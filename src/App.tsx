@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { createBrowserRouter, createHashRouter, RouterProvider } from "react-router";
+import { createHashRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
@@ -22,7 +22,6 @@ const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
-
   },
   {
     path: "login",
