@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 // import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
-
+import { Provider } from "react-redux";
 import Login from "./pages/Login.tsx";
 import Register from "./pages/Register.tsx";
 import ForgetPassword from "./pages/ForgetPassword.tsx";
@@ -18,6 +18,7 @@ import Wishlist from "./pages/Wishlist.tsx";
 import DashBoard from "./pages/Dashboard.tsx";
 import Cart from "./pages/Carts.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import { store } from "./lib/store/store.ts";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +80,8 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );
