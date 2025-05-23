@@ -1,6 +1,6 @@
 import "./App.css";
 
-import {createHashRouter, RouterProvider } from "react-router";
+import {createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
@@ -18,7 +18,7 @@ import Cart from "./pages/Cart/Carts.tsx";
 import NotFound from "./pages/NotFound/NotFound.tsx";
 import { store } from "./lib/store/store.ts";
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
