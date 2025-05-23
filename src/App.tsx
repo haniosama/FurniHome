@@ -18,7 +18,7 @@ import Cart from "./pages/Cart/Carts.tsx";
 import NotFound from "./pages/NotFound/NotFound.tsx";
 import { store } from "./lib/store/store.ts";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
