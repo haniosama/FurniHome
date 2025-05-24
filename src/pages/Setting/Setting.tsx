@@ -144,7 +144,7 @@ const Setting: React.FC = () => {
 >
   <ToastContainer />
 
-  <h2 className="relative text-4xl font-bold mb-12 text-center text-[#0058AA]
+  <h2 className="relative text-3xl md:text-4xl font-bold mb-12 text-center text-[#0058AA]
                 inline-block
                 after:content-[''] after:absolute after:-bottom-3 after:left-0 
                 after:w-full after:h-1 after:bg-[#FBD913] after:opacity-80
@@ -164,15 +164,16 @@ const Setting: React.FC = () => {
           whileHover={{ scale: 1.05 }}
         >
           <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#0058AA] shadow-lg">
-            <img
-              src={
-                previewImage
-                  ? previewImage
-                  : `https://ecommerceapi-production-8d5f.up.railway.app/images/${userInfo.avatar}`
-              }
-              alt="Avatar"
-              className="w-full h-full object-cover"
-            />
+          <img
+            src={
+              previewImage
+                ? previewImage
+                : '/Ronaldo.jpg'
+            }
+            alt="Avatar"
+            className="w-full h-full object-cover"
+          />
+
           </div>
           <label
             htmlFor="avatar"
@@ -219,7 +220,7 @@ const Setting: React.FC = () => {
             disabled
             readOnly
             onChange={handleInputChange}
-            className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
+            className="border border-gray-300 bg-blue-50 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
           />
         </div>
 
