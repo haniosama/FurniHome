@@ -18,6 +18,9 @@ import Cart from "./pages/Cart/Carts.tsx";
 import NotFound from "./pages/NotFound/NotFound.tsx";
 import { store } from "./lib/store/store.ts";
 import Layout from "./pages/Layout/Layout.tsx";
+import MainDashboar from "./pages/MainDashboar/MainDashboar.tsx";
+import OrdersDashboard from "./pages/OrdersDashboard/OrdersDashboard.tsx";
+import ProductDashboard from "./pages/ProductDashboard/ProductDashboard.tsx";
 
 const router = createBrowserRouter([
 
@@ -47,6 +50,12 @@ const router = createBrowserRouter([
         {
           path: "dashboard",
           element: <DashBoard />,
+          children:[
+            {index:true,element:<MainDashboar/>},
+            {path:"maindashboard",element:<MainDashboar/>},
+            {path:"orders",element:<OrdersDashboard/>},
+            {path:"products",element:<ProductDashboard/>},
+          ]
         },
         {
           path: "product",
