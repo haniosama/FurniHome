@@ -7,7 +7,9 @@ import { LuBox } from "react-icons/lu"
 import { BiCategory } from "react-icons/bi"
 import { FaUserGroup } from "react-icons/fa6"
 import { MdSupportAgent } from "react-icons/md"
-import { useState } from "react"
+import { useState } from "react";
+import "../pages/Dasboard/Dashboard.css"
+
 const SideSliderDashboard = () => {
     const [openSlider,setOpenSlider]=useState(false);
     return (

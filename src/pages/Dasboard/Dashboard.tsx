@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import SideSliderDashboard from "../../component/SideSliderDashboard";
-
+import "./Dashboard.css"
 const DashBoard = () => {
   return <div className="flex">
     <SideSliderDashboard/>
