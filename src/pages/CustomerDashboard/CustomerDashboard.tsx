@@ -1,5 +1,5 @@
 import placeholderImage from "../../assets/placeholderProduct.jpg"
-import type { ICustomer } from "../../interfaces/CustomerDashboard";
+import type { ICustomer } from "../../interfaces/customerDashboard";
 
 const CustomerDashboard = () => {
    const customers:ICustomer[] = [
