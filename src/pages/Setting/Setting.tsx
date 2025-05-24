@@ -144,15 +144,19 @@ const Setting: React.FC = () => {
 >
   <ToastContainer />
 
-  <h2 className="relative text-3xl md:text-4xl font-bold mb-12 text-center text-[#0058AA]
-                inline-block
-                after:content-[''] after:absolute after:-bottom-3 after:left-0 
-                after:w-full after:h-1 after:bg-[#FBD913] after:opacity-80
-                before:content-[''] before:absolute before:-bottom-5 before:left-1/4 
-                before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-50">
-    Personal Settings
-  </h2>
-   
+    <div className="text-center">
+      <h2
+        className="relative text-3xl md:text-4xl font-bold mb-12 text-[#0058AA]
+                  inline-block
+                  after:content-[''] after:absolute after:-bottom-3 after:left-0 
+                  after:w-full after:h-1 after:bg-[#FBD913] after:opacity-80
+                  before:content-[''] before:absolute before:-bottom-5 before:left-1/4 
+                  before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-50"
+      >
+        Personal Settings
+      </h2>
+    </div>
+
 
 
   <form onSubmit={handleSubmit} className="flex flex-col gap-6">
