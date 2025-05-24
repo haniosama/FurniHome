@@ -21,6 +21,9 @@ import Layout from "./pages/Layout/Layout.tsx";
 import MainDashboar from "./pages/MainDashboar/MainDashboar.tsx";
 import OrdersDashboard from "./pages/OrdersDashboard/OrdersDashboard.tsx";
 import ProductDashboard from "./pages/ProductDashboard/ProductDashboard.tsx";
+import CustomerDashboard from "./pages/CustomerDashboard/CustomerDashboard.tsx";
+import CouponDashbard from "./pages/CopunDashbard/CopunDashbard.tsx";
+import CategoriesDashboard from "./pages/CategoriesDashboard/CategoriesDashboard.tsx";
 
 const router = createBrowserRouter([
 
@@ -55,6 +58,9 @@ const router = createBrowserRouter([
             {path:"maindashboard",element:<MainDashboar/>},
             {path:"orders",element:<OrdersDashboard/>},
             {path:"products",element:<ProductDashboard/>},
+            {path:"customer",element:<CustomerDashboard/>},
+            {path:"coupons",element:<CouponDashbard/>},
+            {path:"categories",element:<CategoriesDashboard/>},
           ]
         },
         {

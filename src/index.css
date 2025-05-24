@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+.scrollable-x {
+  overflow-x: auto;
+}
+
+/* Scrollbar height */
+.scrollable-x::-webkit-scrollbar {
+  height: 8px;
+}
+
+/* Track background */
+.scrollable-x::-webkit-scrollbar-track {
+  background: #e0f2fe; /* light blue */
+}
+
+/* Thumb color */
+.scrollable-x::-webkit-scrollbar-thumb {
+  background-color: #050e1e; /* blue */
+  border-radius: 8px;
+}
