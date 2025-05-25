@@ -1,7 +1,13 @@
+import { IoMdSearch } from "react-icons/io";
 import placeholderImage from "../../assets/placeholderProduct.jpg"
 import type { IOrderItem } from "../../interfaces/ordersDashboard";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import { useState, type ChangeEvent } from "react";
+import { motion } from "framer-motion";
+
+
 const OrdersDashboard = () => {
-    const orders:IOrderItem[] = [
+    const ordersArr:IOrderItem[] = [
   {
     productName: "Wireless Headphones",
     price: 99.99,
@@ -39,21 +45,68 @@ const OrdersDashboard = () => {
     quantity: 3,
   },
 ];
+    const [orders,setOrders]=useState<IOrderItem[]>(ordersArr)
+
+
+    
+    const handleSearch=(e:ChangeEvent<HTMLInputElement>)=>{
+        const orderId=e.target.value.toLowerCase();
+        if(orderId !==""){
+            const filterorders=orders.filter(item=>item.orderId.toLowerCase().indexOf(orderId) !== -1);
+            if(filterorders.length>0){
+                setOrders(filterorders)
+            }else{
+                toast.error('Order Not Found', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+                });
+            }
+        }
+        else{
+            setOrders(ordersArr);
+        }
+    }
 
     return (
         <>
-            <h2 className="font-semibold text-2xl mt-7">Orders</h2>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+                />
+            <div className="flex items-center justify-between mt-7 pr-10 flex-wrap gap-y-3 ">
+                <h2 className="font-semibold text-2xl ">Orders</h2>
+                <div className="bg-white px-4 py-2 rounded-3xl flex justify-between items-center w-[300px] mx-auto md:m-0">
+                    <input type="text" placeholder="Search by OrderId" className="outline-0 border-0 pr-10" onChange={handleSearch}/>
+                    <IoMdSearch className="text-lg " />
+                </div>
+            </div>
             <div className="scrollable-x">
-                <table className="min-w-full border-collapse bg-white mt-10 ">
+                <motion.table initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.4 }} className="min-w-full border-collapse bg-white mt-10 ">
                     <thead className="bg-gray-100">
                         <tr>
                             <th className=" px-4 py-4 text-left text-gray-700">Product Name</th>
                             <th className=" px-4 py-4 text-left text-gray-700">Order ID</th>
-                            <th className=" px-4 py-4 text-left text-gray-700">Customer Name</th>
-                            <th className=" px-4 py-4 text-left text-gray-700">Date</th>
+                            <th className=" px-4 py-4 text-left text-gray-700 min-w-[150px]">Customer Name</th>
+                            <th className=" px-4 py-4 text-left text-gray-700 min-w-[120px]">Date</th>
                             <th className=" px-4 py-4 text-right text-gray-700">QTY</th>
                             <th className=" px-4 py-4 text-right text-gray-700">Price</th>
-                            <th className=" px-4 py-4 text-left text-gray-700">Payment Status</th>
+                            <th className=" px-4 py-4 text-left text-gray-700 min-w-[200px]">Payment Status</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -91,7 +144,7 @@ const OrdersDashboard = () => {
                             )
                         })}
                     </tbody>
-                </table>
+                </motion.table>
             </div>
         </>
     )

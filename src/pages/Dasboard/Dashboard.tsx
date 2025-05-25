@@ -4,10 +4,8 @@ import "./Dashboard.css"
 const DashBoard = () => {
   return <div className="flex">
     <SideSliderDashboard/>
-    <div className="md:ml-[230px] bg-[#f4f5fc] min-h-[99vh] w-full p-4 ">
-      <div className="">
+    <div className="lg:ml-[230px] bg-[#f4f5fc] min-h-[99vh] w-full p-4 ">
         <Outlet/>
-      </div>
     </div>
   </div>;
 };
