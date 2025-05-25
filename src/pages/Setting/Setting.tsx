@@ -121,7 +121,7 @@ const Setting: React.FC = () => {
     if (userInfo.avatarFile) {
       formData.append("avatar", userInfo.avatarFile);
     } else {
-      formData.append("oldAvatar", userInfo.avatar || "profile.png");
+      formData.append('oldAvatar', userInfo.avatar || 'Ronaldo.jpg');
     }
     formData.append("username", userInfo.username);
     formData.append("phone", userInfo.phone);
@@ -159,8 +159,23 @@ const Setting: React.FC = () => {
           className="relative text-3xl md:text-4xl font-bold mb-12 text-[#0058AA]
                   inline-block
                   after:content-[''] after:absolute after:-bottom-3 after:left-0 
-                  after:w-full after:h-1 after:bg-[#FBD913] after:opacity-80
+                  after:w-full after:h-1 after:bg-[#FBD913] after:opacity-100
                   before:content-[''] before:absolute before:-bottom-5 before:left-1/4 
+                  before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-80"
+      >
+        Personal Settings
+      </h2>
+    </div>
+
+
+
+  <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <div className="flex flex-col md:flex-row items-start gap-8">
+      {/* Image */}
+      <div className="w-full md:w-1/6 flex justify-center md:justify-start">
+        <motion.div 
+          className="relative w-40 h-40"
+          whileHover={{ scale: 1.05 }}
                   before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-50"
         >
           Personal Settings
