@@ -1,5 +1,4 @@
 import Hero from "../../component/Hero";
-
 import Product from "../../component/Product";
 
 const Home = () => {
