@@ -14,15 +14,9 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/vite": "^4.1.7",
     "axios": "^1.9.0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
     "formik": "^2.4.6",
     "react-hot-toast": "^2.5.2",
-    "yup": "^1.6.1"
-
->>>>>>> f35403878e06fe87ec91766b4b83082ca056966f
+    "yup": "^1.6.1",
     "framer-motion": "^12.12.2",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
@@ -33,9 +27,7 @@
     "react-router": "^7.6.0",
     "react-toastify": "^11.0.5",
     "tailwind-scrollbar": "^4.0.2",
-    "tailwindcss": "^4.1.7"
-<<<<<<< HEAD
-=======
+    "tailwindcss": "^4.1.7",
     "formik": "^2.4.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -45,10 +37,6 @@
     "react-router": "^7.6.0",
     "tailwindcss": "^4.1.7",
     "yup": "^1.6.1"
->>>>>>> mamdouh
-=======
-
->>>>>>> f35403878e06fe87ec91766b4b83082ca056966f
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
