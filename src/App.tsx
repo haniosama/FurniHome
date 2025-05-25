@@ -2,8 +2,8 @@ import "./App.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
-import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
+import Login from "./pages/Login/Login.tsx";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword.tsx";
 import Home from "./pages/Home/Home.tsx";
 import ContactUs from "./pages/Contactus/ContactUs.tsx";
@@ -18,81 +18,82 @@ import Cart from "./pages/Cart/Carts.tsx";
 import NotFound from "./pages/NotFound/NotFound.tsx";
 import { store } from "./lib/store/store.ts";
 import Layout from "./pages/Layout/Layout.tsx";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
-
   {
-    path: '', element: <Layout />, children:
-      [
-        {
-          index: true,
-          element: <Home />,
-        },
-        {
-          path: "home",
-          element: <Home />,
-        },
-        {
-          path: "login",
-          element: <Login />,
-        },
-        {
-          path: "register",
-          element: <Register />,
-        },
-        {
-          path: "forget-password",
-          element: <ForgetPassword />,
-        },
-        {
-          path: "dashboard",
-          element: <DashBoard />,
-        },
-        {
-          path: "product",
-          element: <Product />,
-        },
-        {
-          path: "product/:id",
-          element: <ProductDetials />,
-        },
-        {
-          path: "cart",
-          element: <Cart />,
-        },
-        {
-          path: "category",
-          element: <Category />,
-        },
-        {
-          path: "order",
-          element: <Order />,
-        },
-        {
-          path: "setting",
-          element: <Setting />,
-        },
-        {
-          path: "wishlist",
-          element: <Wishlist />,
-        },
-        {
-          path: "contactus",
-          element: <ContactUs />,
-        },
-        {
-          path: "*",
-          element: <NotFound />,
-        },
-      ]
-  }
-
+    path: "",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "home",
+        element: <Home />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "forget-password",
+        element: <ForgetPassword />,
+      },
+      {
+        path: "dashboard",
+        element: <DashBoard />,
+      },
+      {
+        path: "product",
+        element: <Product />,
+      },
+      {
+        path: "product/:id",
+        element: <ProductDetials />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "category",
+        element: <Category />,
+      },
+      {
+        path: "order",
+        element: <Order />,
+      },
+      {
+        path: "setting",
+        element: <Setting />,
+      },
+      {
+        path: "wishlist",
+        element: <Wishlist />,
+      },
+      {
+        path: "contactus",
+        element: <ContactUs />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
 ]);
 
 function App() {
   return (
     <Provider store={store}>
       <RouterProvider router={router} />
+      <Toaster />
     </Provider>
   );
 }
