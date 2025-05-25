@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { createHashRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
@@ -24,9 +24,10 @@ import ProductDashboard from "./pages/ProductDashboard/ProductDashboard.tsx";
 import CustomerDashboard from "./pages/CustomerDashboard/CustomerDashboard.tsx";
 import CouponDashbard from "./pages/CopunDashbard/CopunDashbard.tsx";
 import CategoriesDashboard from "./pages/CategoriesDashboard/CategoriesDashboard.tsx";
+import CategoryDetails from "./pages/CategoryDetails/CategoryDetails.tsx";
 
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: '', element: <Layout />, children:
       [
@@ -78,6 +79,10 @@ const router = createHashRouter([
         {
           path: "category",
           element: <Category />,
+        },
+        {
+          path: "category/:name",
+          element: <CategoryDetails />,
         },
         {
           path: "order",
