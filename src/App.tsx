@@ -27,6 +27,7 @@ import CategoriesDashboard from "./pages/CategoriesDashboard/CategoriesDashboard
 import CategoryDetails from "./pages/CategoryDetails/CategoryDetails.tsx";
 
 import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 
 
 const router = createBrowserRouter([

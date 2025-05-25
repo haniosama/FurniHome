@@ -62,9 +62,7 @@ const Setting: React.FC = () => {
     axios
       .get(
         `https://ecommerceapi-production-8d5f.up.railway.app/api/user/${userId}`,
-        {
-          headers: { Authorization: token },
-        }
+        { headers: { Authorization: token } }
       )
       .then((res) => {
         const data = res.data.data[0];
@@ -117,6 +115,7 @@ const Setting: React.FC = () => {
       toast.error("New password and confirmation do not match");
       return;
     }
+
     const formData = new FormData();
     if (userInfo.avatarFile) {
       formData.append("avatar", userInfo.avatarFile);
@@ -135,7 +134,6 @@ const Setting: React.FC = () => {
         formData,
         { headers: { Authorization: token } }
       );
-
       toast.success("Updated Successfully");
     } catch (err) {
       toast.error("Failed to update data");
@@ -150,7 +148,7 @@ const Setting: React.FC = () => {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.4 }}
-      className="max-w-6xl mx-auto p-6 bg-white shadow-xl rounded-xl mt-15">
+      className="w-6xl mx-auto p-6 bg-white shadow-xl rounded-xl mt-15">
       <ToastContainer />
 
       <div className="text-center">
@@ -168,9 +166,9 @@ const Setting: React.FC = () => {
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <div className="flex flex-col md:flex-row items-start gap-8">
           {/* Image */}
-          <div className="w-full md:w-1/6 flex justify-center md:justify-start">
+          <div className="flex-1 flex justify-center md:justify-start">
             <motion.div
-              className="relative w-40 h-40"
+              className="relative w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60"
               whileHover={{ scale: 1.05 }}>
               <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#0058AA] shadow-lg">
                 <img
@@ -193,14 +191,11 @@ const Setting: React.FC = () => {
             />
           </div>
 
-          {/* inputs */}
-          <div className="w-full grid grid-cols-1 gap-4">
+          {/* Inputs */}
+          <div className="flex-[2] grid grid-cols-1 gap-4">
             <div className="flex flex-col gap-2">
-              <label
-                htmlFor="username"
-                className="text-gray-700 flex items-center font-medium text-left">
-                <FaUser className="mr-2 text-[#0058AA]" />
-                Name
+              <label htmlFor="username" className="text-gray-700 flex items-center font-medium text-left">
+                <FaUser className="mr-2 text-[#0058AA]" /> Name
               </label>
               <input
                 type="text"
@@ -213,11 +208,8 @@ const Setting: React.FC = () => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label
-                htmlFor="email"
-                className="text-gray-700 flex items-center font-medium text-left">
-                <FaEnvelope className="mr-2 text-[#0058AA]" />
-                Email
+              <label htmlFor="email" className="text-gray-700 flex items-center font-medium text-left">
+                <FaEnvelope className="mr-2 text-[#0058AA]" /> Email
               </label>
               <input
                 type="email"
@@ -226,17 +218,13 @@ const Setting: React.FC = () => {
                 value={userInfo.email}
                 disabled
                 readOnly
-                onChange={handleInputChange}
                 className="border border-gray-300 bg-blue-50 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
               />
             </div>
 
             <div className="flex flex-col gap-2">
-              <label
-                htmlFor="phone"
-                className="text-gray-700 flex items-center font-medium text-left">
-                <FaPhone className="mr-2 text-[#0058AA]" />
-                Phone
+              <label htmlFor="phone" className="text-gray-700 flex items-center font-medium text-left">
+                <FaPhone className="mr-2 text-[#0058AA]" /> Phone
               </label>
               <input
                 type="text"
@@ -253,63 +241,35 @@ const Setting: React.FC = () => {
         {/* Divider */}
         <div className="border border-[#0058AA] my-6 opacity-100"></div>
 
-        {/* Change password */}
+        {/* Change Password */}
         <div>
-          <h3 className="text-xl font-bold mb-5 text-[#0058AA]">
-            Change Password
-          </h3>
+          <h3 className="text-xl font-bold mb-5 text-[#0058AA]">Change Password</h3>
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 flex flex-col gap-2">
-              <label
-                htmlFor="oldPassword"
-                className="text-gray-700 flex items-center font-medium text-left">
-                <FaLock className="mr-2 text-[#0058AA]" />
-                Old Password
-              </label>
-              <input
-                type="password"
-                id="oldPassword"
-                name="oldPassword"
-                onChange={handleInputChange}
-                className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
-              />
-            </div>
-
-            <div className="flex-1 flex flex-col gap-2">
-              <label
-                htmlFor="newPassword"
-                className="text-gray-700 flex items-center font-medium text-left">
-                <FaLock className="mr-2 text-[#0058AA]" />
-                New Password
-              </label>
-              <input
-                type="password"
-                id="newPassword"
-                name="newPassword"
-                onChange={handleInputChange}
-                className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
-              />
-            </div>
-
-            <div className="flex-1 flex flex-col gap-2">
-              <label
-                htmlFor="confirmNewPassword"
-                className="text-gray-700 flex items-center font-medium text-left">
-                <FaLock className="mr-2 text-[#0058AA]" />
-                Confirm New Password
-              </label>
-              <input
-                type="password"
-                id="confirmNewPassword"
-                name="confirmNewPassword"
-                onChange={handleInputChange}
-                className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
-              />
-            </div>
+            {["oldPassword", "newPassword", "confirmNewPassword"].map((field, index) => (
+              <div key={index} className="flex-1 flex flex-col gap-2">
+                <label
+                  htmlFor={field}
+                  className="text-gray-700 flex items-center font-medium text-left">
+                  <FaLock className="mr-2 text-[#0058AA]" />
+                  {field === "oldPassword"
+                    ? "Old Password"
+                    : field === "newPassword"
+                    ? "New Password"
+                    : "Confirm New Password"}
+                </label>
+                <input
+                  type="password"
+                  id={field}
+                  name={field}
+                  onChange={handleInputChange}
+                  className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Save Changes */}
+        {/* Save Button */}
         <div className="text-center">
           <motion.button
             type="submit"
@@ -328,13 +288,7 @@ const Setting: React.FC = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"></circle>
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
