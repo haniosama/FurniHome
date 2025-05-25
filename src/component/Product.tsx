@@ -96,7 +96,7 @@ const Product = () => {
       <h1 className="text-5xl font-bold text-center mb-8 text-gray-900">
         Upgrade Your Space with IKEA Furniture
       </h1>
-      <div className="flex flex-col md:flex-row justify-center items-start gap-10 flex-wrap max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-center items-center gap-10 flex-wrap max-w-7xl mx-auto">
         {ikeaFurniture.map((item, index) => (
           <div
             key={index}
