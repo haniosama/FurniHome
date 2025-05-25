@@ -2,8 +2,8 @@ import "./App.css";
 
 import { createHashRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
-import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
+import Login from "./pages/Login/Login.tsx";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword.tsx";
 import Home from "./pages/Home/Home.tsx";
 import ContactUs from "./pages/Contactus/ContactUs.tsx";
@@ -24,6 +24,7 @@ import ProductDashboard from "./pages/ProductDashboard/ProductDashboard.tsx";
 import CustomerDashboard from "./pages/CustomerDashboard/CustomerDashboard.tsx";
 import CouponDashbard from "./pages/CopunDashbard/CopunDashbard.tsx";
 import CategoriesDashboard from "./pages/CategoriesDashboard/CategoriesDashboard.tsx";
+import { Toaster } from "react-hot-toast";
 
 
 const router = createHashRouter([
@@ -108,6 +109,7 @@ function App() {
   return (
     <Provider store={store}>
       <RouterProvider router={router} />
+      <Toaster />
     </Provider>
   );
 }
