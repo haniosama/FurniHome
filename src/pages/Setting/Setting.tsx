@@ -140,7 +140,7 @@ const Setting: React.FC = () => {
   initial={{ opacity: 0, y: 40 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 1.4 }}
-  className="max-w-6xl mx-auto p-6 bg-white shadow-xl rounded-xl mt-5"
+  className="max-w-6xl mx-auto p-6 bg-white shadow-xl rounded-xl mt-15"
 >
   <ToastContainer />
 
