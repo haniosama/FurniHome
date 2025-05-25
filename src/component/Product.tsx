@@ -9,6 +9,9 @@ import img7 from "../assets/image7.webp";
 import img8 from "../assets/image8.webp";
 import img9 from "../assets/image9.jpg";
 import img10 from "../assets/image10.jpg";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../lib/store/store";
+import { addTOCartAction } from "../lib/slices/cartSlice";
 
 const ikeaFurniture = [
   {
@@ -18,6 +21,7 @@ const ikeaFurniture = [
     description:
       "A classic, adjustable bookcase that fits many rooms and styles.",
     rating: 4.5,
+    _id: "682a0184635ed991eac356b8",
   },
   {
     image: img2,
@@ -25,6 +29,7 @@ const ikeaFurniture = [
     price: "EGP 3,799",
     description: "Spacious dresser with six drawers, crafted from solid wood.",
     rating: 4.2,
+    _id: "682a03a8635ed991eac356c1",
   },
   {
     image: img3,
@@ -32,6 +37,7 @@ const ikeaFurniture = [
     price: "EGP 4,499",
     description: "Comfortable 2-seat sofa with removable, washable covers.",
     rating: 4.7,
+    _id: "682a04e8635ed991eac356dd",
   },
   {
     image: img4,
@@ -39,6 +45,7 @@ const ikeaFurniture = [
     price: "EGP 449",
     description: "Minimalist coffee table that fits perfectly in small spaces.",
     rating: 4.0,
+    _id: "682a0763426afce62e2bd862",
   },
   {
     image: img5,
@@ -46,6 +53,7 @@ const ikeaFurniture = [
     price: "EGP 5,299",
     description: "Sleek and modern bed frame with underbed storage options.",
     rating: 4.6,
+    _id: "682a07cd426afce62e2bd864",
   },
   {
     image: img6,
@@ -53,6 +61,7 @@ const ikeaFurniture = [
     price: "EGP 1,899",
     description: "Comfortable armchair with a bentwood frame and soft cushion.",
     rating: 4.3,
+    _id: "682a0184635ed991eac356b8",
   },
   {
     image: img7,
@@ -60,6 +69,7 @@ const ikeaFurniture = [
     price: "EGP 999",
     description: "Modular wall cabinet to customize your storage solutions.",
     rating: 3.9,
+    _id: "682a0184635ed991eac356b8",
   },
   {
     image: img8,
@@ -67,6 +77,7 @@ const ikeaFurniture = [
     price: "EGP 1,499",
     description: "Spacious shelving unit perfect for storage and display.",
     rating: 4.1,
+    _id: "682a0184635ed991eac356b8",
   },
   {
     image: img9,
@@ -74,6 +85,7 @@ const ikeaFurniture = [
     price: "EGP 3,899",
     description: "Classic wing chair with comfortable cushioning and support.",
     rating: 4.8,
+    _id: "682a0184635ed991eac356b8",
   },
   {
     image: img10,
@@ -81,6 +93,7 @@ const ikeaFurniture = [
     price: "EGP 2,199",
     description: "Elegant TV bench with storage compartments and drawers.",
     rating: 4.4,
+    _id: "682a0184635ed991eac356b8",
   },
 ];
 
@@ -91,6 +104,8 @@ const Product = () => {
     setWishlist((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
+  const dispatch: AppDispatch = useDispatch();
+
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <h1 className="text-5xl font-bold text-center mb-8 text-gray-900">
@@ -100,21 +115,18 @@ const Product = () => {
         {ikeaFurniture.map((item, index) => (
           <div
             key={index}
-            className="relative bg-white rounded-lg shadow-lg p-4 w-72 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-          >
+            className="relative bg-white rounded-lg shadow-lg p-4 w-72 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 overflow-hidden">
             <button
               onClick={() => toggleWishlist(index)}
               aria-label="Add to wishlist"
-              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10 border-2 border-gray-300 rounded-full p-2"
-            >
+              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10 border-2 border-gray-300 rounded-full p-2">
               {wishlist[index] ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="red"
                   viewBox="0 0 24 24"
                   stroke="red"
-                  className="w-6 h-6"
-                >
+                  className="w-6 h-6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -128,8 +140,7 @@ const Product = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  className="w-6 h-6"
-                >
+                  className="w-6 h-6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -154,7 +165,11 @@ const Product = () => {
             </p>
             <p className="text-gray-600 text-sm mb-4">{item.description}</p>
 
-            <button className="bg-[#fbd914] hover:bg-[#fbd919] text-white px-6 py-2 rounded-md transition-colors duration-300 w-full">
+            <button
+              onClick={() => {
+                dispatch(addTOCartAction(item._id));
+              }}
+              className="bg-[#fbd914] cursor-pointer hover:bg-[#fbd919] text-white px-6 py-2 rounded-md transition-colors duration-300 w-full">
               Add to Cart
             </button>
           </div>

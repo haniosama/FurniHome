@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { createHashRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 import Register from "./pages/Register/Register.tsx";
 import Login from "./pages/Login/Login.tsx";
@@ -14,7 +14,7 @@ import Order from "./pages/Order/Order.tsx";
 import Setting from "./pages/Setting/Setting.tsx";
 import Wishlist from "./pages/Wishlist/Wishlist.tsx";
 import DashBoard from "./pages/Dasboard/Dashboard.tsx";
-import Cart from "./pages/Cart/Carts.tsx";
+import Cart from "./pages/Cart/Cart.tsx";
 import NotFound from "./pages/NotFound/NotFound.tsx";
 import { store } from "./lib/store/store.ts";
 import Layout from "./pages/Layout/Layout.tsx";
@@ -24,89 +24,95 @@ import ProductDashboard from "./pages/ProductDashboard/ProductDashboard.tsx";
 import CustomerDashboard from "./pages/CustomerDashboard/CustomerDashboard.tsx";
 import CouponDashbard from "./pages/CopunDashbard/CopunDashbard.tsx";
 import CategoriesDashboard from "./pages/CategoriesDashboard/CategoriesDashboard.tsx";
+
+import { ToastContainer } from "react-toastify";
+
 import { Toaster } from "react-hot-toast";
 
-
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
-    path: '', element: <Layout />, children:
-      [
-        {
-          index: true,
-          element: <Home />,
-        },
-        {
-          path: "home",
-          element: <Home />,
-        },
-        {
-          path: "login",
-          element: <Login />,
-        },
-        {
-          path: "register",
-          element: <Register />,
-        },
-        {
-          path: "forget-password",
-          element: <ForgetPassword />,
-        },
-        {
-          path: "dashboard",
-          element: <DashBoard />,
-          children:[
-            {index:true,element:<MainDashboar/>},
-            {path:"maindashboard",element:<MainDashboar/>},
-            {path:"orders",element:<OrdersDashboard/>},
-            {path:"products",element:<ProductDashboard/>},
-            {path:"customer",element:<CustomerDashboard/>},
-            {path:"coupons",element:<CouponDashbard/>},
-            {path:"categories",element:<CategoriesDashboard/>},
-          ]
-        },
-        {
-          path: "product",
-          element: <Product />,
-        },
-        {
-          path: "product/:id",
-          element: <ProductDetials />,
-        },
-        {
-          path: "cart",
-          element: <Cart />,
-        },
-        {
-          path: "category",
-          element: <Category />,
-        },
-        {
-          path: "order",
-          element: <Order />,
-        },
-        {
-          path: "setting",
-          element: <Setting />,
-        },
-        {
-          path: "wishlist",
-          element: <Wishlist />,
-        },
-        {
-          path: "contactus",
-          element: <ContactUs />,
-        },
-        {
-          path: "*",
-          element: <NotFound />,
-        },
-      ]
-  }
+
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "home",
+        element: <Home />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "forget-password",
+        element: <ForgetPassword />,
+      },
+      {
+        path: "dashboard",
+        element: <DashBoard />,
+        children: [
+          { index: true, element: <MainDashboar /> },
+          { path: "maindashboard", element: <MainDashboar /> },
+          { path: "orders", element: <OrdersDashboard /> },
+          { path: "products", element: <ProductDashboard /> },
+          { path: "customer", element: <CustomerDashboard /> },
+          { path: "coupons", element: <CouponDashbard /> },
+          { path: "categories", element: <CategoriesDashboard /> },
+        ],
+      },
+      {
+        path: "product",
+        element: <Product />,
+      },
+      {
+        path: "product/:id",
+        element: <ProductDetials />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "category",
+        element: <Category />,
+      },
+      {
+        path: "order",
+        element: <Order />,
+      },
+      {
+        path: "setting",
+        element: <Setting />,
+      },
+      {
+        path: "wishlist",
+        element: <Wishlist />,
+      },
+      {
+        path: "contactus",
+        element: <ContactUs />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+
 ]);
 
 function App() {
   return (
     <Provider store={store}>
+      <ToastContainer />
       <RouterProvider router={router} />
       <Toaster />
     </Provider>
