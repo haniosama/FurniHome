@@ -1,8 +1,107 @@
-const Navbar = () => {
+import { useState } from "react";
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div>
-      <h1>Navbar</h1>
-    </div>
+    <nav className="fixed top-0 left-0 w-full bg-[#0058ab] text-white z-50 shadow-lg ">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        <div className="flex-shrink-0">
+          <a href="/" className="text-2xl font-bold">
+            FurniHome
+          </a>
+        </div>
+        <div className="hidden md:flex space-x-6 mx-auto">
+          <a href="/" className="hover:text-gray-300">
+            Home
+          </a>
+          <a href="/shop" className="hover:text-gray-300">
+            Shop
+          </a>
+          <a href="/about" className="hover:text-gray-300">
+            Category
+          </a>
+          <a href="/contact" className="hover:text-gray-300">
+            Contact
+          </a>
+        </div>
+        <div className="hidden md:flex items-center space-x-4">
+          <a href="/cart" className="hover:text-gray-300">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.01 16h11.986c.808 0 1.52-.49 1.82-1.23l2.944-7.21c.135-.332.21-.694.21-1.07 0-1.657-1.343-3-3-3H5.21L4.27.927A1 1 0 0 0 3.308 0H1v2h1.692l3.6 9.57-1.35 2.44C4.45 14.68 5.66 16 7.01 16z" />
+            </svg>
+          </a>
+          <a href="/login" className="hover:text-gray-300">
+            Login
+          </a>
+        </div>
+        <div className="md:hidden">
+          <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {isOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        } bg-gray-800 px-6`}
+      >
+        <div className="flex flex-col py-4 space-y-2">
+          <a href="/" className="hover:text-gray-300">
+            Home
+          </a>
+          <a href="/shop" className="hover:text-gray-300">
+            Shop
+          </a>
+          <a href="/about" className="hover:text-gray-300">
+            Category
+          </a>
+          <a href="/contact" className="hover:text-gray-300">
+            Contact
+          </a>
+          <a href="/cart" className="hover:text-gray-300">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.01 16h11.986c.808 0 1.52-.49 1.82-1.23l2.944-7.21c.135-.332.21-.694.21-1.07 0-1.657-1.343-3-3-3H5.21L4.27.927A1 1 0 0 0 3.308 0H1v2h1.692l3.6 9.57-1.35 2.44C4.45 14.68 5.66 16 7.01 16z" />
+            </svg>
+          </a>
+          <a href="/login" className="hover:text-gray-300">
+            Login
+          </a>
+        </div>
+      </div>
+    </nav>
   );
-};
-export default Navbar;
+}

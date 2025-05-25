@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+body {
+  height: 100%;
+  margin: 0;
+  overflow-y: scroll; /* forces vertical scrollbar */
+  scroll-behavior: smooth; /* smooth scrolling when using anchors or JS */
+}
+
+/* Custom scrollbar example for webkit browsers */
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #0058ab;
+}
