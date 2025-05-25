@@ -13,8 +13,8 @@ import "../pages/Dasboard/Dashboard.css"
 const SideSliderDashboard = () => {
     const [openSlider,setOpenSlider]=useState(false);
     return (
-        <div className={`${openSlider?"translate-x-0":"-translate-x-[207px]"} md:translate-x-0 h-[90vh] bg-white p-2 fixed top-15 w-[210px] text-gray-700 transition-all duration-500`}>
-                <div className="absolute top-9 md:top-5 -right-[27px] md:-right-2 bg-white p-2 rounded-lg cursor-pointer text-lg" onClick={()=>setOpenSlider(!openSlider)}>
+        <div className={`${openSlider?"translate-x-0":"-translate-x-[207px]"} lg:translate-x-0 h-[90vh] bg-white p-2 fixed top-15 w-[210px] text-gray-700 transition-all duration-500`}>
+                <div className="absolute top-9 lg:top-5 -right-[27px] lg:-right-2 bg-white p-2 rounded-lg cursor-pointer text-lg" onClick={()=>setOpenSlider(!openSlider)}>
                     <FaBars />
                 </div>
             <div className="flex items-center">

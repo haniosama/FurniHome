@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .scrollable-x {
-  overflow-x: auto;
+  overflow-x: scroll;
 }
 
 /* Scrollbar height */
