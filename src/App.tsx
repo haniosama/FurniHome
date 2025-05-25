@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createHashRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
@@ -25,8 +25,8 @@ import CustomerDashboard from "./pages/CustomerDashboard/CustomerDashboard.tsx";
 import CouponDashbard from "./pages/CopunDashbard/CopunDashbard.tsx";
 import CategoriesDashboard from "./pages/CategoriesDashboard/CategoriesDashboard.tsx";
 
-const router = createBrowserRouter([
 
+const router = createHashRouter([
   {
     path: '', element: <Layout />, children:
       [
