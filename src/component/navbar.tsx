@@ -25,16 +25,18 @@ export default function Navbar() {
           </a>
         </div>
         <div className="hidden md:flex items-center space-x-4">
-          <a href="/cart" className="hover:text-gray-300">
+          <a href="/cart" className="hover:text-gray-300" title="Shopping Cart">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
               fill="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.01 16h11.986c.808 0 1.52-.49 1.82-1.23l2.944-7.21c.135-.332.21-.694.21-1.07 0-1.657-1.343-3-3-3H5.21L4.27.927A1 1 0 0 0 3.308 0H1v2h1.692l3.6 9.57-1.35 2.44C4.45 14.68 5.66 16 7.01 16z" />
             </svg>
+            <span className="sr-only">Shopping Cart</span>
           </a>
           <a href="/login" className="hover:text-gray-300">
             Login
@@ -48,6 +50,7 @@ export default function Navbar() {
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               {isOpen ? (
                 <path
@@ -86,16 +89,18 @@ export default function Navbar() {
           <a href="/contact" className="hover:text-gray-300">
             Contact
           </a>
-          <a href="/cart" className="hover:text-gray-300">
+          <a href="/cart" className="hover:text-gray-300" title="Shopping Cart">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
               fill="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.01 16h11.986c.808 0 1.52-.49 1.82-1.23l2.944-7.21c.135-.332.21-.694.21-1.07 0-1.657-1.343-3-3-3H5.21L4.27.927A1 1 0 0 0 3.308 0H1v2h1.692l3.6 9.57-1.35 2.44C4.45 14.68 5.66 16 7.01 16z" />
             </svg>
+            <span className="sr-only">Shopping Cart</span>
           </a>
           <a href="/login" className="hover:text-gray-300">
             Login
