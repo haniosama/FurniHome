@@ -3,11 +3,11 @@
 body {
   height: 100%;
   margin: 0;
-  overflow-y: scroll; /* forces vertical scrollbar */
-  scroll-behavior: smooth; /* smooth scrolling when using anchors or JS */
+  overflow-y: scroll;
+  scroll-behavior: smooth; 
 }
 
-/* Custom scrollbar example for webkit browsers */
+
 body::-webkit-scrollbar {
   width: 12px;
 }
