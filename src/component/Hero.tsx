@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <div className="bg-[url('/public/image1.jpg')] h-screen bg-cover bg-center relative">
+    <div className="bg-[url('/image1.jpg')] h-screen bg-cover bg-center relative">
       <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
         <div className="text-center text-white max-w-2xl px-4">
           <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">
