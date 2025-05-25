@@ -1,6 +1,7 @@
 @import "tailwindcss";
 .scrollable-x {
   overflow-x: scroll;
+}
 
 body {
   height: 100%;
