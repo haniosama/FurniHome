@@ -60,7 +60,7 @@ const router = createBrowserRouter([
         element: <DashBoard />,
         children: [
           { index: true, element: <MainDashboar /> },
-          { path: "maindashboard", element: <MainDashboar /> },
+          {  path:"maindashboard", element: <MainDashboar /> },
           { path: "orders", element: <OrdersDashboard /> },
           { path: "products", element: <ProductDashboard /> },
           { path: "customer", element: <CustomerDashboard /> },

@@ -1,9 +1,6 @@
 @import "tailwindcss";
-.scrollable-x {
-  overflow-x: scroll;
-}
 
-body {
+body{
   height: 100%;
   margin: 0;
   overflow-y: scroll;
@@ -14,4 +11,49 @@ body::-webkit-scrollbar {
 }
 body::-webkit-scrollbar-thumb {
   background-color: #0058ab;
+}
+.scrollable-x{
+  overflow-x: scroll;
+}
+
+/* Scrollbar height */
+.scrollable-x::-webkit-scrollbar {
+  height: 12px;
+}
+
+/* Track background */
+.scrollable-x::-webkit-scrollbar-track {
+  background: #e0f2fe; /* light blue */
+}
+
+/* Thumb color */
+.scrollable-x::-webkit-scrollbar-thumb {
+  background-color: #0058ab; /* blue */
+  border-radius: 8px;
+}
+@media screen and (min-width: 590px) {
+  .scrollable-x::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+.scrollable-y{
+  overflow-y: scroll;
+}
+
+/* Scrollbar height */
+.scrollable-y::-webkit-scrollbar {
+  height: 12px;
+}
+
+/* Track background */
+.scrollable-y::-webkit-scrollbar-track {
+  background: #e0f2fe; /* light blue */
+}
+
+/* Thumb color */
+.scrollable-y::-webkit-scrollbar-thumb {
+  background-color: #0058ab; /* blue */
+  border-radius: 8px;
 }

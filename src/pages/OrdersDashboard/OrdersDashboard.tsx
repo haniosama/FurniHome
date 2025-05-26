@@ -1,7 +1,7 @@
 import { IoMdSearch } from "react-icons/io";
 import placeholderImage from "../../assets/placeholderProduct.jpg"
 import type { IOrderItem } from "../../interfaces/ordersDashboard";
-import { Bounce, toast, ToastContainer } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 import { useState, type ChangeEvent } from "react";
 import { motion } from "framer-motion";
 
@@ -76,19 +76,6 @@ const OrdersDashboard = () => {
 
     return (
         <>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-                />
             <div className="flex items-center justify-between mt-7 pr-10 flex-wrap gap-y-3 ">
                 <h2 className="font-semibold text-2xl ">Orders</h2>
                 <div className="bg-white px-4 py-2 rounded-3xl flex justify-between items-center w-[300px] mx-auto md:m-0">
