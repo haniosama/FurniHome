@@ -32,8 +32,17 @@ interface DecodedToken {
   role: string;
 }
 
-const token =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImpvbyIsInVzZXJJRCI6IjY4MzBkZjhlODUxYzJjOTQzZTQ3ZmMxNSIsImVtYWlsIjoiam9vQGdtYWlsLmNvbSIsInZlcmlmaWVkIjpmYWxzZSwiYXZhdGFyIjoidXNlci0xNzQ3OTQxMTE2NzgzNzIuMTk4ODUzOTM3ODg1OTQucG5nIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDgwMzM0NjF9.IXFYhPSP-KhGGwI7dZost_TeDvO5hPkaY3fJ54q5Kdk";
+// getToken
+function getTokenFromCookie(): string | null {
+  const cookies = Object.fromEntries(
+    document.cookie.split("; ").map(cookie => cookie.split("="))
+  );
+  return cookies.userToken || null;
+}
+const token = getTokenFromCookie();
+console.log(token)
+
+
 
 const Setting: React.FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
@@ -55,14 +64,14 @@ const Setting: React.FC = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const decoded: DecodedToken = jwtDecode(token.split(" ")[1]);
+  const decoded: DecodedToken = jwtDecode(token || "");
   const userId = decoded.userID;
 
   useEffect(() => {
     axios
       .get(
         `https://ecommerceapi-production-8d5f.up.railway.app/api/user/${userId}`,
-        { headers: { Authorization: token } }
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
         const data = res.data.data[0];
