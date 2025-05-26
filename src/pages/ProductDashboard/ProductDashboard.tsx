@@ -2,7 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import placeholderImage from "../../assets/placeholderProduct.jpg"
 import type { IProduct } from "../../interfaces/productsDashbord";
 import { IoMdSearch } from "react-icons/io";
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 import { motion } from "framer-motion";
 
 
@@ -71,7 +71,7 @@ const ProductDashboard = () => {
     }
     return (
         <>
-            <ToastContainer
+            {/* <ToastContainer
                 position="top-right"
                 autoClose={5000}
                 hideProgressBar={false}
@@ -83,7 +83,7 @@ const ProductDashboard = () => {
                 pauseOnHover
                 theme="light"
                 transition={Bounce}
-                />
+                /> */}
             <div className="flex items-center justify-between mt-7 pr-10 flex-wrap gap-y-3 ">
                 <h2 className="font-semibold text-2xl ">Customer</h2>
                 <div className="bg-white px-4 py-2 rounded-3xl flex justify-between items-center w-[300px] mx-auto md:m-0">

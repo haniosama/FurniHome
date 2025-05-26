@@ -24,7 +24,7 @@ const orders: IOreder[] = [
 ];
   return (
      <>
-        <h2 className="font-semibold text-2xl mt-7">Products</h2>
+        <h2 className="font-semibold text-2xl mt-7">Coupons</h2>
         <div className="scrollable-x">
             <motion.table initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.4 }} className="min-w-full border-collapse bg-white mt-10">
                 <thead className="bg-gray-100">

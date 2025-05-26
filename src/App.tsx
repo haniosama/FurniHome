@@ -32,6 +32,7 @@ import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
+
     path: '', element: <Layout />, children:
       [
         {
@@ -109,7 +110,6 @@ const router = createBrowserRouter([
         },
       ]
   }
-
 ]);
 
 function App() {
