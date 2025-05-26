@@ -33,13 +33,10 @@ interface DecodedToken {
 }
 
 // getToken
-function getTokenFromCookie(): string | null {
-  const cookies = Object.fromEntries(
-    document.cookie.split("; ").map(cookie => cookie.split("="))
-  );
-  return cookies.userToken || null;
+function getTokenFromLocalStorage(): string | null {
+  return localStorage.getItem("Token");
 }
-const token = getTokenFromCookie();
+const token = getTokenFromLocalStorage();
 console.log(token)
 
 
