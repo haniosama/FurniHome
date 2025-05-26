@@ -37,7 +37,7 @@ function getTokenFromLocalStorage(): string | null {
   return localStorage.getItem("Token");
 }
 const token = getTokenFromLocalStorage();
-console.log(token)
+console.log("tokkkkkken",token)
 
 
 
@@ -138,7 +138,7 @@ const Setting: React.FC = () => {
       await axios.patch(
         "https://ecommerceapi-production-8d5f.up.railway.app/api/auth/changeUserInfo",
         formData,
-        { headers: { Authorization: token } }
+        { headers: { Authorization: `Bearer ${token}`} }
       );
       toast.success("Updated Successfully");
     } catch (err) {
@@ -150,165 +150,180 @@ const Setting: React.FC = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1.4 }}
-      className="w-6xl mx-auto p-6 bg-white shadow-xl rounded-xl mt-15">
-      <ToastContainer />
+<motion.div
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1.4 }}
+  className="w-[90%] md:w-[80%] max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-screen-2xl mx-auto p-4 sm:p-6 md:p-8 bg-white shadow-xl rounded-xl "
+>
+  <ToastContainer />
 
-      <div className="text-center">
-        <h2
-          className="relative text-3xl md:text-4xl font-bold mb-12 text-[#0058AA]
-                  inline-block
-                  after:content-[''] after:absolute after:-bottom-3 after:left-0 
-                  after:w-full after:h-1 after:bg-[#FBD913] after:opacity-100
-                  before:content-[''] before:absolute before:-bottom-5 before:left-1/4 
-                  before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-80">
-          Personal Settings
-        </h2>
-      </div>
+  <div className="text-center">
+    <h2
+      className="relative text-2xl md:text-4xl font-bold mb-12 text-[#0058AA]
+              inline-block
+              after:content-[''] after:absolute after:-bottom-3 after:left-0 
+              after:w-full after:h-1 after:bg-[#FBD913] after:opacity-100
+              before:content-[''] before:absolute before:-bottom-5 before:left-1/4 
+              before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-80">
+      Personal Settings
+    </h2>
+  </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-        <div className="flex flex-col md:flex-row items-start gap-8">
-          {/* Image */}
-          <div className="flex-1 flex justify-center md:justify-start">
-            <motion.div
-              className="relative w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60"
-              whileHover={{ scale: 1.05 }}>
-              <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#0058AA] shadow-lg">
-                <img
-                  src={previewImage ? previewImage : "/Ronaldo.jpg"}
-                  alt="Avatar"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <label
-                htmlFor="avatar"
-                className="absolute bottom-0 right-3 z-10 cursor-pointer bg-[#0058AA] text-white p-2 rounded-full shadow-lg hover:bg-[#004080] translate-x-1 translate-y-1">
-                <FaCamera className="w-4 h-4" />
-              </label>
-            </motion.div>
-            <input
-              type="file"
-              id="avatar"
-              onChange={handleImageChange}
-              className="hidden"
+  <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <div className="flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
+      {/* Image */}
+      <div className="w-full md:w-auto flex justify-center">
+        <motion.div
+          className="relative w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60"
+          whileHover={{ scale: 1.05 }}
+        >
+          <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#0058AA] shadow-lg">
+            <img
+              src={previewImage ? previewImage : "/Ronaldo.jpg"}
+              alt="Avatar"
+              className="w-full h-full object-cover"
             />
           </div>
+          <label
+            htmlFor="avatar"
+            className="absolute bottom-0 right-6 z-10 cursor-pointer bg-[#0058AA] text-white p-2 rounded-full shadow-lg hover:bg-[#004080] translate-x-1 translate-y-1"
+          >
+            <FaCamera className="w-4 h-4" />
+          </label>
+        </motion.div>
+        <input
+          type="file"
+          id="avatar"
+          onChange={handleImageChange}
+          className="hidden"
+        />
+      </div>
 
-          {/* Inputs */}
-          <div className="flex-[2] grid grid-cols-1 gap-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="username" className="text-gray-700 flex items-center font-medium text-left">
-                <FaUser className="mr-2 text-[#0058AA]" /> Name
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={userInfo.username}
-                onChange={handleInputChange}
-                className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
-              />
-            </div>
+      {/* Inputs */}
+      <div className="w-full md:flex-[2] grid grid-cols-1 gap-4">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="username" className="text-gray-700 flex items-center font-medium text-left">
+            <FaUser className="mr-2 text-[#0058AA]" /> Name
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={userInfo.username}
+            onChange={handleInputChange}
+            className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
+          />
+        </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-gray-700 flex items-center font-medium text-left">
-                <FaEnvelope className="mr-2 text-[#0058AA]" /> Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={userInfo.email}
-                disabled
-                readOnly
-                className="border border-gray-300 bg-blue-50 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
-              />
-            </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className="text-gray-700 flex items-center font-medium text-left">
+            <FaEnvelope className="mr-2 text-[#0058AA]" /> Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={userInfo.email}
+            disabled
+            readOnly
+            className="border border-gray-300 bg-blue-50 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
+          />
+        </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="phone" className="text-gray-700 flex items-center font-medium text-left">
-                <FaPhone className="mr-2 text-[#0058AA]" /> Phone
-              </label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={userInfo.phone}
-                onChange={handleInputChange}
-                className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
-              />
-            </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="phone" className="text-gray-700 flex items-center font-medium text-left">
+            <FaPhone className="mr-2 text-[#0058AA]" /> Phone
+          </label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            value={userInfo.phone}
+            onChange={handleInputChange}
+            className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
+          />
+        </div>
+      </div>
+    </div>
+
+    {/* Divider */}
+    <div className="border border-[#0058AA] my-6 opacity-100"></div>
+
+    {/* Change Password */}
+    <div>
+      <h3 className="text-xl font-bold mb-5 text-[#0058AA] text-center ">Change Password</h3>
+      <div className="flex flex-col md:flex-row gap-4">
+        {["oldPassword", "newPassword", "confirmNewPassword"].map((field, index) => (
+          <div key={index} className="flex-1 flex flex-col gap-2">
+            <label
+              htmlFor={field}
+              className="text-gray-700 flex items-center font-medium text-left"
+            >
+              <FaLock className="mr-2 text-[#0058AA]" />
+              {field === "oldPassword"
+                ? "Old Password"
+                : field === "newPassword"
+                ? "New Password"
+                : "Confirm New Password"}
+            </label>
+            <input
+              type="password"
+              id={field}
+              name={field}
+              onChange={handleInputChange}
+              className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
+            />
           </div>
-        </div>
+        ))}
+      </div>
+    </div>
 
-        {/* Divider */}
-        <div className="border border-[#0058AA] my-6 opacity-100"></div>
+    {/* Save Button */}
+    <div className="text-center">
+      <motion.button
+        type="submit"
+        disabled={!hasChanges() || loading}
+        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.05 }}
+        className={`mt-4 py-3 px-8 rounded-lg text-lg font-semibold transition duration-300 shadow-md cursor-pointer ${
+          !hasChanges() || loading
+            ? "bg-gray-400 text-white cursor-not-allowed"
+            : "bg-[#0058AA] text-white hover:bg-[#004080]"
+        }`}
+      >
+        {loading ? (
+          <span className="flex items-center justify-center">
+            <svg
+              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            Saving...
+          </span>
+        ) : (
+          "Save Changes"
+        )}
+      </motion.button>
+    </div>
+  </form>
+</motion.div>
 
-        {/* Change Password */}
-        <div>
-          <h3 className="text-xl font-bold mb-5 text-[#0058AA]">Change Password</h3>
-          <div className="flex flex-col md:flex-row gap-4">
-            {["oldPassword", "newPassword", "confirmNewPassword"].map((field, index) => (
-              <div key={index} className="flex-1 flex flex-col gap-2">
-                <label
-                  htmlFor={field}
-                  className="text-gray-700 flex items-center font-medium text-left">
-                  <FaLock className="mr-2 text-[#0058AA]" />
-                  {field === "oldPassword"
-                    ? "Old Password"
-                    : field === "newPassword"
-                    ? "New Password"
-                    : "Confirm New Password"}
-                </label>
-                <input
-                  type="password"
-                  id={field}
-                  name={field}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 p-3 rounded w-full focus:outline-none focus:border-[#0058AA] focus:ring-1 focus:ring-[#0058AA] transition duration-200"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Save Button */}
-        <div className="text-center">
-          <motion.button
-            type="submit"
-            disabled={!hasChanges() || loading}
-            whileTap={{ scale: 0.95 }}
-            whileHover={{ scale: 1.05 }}
-            className={`mt-4 py-3 px-8 rounded-lg text-lg font-semibold transition duration-300 shadow-md cursor-pointer ${
-              !hasChanges() || loading
-                ? "bg-gray-400 text-white cursor-not-allowed"
-                : "bg-[#0058AA] text-white hover:bg-[#004080]"
-            }`}>
-            {loading ? (
-              <span className="flex items-center justify-center">
-                <svg
-                  className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Saving...
-              </span>
-            ) : (
-              "Save Changes"
-            )}
-          </motion.button>
-        </div>
-      </form>
-    </motion.div>
   );
 };
 
