@@ -1,8 +1,13 @@
+import { useState, type ChangeEvent } from "react";
 import placeholderImage from "../../assets/placeholderProduct.jpg"
 import type { IProduct } from "../../interfaces/productsDashbord";
+import { IoMdSearch } from "react-icons/io";
+import { Bounce, toast } from 'react-toastify';
+import { motion } from "framer-motion";
+
 
 const ProductDashboard = () => {
-    const products:IProduct[] = [
+    const productsArr:IProduct[] = [
         {
             productName: "Wireless Headphones",
             category: "Electronics",
@@ -36,23 +41,71 @@ const ProductDashboard = () => {
             createdAt: "2025-01-20",
         },
     ];
+    const [products,setProducts]=useState<IProduct[]>(productsArr)
+
+
+    
+    const handleSearch=(e:ChangeEvent<HTMLInputElement>)=>{
+        const searchName=e.target.value.toLowerCase();
+        if(searchName !==""){
+            const filterProducts=products.filter(item=>item.productName.toLowerCase().indexOf(searchName) !== -1);
+            if(filterProducts.length>0){
+                setProducts(filterProducts)
+            }else{
+                toast.error('Product Not Found', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+                });
+            }
+        }
+        else{
+            setProducts(productsArr);
+        }
+    }
     return (
         <>
-            <h2 className="font-semibold text-2xl mt-7">Products</h2>
+            {/* <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+                /> */}
+            <div className="flex items-center justify-between mt-7 pr-10 flex-wrap gap-y-3 ">
+                <h2 className="font-semibold text-2xl ">Customer</h2>
+                <div className="bg-white px-4 py-2 rounded-3xl flex justify-between items-center w-[300px] mx-auto md:m-0">
+                    <input type="text" placeholder="Search by Produc Name" className="outline-0 border-0 pr-10" onChange={handleSearch}/>
+                    <IoMdSearch className="text-lg " />
+                </div>
+            </div>
             <div className="scrollable-x">
-                <table className="min-w-full border-collapse bg-white mt-10">
+                <motion.table initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.4 }} className="min-w-full border-collapse bg-white mt-10">
                     <thead className="bg-gray-100">
                         <tr>
+                            <th className=" px-4 py-4 text-left text-gray-700 min-w-[80px]"></th>
                             <th className=" px-4 py-4 text-left text-gray-700">Product Name</th>
                             <th className=" px-4 py-4 text-left text-gray-700">Category</th>
                             <th className=" px-4 py-4 text-left text-gray-700">Price</th>
                             <th className=" px-4 py-4 text-center text-gray-700 ">Status</th>
                             <th className=" px-4 py-4 text-right text-gray-700">Stock</th>
-                            <th className=" px-4 py-4 text-right text-gray-700">Create At</th>
+                            <th className=" px-4 py-4 text-right text-gray-700 min-w-[150px]">Create At</th>
                             <th className=" px-4 py-4 text-center text-gray-700">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody  >
                         {products.map((item)=>{
                             return(
                             <tr key={item.productName} className="hover:bg-gray-50">
@@ -73,6 +126,7 @@ const ProductDashboard = () => {
                                     />
                                 </td>
                                 }
+                                <td className=" px-4 py-6 text-gray-700">{item.productName}</td>
                                 <td className=" px-4 py-6 text-gray-700">{item.category}</td>
                                 <td className=" px-4 py-6 text-gray-700">{item.price}</td>
                                 <td className=" px-4 py-6 text-center">
@@ -90,7 +144,7 @@ const ProductDashboard = () => {
                             )
                         })}
                     </tbody>
-                </table>
+                </motion.table>
             </div>
         </>
     )

@@ -1,9 +1,35 @@
-interface Products {
+
+
+export interface Iproduct {
   _id: string;
-  imageCover: string;
   title: string;
-  price: string;
+  sold: number;
   description: string;
-  rating: number;
+  quantity: number;
+  price: number;
+  imageCover: string;
+  images: string[];
+  category: {
+    name: string;
+  };
+  ratingsAverage: number;
+  ratingsQuantity: number;
+  adminId: string;
+  isWachList: boolean;
+  createdAt: string;
+  updatedAt: string;
+  Comments: {
+    userId: string;
+    comment: string;
+    createdAt: string;
+    _id: string;
+    updatedAt: string;
+  }[];
+  __v: number;
 }
-export type { Products as default };
+
+export interface ICartProduct {
+  _id: string;
+  quantity: number;
+  productId: Iproduct;
+}
