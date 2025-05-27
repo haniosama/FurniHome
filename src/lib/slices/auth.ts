@@ -8,7 +8,7 @@ export const signup = createAsyncThunk(
   async function (userInfo: IRegister, { rejectWithValue }) {
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/signup`,
+        `https://nodejs-e-commerce-production.up.railway.app/api/auth/signup`,
         userInfo
       );
       return data;
@@ -23,7 +23,7 @@ export const signin = createAsyncThunk(
   async function (userInfo: ILogin, { rejectWithValue }) {
     try {
       const { data } = await axios.post(
-         `${import.meta.env.VITE_API_URL}/api/auth/signin`,
+         `https://nodejs-e-commerce-production.up.railway.app/api/auth/signin`,
         userInfo
       );
       return data;
@@ -38,7 +38,7 @@ export const emailVerification = createAsyncThunk(
   async function (values: IChangePassword, { rejectWithValue }) {
     try {
       const { data } = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/api/auth/forget-password`,
+        `https://nodejs-e-commerce-production.up.railway.app/api/auth/forget-password`,
         { email: values.email }
       );
       return data;
@@ -53,7 +53,7 @@ export const changePassword = createAsyncThunk(
   async function (values: IChangePassword, { rejectWithValue }) {
     try {
       const { data } = await axios.patch(
-         `${import.meta.env.VITE_API_URL}/api/auth/forget-password-verification`,
+         `https://nodejs-e-commerce-production.up.railway.app/api/auth/forget-password-verification`,
         {
           providedCode: values.providedCode,
           newPassword: values.newPassword,
