@@ -61,6 +61,7 @@ export default function Navbar() {
             </svg>
 
           </Link>
+          </div>
 
         <div className="hidden md:flex items-center space-x-4">
           {/* <Link to="/cart" className="hover:text-gray-300" title="Shopping Cart">
