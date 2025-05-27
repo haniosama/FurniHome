@@ -50,11 +50,7 @@ export default function Navbar() {
             className="hover:text-gray-300"
             title="Shopping Cart"
           >
-
-        <div className="hidden md:flex items-center space-x-4">
-          {/* <Link to="/cart" className="hover:text-gray-300" title="Shopping Cart">
-
-            <svg
+             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -65,6 +61,11 @@ export default function Navbar() {
             </svg>
 
           </Link>
+
+        <div className="hidden md:flex items-center space-x-4">
+          {/* <Link to="/cart" className="hover:text-gray-300" title="Shopping Cart">
+
+           
           <Link
             to="/register"
             className="hover:text-gray-300 border-r-2 border-gray-300 pr-2"
