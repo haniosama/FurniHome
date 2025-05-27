@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -11,36 +12,45 @@ export default function Navbar() {
           </a>
         </div>
         <div className="hidden md:flex space-x-6 mx-auto">
-          <a href="/" className="hover:text-gray-300">
+          <Link to="/" className="hover:text-gray-300">
             Home
-          </a>
-          <a href="/shop" className="hover:text-gray-300">
+          </Link>
+          <Link to="/product" className="hover:text-gray-300">
             Shop
-          </a>
-          <a href="/about" className="hover:text-gray-300">
+          </Link>
+          <Link to="/category" className="hover:text-gray-300">
             Category
-          </a>
-          <a href="/contact" className="hover:text-gray-300">
+          </Link>
+          <Link to="/contact" className="hover:text-gray-300">
             Contact
-          </a>
+          </Link>
         </div>
-        <div className="hidden md:flex items-center space-x-4">
-          <a href="/cart" className="hover:text-gray-300" title="Shopping Cart">
+        <div className="hidden md:flex items-center space-x-2 justify-center">
+          <Link
+            to="/cart"
+            className="hover:text-gray-300"
+            title="Shopping Cart"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="20"
+              height="20"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
             >
               <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.01 16h11.986c.808 0 1.52-.49 1.82-1.23l2.944-7.21c.135-.332.21-.694.21-1.07 0-1.657-1.343-3-3-3H5.21L4.27.927A1 1 0 0 0 3.308 0H1v2h1.692l3.6 9.57-1.35 2.44C4.45 14.68 5.66 16 7.01 16z" />
             </svg>
-            <span className="sr-only">Shopping Cart</span>
-          </a>
-          <a href="/login" className="hover:text-gray-300">
+          </Link>
+          <Link
+            to="/register"
+            className="hover:text-gray-300 border-r-2 border-gray-300 pr-2"
+          >
+            Register
+          </Link>
+          <Link to="/login" className="hover:text-gray-300">
             Login
-          </a>
+          </Link>
         </div>
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
@@ -77,19 +87,23 @@ export default function Navbar() {
         } bg-gray-800 px-6`}
       >
         <div className="flex flex-col py-4 space-y-2">
-          <a href="/" className="hover:text-gray-300">
+          <Link to="/" className="hover:text-gray-300">
             Home
-          </a>
-          <a href="/shop" className="hover:text-gray-300">
+          </Link>
+          <Link to="/product" className="hover:text-gray-300">
             Shop
-          </a>
-          <a href="/about" className="hover:text-gray-300">
+          </Link>
+          <Link to="/about" className="hover:text-gray-300">
             Category
-          </a>
-          <a href="/contact" className="hover:text-gray-300">
+          </Link>
+          <Link to="/contact" className="hover:text-gray-300">
             Contact
-          </a>
-          <a href="/cart" className="hover:text-gray-300" title="Shopping Cart">
+          </Link>
+          <Link
+            to="/cart"
+            className="hover:text-gray-300"
+            title="Shopping Cart"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -100,11 +114,13 @@ export default function Navbar() {
             >
               <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.01 16h11.986c.808 0 1.52-.49 1.82-1.23l2.944-7.21c.135-.332.21-.694.21-1.07 0-1.657-1.343-3-3-3H5.21L4.27.927A1 1 0 0 0 3.308 0H1v2h1.692l3.6 9.57-1.35 2.44C4.45 14.68 5.66 16 7.01 16z" />
             </svg>
-            <span className="sr-only">Shopping Cart</span>
-          </a>
-          <a href="/login" className="hover:text-gray-300">
+          </Link>
+          <Link to="/register" className="hover:text-gray-300 ">
+            Register
+          </Link>
+          <Link to="/login" className="hover:text-gray-300">
             Login
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
