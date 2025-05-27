@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "postinstall": "lightningcss --version"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@nivo/line": "^0.99.0",
