@@ -12,6 +12,8 @@ import img10 from "../assets/image10.jpg";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../lib/store/store";
 import { addTOCartAction } from "../lib/slices/cartSlice";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const ikeaFurniture = [
   {
@@ -99,7 +101,7 @@ const ikeaFurniture = [
 
 const Product = () => {
   const [wishlist, setWishlist] = useState<{ [key: number]: boolean }>({});
-
+  const navigate = useNavigate();
   const toggleWishlist = (index: number) => {
     setWishlist((prev) => ({ ...prev, [index]: !prev[index] }));
   };
@@ -167,7 +169,12 @@ const Product = () => {
 
             <button
               onClick={() => {
-                dispatch(addTOCartAction(item._id));
+                if (localStorage.getItem("Token")) {
+                  dispatch(addTOCartAction(item._id));
+                } else {
+                  toast.error("You must be logged in first");
+                  navigate("login");
+                }
               }}
               className="bg-[#fbd914] cursor-pointer hover:bg-[#fbd919] text-white px-6 py-2 rounded-md transition-colors duration-300 w-full">
               Add to Cart
