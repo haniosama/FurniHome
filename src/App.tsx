@@ -33,26 +33,11 @@ const router = createBrowserRouter([
     path: "",
     element: <Layout />,
     children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "home",
-        element: <Home />,
-      },
-      {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "register",
-        element: <Register />,
-      },
-      {
-        path: "forget-password",
-        element: <ForgetPassword />,
-      },
+      { index: true, element: <Home /> },
+      { path: "home", element: <Home /> },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+      { path: "forget-password", element: <ForgetPassword /> },
       {
         path: "dashboard",
         element: <DashBoard />,
@@ -66,51 +51,20 @@ const router = createBrowserRouter([
           { path: "categories", element: <CategoriesDashboard /> },
         ],
       },
-      {
-        path: "product",
-        element: <AllProduct />,
-
-      },
-      {
-        path: "product/:id",
-        element: <ProductDetials />,
-      },
-      {
-        path: "cart",
-        element: <Cart />,
-      },
-
-        path: "category",
-        element: <Category />,
-      },
-      {
-
-        path: "category/:name",
-        element: <CategoryDetails />,
-      },
-
-        path: "order",
-        element: <Order />,
-      },
-      {
-        path: "setting",
-        element: <Setting />,
-      },
-      {
-        path: "wishlist",
-        element: <Wishlist />,
-      },
-      {
-        path: "contactus",
-        element: <ContactUs />,
-      },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
+      { path: "product", element: <AllProduct /> },
+      { path: "product/:id", element: <ProductDetials /> },
+      { path: "cart", element: <Cart /> },
+      { path: "category", element: <Category /> },           
+      { path: "category/:name", element: <CategoryDetails /> }, 
+      { path: "order", element: <Order /> },                 
+      { path: "setting", element: <Setting /> },
+      { path: "wishlist", element: <Wishlist /> },
+      { path: "contactus", element: <ContactUs /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
+
 
 function App() {
   return (
