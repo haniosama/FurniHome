@@ -5,7 +5,7 @@ import type { AppDispatch, RootState } from "../../lib/store/store";
 import { useEffect, useState } from "react";
 import { fetchProduct } from "../../lib/slices/products";
 
-import type Products from "../../interfaces/product";
+import { Product } from "../../interfaces/product";
 import Product from "../../component/Product";
 
 const AllProduct = () => {
