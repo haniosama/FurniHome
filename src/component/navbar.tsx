@@ -1,3 +1,5 @@
+
+
 import { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,27 +33,44 @@ export default function Navbar() {
           <Link to="/" className="hover:text-gray-300">
             Home
           </Link>
-          <Link to="/shop" className="hover:text-gray-300">
+          <Link to="/product" className="hover:text-gray-300">
             Shop
           </Link>
-          <Link to="/about" className="hover:text-gray-300">
+          <Link to="/category" className="hover:text-gray-300">
             Category
-          </Link>
+          </Link> 
           <Link to="/contact" className="hover:text-gray-300">
             Contact
           </Link>
         </div>
+
+        <div className="hidden md:flex items-center space-x-2 justify-center">
+          <Link
+            to="/cart"
+            className="hover:text-gray-300"
+            title="Shopping Cart"
+          >
+
         <div className="hidden md:flex items-center space-x-4">
           {/* <Link to="/cart" className="hover:text-gray-300" title="Shopping Cart">
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="20"
+              height="20"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true">
               <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.01 16h11.986c.808 0 1.52-.49 1.82-1.23l2.944-7.21c.135-.332.21-.694.21-1.07 0-1.657-1.343-3-3-3H5.21L4.27.927A1 1 0 0 0 3.308 0H1v2h1.692l3.6 9.57-1.35 2.44C4.45 14.68 5.66 16 7.01 16z" />
             </svg>
+
+          </Link>
+          <Link
+            to="/register"
+            className="hover:text-gray-300 border-r-2 border-gray-300 pr-2"
+          >
+            Register
+
             <span className="sr-only">Shopping Cart</span>
           </Link> */}
           <Link to="/cart" className="relative">
@@ -64,6 +83,7 @@ export default function Navbar() {
                 productsCart.length
               )}
             </span>
+
           </Link>
           <Link to="/login" className="hover:text-gray-300">
             Login
@@ -105,7 +125,13 @@ export default function Navbar() {
           <Link to="/" className="hover:text-gray-300">
             Home
           </Link>
+
+          <Link to="/product" className="hover:text-gray-300">
+            Product
+          </Link>
+
           <Link to="/shop" className="hover:text-gray-300">
+
             Shop
           </Link>
           <Link to="/about" className="hover:text-gray-300">
@@ -116,8 +142,8 @@ export default function Navbar() {
           </Link>
           <Link
             to="/cart"
-            className="hover:text-gray-300"
-            title="Shopping Cart">
+            title="Shopping Cart"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -127,7 +153,11 @@ export default function Navbar() {
               aria-hidden="true">
               <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.01 16h11.986c.808 0 1.52-.49 1.82-1.23l2.944-7.21c.135-.332.21-.694.21-1.07 0-1.657-1.343-3-3-3H5.21L4.27.927A1 1 0 0 0 3.308 0H1v2h1.692l3.6 9.57-1.35 2.44C4.45 14.68 5.66 16 7.01 16z" />
             </svg>
-            <span className="sr-only">Shopping Cart</span>
+
+          </Link>
+          <Link to="/register" className="hover:text-gray-300 ">
+            Register
+
           </Link>
           <Link to="/login" className="hover:text-gray-300">
             Login

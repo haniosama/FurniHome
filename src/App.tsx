@@ -7,7 +7,6 @@ import Login from "./pages/Login/Login.tsx";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword.tsx";
 import Home from "./pages/Home/Home.tsx";
 import ContactUs from "./pages/Contactus/ContactUs.tsx";
-import Product from "./pages/Products/Product.tsx";
 import ProductDetials from "./pages/ProductDetial/ProductDetials.tsx";
 import Category from "./pages/Category/Category.tsx";
 import Order from "./pages/Order/Order.tsx";
@@ -24,12 +23,11 @@ import ProductDashboard from "./pages/ProductDashboard/ProductDashboard.tsx";
 import CustomerDashboard from "./pages/CustomerDashboard/CustomerDashboard.tsx";
 import CouponDashbard from "./pages/CopunDashbard/CopunDashbard.tsx";
 import CategoriesDashboard from "./pages/CategoriesDashboard/CategoriesDashboard.tsx";
+import AllProduct from "./pages/Products/Product.tsx";
 import CategoryDetails from "./pages/CategoryDetails/CategoryDetails.tsx";
-
 import { ToastContainer } from "react-toastify";
 import { Toaster } from "react-hot-toast";
 import CheckOut from "./pages/CheckOut/CheckOut.tsx";
-
 const router = createBrowserRouter([
   {
     path: "",
@@ -70,7 +68,8 @@ const router = createBrowserRouter([
       },
       {
         path: "product",
-        element: <Product />,
+        element: <AllProduct />,
+
       },
       {
         path: "product/:id",
@@ -80,19 +79,16 @@ const router = createBrowserRouter([
         path: "cart",
         element: <Cart />,
       },
-      {
-        path: "checkout",
-        element: <CheckOut />,
-      },
-      {
+
         path: "category",
         element: <Category />,
       },
       {
+
         path: "category/:name",
         element: <CategoryDetails />,
       },
-      {
+
         path: "order",
         element: <Order />,
       },
