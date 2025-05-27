@@ -60,6 +60,7 @@ const router = createBrowserRouter([
       { path: "setting", element: <Setting /> },
       { path: "wishlist", element: <Wishlist /> },
       { path: "contactus", element: <ContactUs /> },
+      { path: "checkout", element: <CheckOut /> },
       { path: "*", element: <NotFound /> },
     ],
   },
