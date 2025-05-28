@@ -7,7 +7,7 @@ import type IProducts from "../../interfaces/product";
 
 
 const AllProduct = () => {
-  const [filteredProducts, setFilteredProducts] = useState<Iproducts[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProducts[]>([]);
   // const [price, setPrice] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
 
