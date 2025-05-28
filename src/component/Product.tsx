@@ -1,4 +1,3 @@
-
 // import { useEffect, useState } from "react";
 // // import img1 from "../assets/image1.jpg";
 // // import img2 from "../assets/image2.jpg";
@@ -199,8 +198,10 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../lib/store/store";
 import { fetchProduct } from "../lib/slices/products";
 import { motion } from "framer-motion";
-import { AddToCart } from "../lib/slices/addToCart";
 import type Products from "../interfaces/product";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { addTOCartAction } from "../lib/slices/cartSlice";
 
 // const Product = ({ filteredProducts = [] }: { filteredProducts?: Products[] }) => {
 const Product = ({
@@ -214,16 +215,11 @@ const Product = ({
     setWishlist((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
-
-  const dispatch = useDispatch<AppDispatch>();
-  const { data, loadings } = useSelector((state: RootState) => state.addToCart);
-  const handleAddToCart = (productId: string) => {
-    dispatch(AddToCart(productId));
-  };
+  const { addLoading } = useSelector((state: RootState) => state.cartReducer);
+  const dispatch: AppDispatch = useDispatch();
   const { products, error, loading } = useSelector(
     (state: RootState) => state.fetchProduct
   );
-  console.log(data);
 
   useEffect(() => {
     dispatch(fetchProduct());
@@ -236,7 +232,6 @@ const Product = ({
       </h1>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-10 flex-wrap max-w-7xl mx-auto">
-
         {error && <p className="text-red-500">{error}</p>}
         {loading && (
           <div className="flex justify-center items-center h-screen">
@@ -254,21 +249,18 @@ const Product = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2, delay: index * 0.1 }}
                 whileHover={{ scale: 1.05 }}
-                className="relative bg-white rounded-lg shadow-lg p-4 w-64 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-              >
+                className="relative bg-white rounded-lg shadow-lg p-4 w-64 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                 <button
                   onClick={() => toggleWishlist(index)}
                   aria-label="Add to wishlist"
-                  className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10 border-2 border-gray-300 rounded-full p-2"
-                >
+                  className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10 border-2 border-gray-300 rounded-full p-2">
                   {wishlist[index] ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="red"
                       viewBox="0 0 24 24"
                       stroke="red"
-                      className="w-6 h-6"
-                    >
+                      className="w-6 h-6">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -282,8 +274,7 @@ const Product = ({
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      className="w-6 h-6"
-                    >
+                      className="w-6 h-6">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -311,16 +302,21 @@ const Product = ({
                   {item.description.slice(0, 50)}...
                 </p>
                 <button
-                  onClick={() => handleAddToCart(item._id)}
-                  disabled={loadings}
+                  onClick={() => {
+                    if (localStorage.getItem("Token")) {
+                      dispatch(addTOCartAction(item._id));
+                    } else {
+                      toast.error("You must be logged in first");
+                      navigate("/login");
+                    }
+                  }}
+                  disabled={addLoading}
                   aria-label="Add to cart"
-                  className="bg-[#ceb123] hover:bg-[#fbd914] text-white px-6 py-2 rounded-md transition-colors duration-300 w-full"
-                >
+                  className="bg-[#ceb123] hover:bg-[#fbd914] text-white px-6 py-2 rounded-md transition-colors duration-300 w-full">
                   Add to Cart
                 </button>
               </motion.div>
             ))}
-
       </div>
     </div>
   );

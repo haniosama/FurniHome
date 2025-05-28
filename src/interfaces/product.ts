@@ -1,5 +1,3 @@
-
-
 export interface Iproduct {
   _id: string;
   title: string;
