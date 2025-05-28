@@ -92,7 +92,7 @@ const router = createBrowserRouter([
         element: <Wishlist />,
       },
       {
-        path: "contactus",
+        path: "contact",
         element: <ContactUs />,
       },
       {

@@ -1,4 +1,4 @@
-interface Products {
+interface IProducts {
   _id: string;
   imageCover: string;
   title: string;
@@ -6,4 +6,4 @@ interface Products {
   description: string;
   rating: number;
 }
-export type { Products as default };
+export type { IProducts as default };

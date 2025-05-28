@@ -48,16 +48,21 @@ const AllProduct = () => {
   };
 
   return (
-    <div className="flex bg-gray-100 pt-15">
-      <div className="flex-1 flex justify-center">
+    <div className="flex flex-col lg:flex-row bg-gray-100 pt-20 min-h-screen">
+      {/* Sidebar Filter */}
+      <div className="w-full lg:w-1/5 px-4 mb-6 lg:mb-0 flex justify-center">
         <SidebarFilter
           onSearch={handleSearch}
           onPriceChange={handlePriceChange}
           onRatingChange={handleRatingChange}
         />
       </div>
-      <div className="flex-4 flex flex-col md:flex-row justify-center items-center gap-10 flex-wrap max-w-7xl mx-auto ">
-        <Product filteredProducts={filteredProducts} />
+
+      {/* Product Grid */}
+      <div className="w-full lg:w-4/5 px-4">
+        <div className="flex flex-wrap justify-center gap-6">
+          <Product filteredProducts={filteredProducts} />
+        </div>
       </div>
     </div>
   );
