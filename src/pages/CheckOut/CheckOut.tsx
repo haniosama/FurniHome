@@ -95,7 +95,8 @@ export default function CheckOut() {
         <div
           className="flex gap-4 mb-4"
           role="group"
-          aria-label="Select payment type">
+          aria-label="Select payment type"
+        >
           <button
             type="button"
             className={`px-4 py-2 rounded ${
@@ -104,7 +105,8 @@ export default function CheckOut() {
                 : "bg-gray-200 text-gray-700"
             }`}
             aria-pressed={typeOrder === "cash"}
-            onClick={() => setTypeOrder("cash")}>
+            onClick={() => setTypeOrder("cash")}
+          >
             Cash
           </button>
 
@@ -116,7 +118,8 @@ export default function CheckOut() {
                 : "bg-gray-200 text-gray-700"
             }`}
             aria-pressed={typeOrder === "online"}
-            onClick={() => setTypeOrder("online")}>
+            onClick={() => setTypeOrder("online")}
+          >
             Online
           </button>
         </div>
@@ -215,7 +218,8 @@ export default function CheckOut() {
 
           <button
             type="submit"
-            className=" bg-teal-700 hover:bg-teal-800 text-white p-2 rounded transition">
+            className=" bg-teal-700 hover:bg-teal-800 text-white p-2 rounded transition"
+          >
             Submit Order
           </button>
         </form>
