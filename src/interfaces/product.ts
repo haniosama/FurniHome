@@ -1,3 +1,4 @@
+
 interface IProducts {
   _id: string;
   title: string;
@@ -9,6 +10,7 @@ interface IProducts {
     name: string;
   };
 }
+
 
 export interface Iproduct {
   _id: string;

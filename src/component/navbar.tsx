@@ -12,7 +12,6 @@ export default function Navbar() {
   const { productsCart, itemsCart } = useSelector(
     (state: RootState) => state.cartReducer
   );
-
   const dispatchs: AppDispatch = useDispatch();
   const { loginToken } = useSelector((store: RootState) => store.auth);
 
@@ -32,6 +31,7 @@ export default function Navbar() {
       transition: { duration: 0.3 },
     },
   };
+
 
   return (
     <nav className="sticky top-0 left-0 w-full bg-[#0058ab] text-white z-50 shadow-lg">
@@ -58,6 +58,7 @@ export default function Navbar() {
           </Link>
         </div>
 
+
         {/* Desktop Right Menu */}
         <div className="hidden md:flex items-center space-x-2 justify-center">
           <Link to="/cart" className="relative ">
@@ -70,6 +71,7 @@ export default function Navbar() {
                 productsCart.length
               )}
             </span>
+
           </Link>
 
           <Link
@@ -77,6 +79,7 @@ export default function Navbar() {
             className="hover:text-gray-300 border-r-2 border-gray-300 px-2 "
           >
             Register
+
           </Link>
           <Link to="/login" className="hover:text-gray-300">
             Login
@@ -111,6 +114,7 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+
 
       {/* Mobile Dropdown Menu */}
       <AnimatePresence>
@@ -163,6 +167,7 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </nav>
   );
 }

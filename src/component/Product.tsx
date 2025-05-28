@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../lib/store/store";
@@ -21,8 +22,8 @@ const Product = ({
   const toggleWishlist = (index: number) => {
     setWishlist((prev) => ({ ...prev, [index]: !prev[index] }));
   };
-
-  const dispatch = useDispatch<AppDispatch>();
+  const { addLoading } = useSelector((state: RootState) => state.cartReducer);
+  const dispatch: AppDispatch = useDispatch();
 
   const { products, error, loading } = useSelector(
     (state: RootState) => state.fetchProduct
@@ -56,21 +57,20 @@ const Product = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2, delay: index * 0.1 }}
                 whileHover={{ scale: 1.05 }}
+
                 className="relative bg-white rounded-lg shadow-lg p-4 w-60 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 overflow-hidden"
               >
                 <button
                   onClick={() => toggleWishlist(index)}
                   aria-label="Add to wishlist"
-                  className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10 border-2 border-gray-300 rounded-full p-2"
-                >
+                  className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10 border-2 border-gray-300 rounded-full p-2">
                   {wishlist[index] ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="red"
                       viewBox="0 0 24 24"
                       stroke="red"
-                      className="w-6 h-6"
-                    >
+                      className="w-6 h-6">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -84,8 +84,7 @@ const Product = ({
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      className="w-6 h-6"
-                    >
+                      className="w-6 h-6">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -115,7 +114,9 @@ const Product = ({
                 <button
                   onClick={() => {
                     if (localStorage.getItem("Token")) {
+
                       cartDispatch(addTOCartAction(item._id));
+
                     } else {
                       toast.error("You must be logged in first");
                       navigate("/login");
@@ -123,8 +124,7 @@ const Product = ({
                   }}
                   disabled={addLoading}
                   aria-label="Add to cart"
-                  className="bg-[#ceb123] hover:bg-[#fbd914] text-white px-6 py-2 rounded-md transition-colors duration-300 w-full"
-                >
+                  className="bg-[#ceb123] hover:bg-[#fbd914] text-white px-6 py-2 rounded-md transition-colors duration-300 w-full">
                   Add to Cart
                 </button>
               </motion.div>
