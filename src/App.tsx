@@ -2,8 +2,8 @@ import "./App.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
-import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
+import Login from "./pages/Login/Login.tsx";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword.tsx";
 import Home from "./pages/Home/Home.tsx";
 import ContactUs from "./pages/Contactus/ContactUs.tsx";
@@ -13,7 +13,7 @@ import Order from "./pages/Order/Order.tsx";
 import Setting from "./pages/Setting/Setting.tsx";
 import Wishlist from "./pages/Wishlist/Wishlist.tsx";
 import DashBoard from "./pages/Dasboard/Dashboard.tsx";
-import Cart from "./pages/Cart/Carts.tsx";
+import Cart from "./pages/Cart/Cart.tsx";
 import NotFound from "./pages/NotFound/NotFound.tsx";
 import { store } from "./lib/store/store.ts";
 import Layout from "./pages/Layout/Layout.tsx";
@@ -24,7 +24,10 @@ import CustomerDashboard from "./pages/CustomerDashboard/CustomerDashboard.tsx";
 import CouponDashbard from "./pages/CopunDashbard/CopunDashbard.tsx";
 import CategoriesDashboard from "./pages/CategoriesDashboard/CategoriesDashboard.tsx";
 import AllProduct from "./pages/Products/Product.tsx";
-
+import CategoryDetails from "./pages/CategoryDetails/CategoryDetails.tsx";
+import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
+import CheckOut from "./pages/CheckOut/CheckOut.tsx";
 const router = createBrowserRouter([
   {
     path: "",
@@ -80,6 +83,10 @@ const router = createBrowserRouter([
         element: <Category />,
       },
       {
+        path: "category/:name",
+        element: <CategoryDetails />,
+      },
+      {
         path: "order",
         element: <Order />,
       },
@@ -96,6 +103,10 @@ const router = createBrowserRouter([
         element: <ContactUs />,
       },
       {
+        path: "checkout",
+        element: <CheckOut />,
+      },
+      {
         path: "*",
         element: <NotFound />,
       },
@@ -106,7 +117,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <Provider store={store}>
+      <ToastContainer />
       <RouterProvider router={router} />
+      <Toaster />
     </Provider>
   );
 }

@@ -4,12 +4,11 @@ import SidebarFilter from "../../component/filter";
 import type { AppDispatch, RootState } from "../../lib/store/store";
 import { useEffect, useState } from "react";
 import { fetchProduct } from "../../lib/slices/products";
-
-import type Products from "../../interfaces/product";
 import Product from "../../component/Product";
+import type IProducts from "../../interfaces/product";
 
 const AllProduct = () => {
-  const [filteredProducts, setFilteredProducts] = useState<Products[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProducts[]>([]);
   // const [price, setPrice] = useState<string>("");
 
   const dispatch = useDispatch<AppDispatch>();
@@ -19,7 +18,7 @@ const AllProduct = () => {
     dispatch(fetchProduct());
   }, [dispatch]);
   const handleSearch = (term: string) => {
-    const filtered = products.filter((product: Products) =>
+    const filtered = products.filter((product: IProducts) =>
       product.title.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredProducts(filtered);
@@ -28,11 +27,8 @@ const AllProduct = () => {
     }
   };
   const handlePriceChange = (value: number) => {
-    // Handle price change logic here
-    console.log("Price:", value);
-    // Filter products based on the selected price range
     const filteredProductsByPrice = products.filter(
-      (product: Products) => parseFloat(product.price) <= value
+      (product: IProducts) => parseFloat(product.price.toString()) <= value
     );
     setFilteredProducts(filteredProductsByPrice);
   };
@@ -41,7 +37,7 @@ const AllProduct = () => {
     console.log("Rating:", value);
     // Filter products based on the selected rating
     const filteredProductsByRating = products.filter(
-      (product: Products) => product.rating >= value
+      (product: IProducts) => product.rating >= value
     );
     console.log(filteredProductsByRating);
     setFilteredProducts(filteredProductsByRating);
@@ -57,8 +53,6 @@ const AllProduct = () => {
           onRatingChange={handleRatingChange}
         />
       </div>
-
-      {/* Product Grid */}
       <div className="w-full lg:w-4/5 px-4">
         <div className="flex flex-wrap justify-center gap-6">
           <Product filteredProducts={filteredProducts} />

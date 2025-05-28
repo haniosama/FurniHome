@@ -17,7 +17,7 @@ const fadeUp = {
 const ContactUs = () => {
   return (
     <div className="max-w-7xl mx-auto p-4">
-      <div className="flex gap-16 flex-col md:flex-row my-20 items-start">
+      <div className="flex gap-16 flex-col md:flex-row mb-20 items-start">
         <motion.div
           className="flex-1 w-full text-center md:text-left"
           initial="hidden"

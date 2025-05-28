@@ -4,6 +4,9 @@ import type { AppDispatch, RootState } from "../lib/store/store";
 import { fetchProduct } from "../lib/slices/products";
 import { motion } from "framer-motion";
 import type IProducts from "../interfaces/product";
+import { addTOCartAction } from "../lib/slices/cartSlice";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 // const Product = ({ filteredProducts = [] }: { filteredProducts?: Products[] }) => {
 const Product = ({
@@ -12,7 +15,9 @@ const Product = ({
   filteredProducts?: IProducts[];
 }) => {
   const [wishlist, setWishlist] = useState<{ [key: number]: boolean }>({});
-
+  const navigate = useNavigate();
+  const { addLoading } = useSelector((state: RootState) => state.cartReducer);
+  const cartDispatch: AppDispatch = useDispatch();
   const toggleWishlist = (index: number) => {
     setWishlist((prev) => ({ ...prev, [index]: !prev[index] }));
   };
@@ -26,6 +31,7 @@ const Product = ({
   useEffect(() => {
     dispatch(fetchProduct());
   }, [dispatch]);
+
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <h1 className="text-5xl font-bold text-center mb-8 text-gray-900">
@@ -107,6 +113,15 @@ const Product = ({
                   {item.description.slice(0, 50)}...
                 </p>
                 <button
+                  onClick={() => {
+                    if (localStorage.getItem("Token")) {
+                      cartDispatch(addTOCartAction(item._id));
+                    } else {
+                      toast.error("You must be logged in first");
+                      navigate("/login");
+                    }
+                  }}
+                  disabled={addLoading}
                   aria-label="Add to cart"
                   className="bg-[#ceb123] hover:bg-[#fbd914] text-white px-6 py-2 rounded-md transition-colors duration-300 w-full"
                 >
