@@ -1,56 +1,35 @@
-import { useState, type ChangeEvent } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState, type ChangeEvent } from "react";
 import placeholderImage from "../../assets/placeholderProduct.jpg"
-import type { IProduct } from "../../interfaces/productsDashbord";
+import type { IProduct, IState } from "../../interfaces/productsDashbord";
 import { IoMdSearch } from "react-icons/io";
 import { Bounce, toast } from 'react-toastify';
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { getProdectForAdmin } from "../../lib/slices/dashboard";
 
 
 const ProductDashboard = () => {
-    const productsArr:IProduct[] = [
-        {
-            productName: "Wireless Headphones",
-            category: "Electronics",
-            price: 99.99,
-            status: "Available",
-            stock: 25,
-            createdAt: "2025-04-10",
-        },
-        {
-            productName: "Running Shoes",
-            category: "Footwear",
-            price: 79.99,
-            status: "Out of Stock",
-            stock: 0,
-            createdAt: "2025-03-15",
-        },
-        {
-            productName: "Smartphone",
-            category: "Electronics",
-            price: 699.99,
-            status: "Available",
-            stock: 10,
-            createdAt: "2025-05-01",
-        },
-        {
-            productName: "Coffee Maker",
-            category: "Home Appliances",
-            price: 49.99,
-            status: "Available",
-            stock: 30,
-            createdAt: "2025-01-20",
-        },
-    ];
-    const [products,setProducts]=useState<IProduct[]>(productsArr)
+
+    const [searchProducts,setSearchProducts]=useState<IProduct[]>([]);
+
+    const {products}:{products:IProduct[]}=useSelector((state:IState)=>state.dashBoard);
+    const dispatch=useDispatch<any>();
+    useEffect(()=>{
+        (async()=>{
+            await dispatch(getProdectForAdmin())
+            setSearchProducts(products)
+        })()
+    },[dispatch])
 
 
     
     const handleSearch=(e:ChangeEvent<HTMLInputElement>)=>{
         const searchName=e.target.value.toLowerCase();
         if(searchName !==""){
-            const filterProducts=products.filter(item=>item.productName.toLowerCase().indexOf(searchName) !== -1);
+            const filterProducts=products.filter(item=>item.title.toLowerCase().indexOf(searchName) !== -1);
             if(filterProducts.length>0){
-                setProducts(filterProducts)
+                setSearchProducts(filterProducts)
             }else{
                 toast.error('Product Not Found', {
                 position: "top-right",
@@ -66,7 +45,7 @@ const ProductDashboard = () => {
             }
         }
         else{
-            setProducts(productsArr);
+            setSearchProducts(products);
         }
     }
     return (
@@ -106,13 +85,13 @@ const ProductDashboard = () => {
                         </tr>
                     </thead>
                     <tbody  >
-                        {products.map((item)=>{
+                        {searchProducts.map((item)=>{
                             return(
-                            <tr key={item.productName} className="hover:bg-gray-50">
-                                {item.image?
+                            <tr key={item.title} className="hover:bg-gray-50">
+                                {item.imageCover?
                                 <td className="flex items-center gap-3  px-4 py-6">
                                     <img
-                                    src={item.image}
+                                    src={item.imageCover}
                                     alt="product"
                                     className="w-12 h-12 object-cover rounded"
                                     />
@@ -126,18 +105,18 @@ const ProductDashboard = () => {
                                     />
                                 </td>
                                 }
-                                <td className=" px-4 py-6 text-gray-700">{item.productName}</td>
-                                <td className=" px-4 py-6 text-gray-700">{item.category}</td>
+                                <td className=" px-4 py-6 text-gray-700">{item.title}</td>
+                                <td className=" px-4 py-6 text-gray-700">{item.category.name}</td>
                                 <td className=" px-4 py-6 text-gray-700">{item.price}</td>
                                 <td className=" px-4 py-6 text-center">
-                                    <span className={`inline-block px-3 py-1 ${item.status.toLowerCase() == "available"?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
-                                        {item.status}
+                                    <span className={`inline-block px-3 py-1 ${item.quantity>0?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
+                                        {item.quantity>0?"Available":"Out of Stock"}
                                     </span>
                                 </td>
-                                <td className=" px-4 py-6 text-right text-gray-700">{item.stock}</td>
+                                <td className=" px-4 py-6 text-right text-gray-700">{item.quantity}</td>
                                 <td className=" px-4 py-6 text-right text-gray-700">{item.createdAt}</td>
                                 <td className=" px-4 py-6 text-center flex gap-1">
-                                    <button className="bg-green-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-green-700 transition-all duration-300 hover:bg-white hover:text-green-700">Update</button>
+                                    <button className="bg-green-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-blue-700 transition-all duration-300 hover:bg-white hover:text-blue-700">Update</button>
                                     <button className="bg-red-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-red-700 transition-all duration-300 hover:bg-white hover:text-red-700">Delete</button>
                                 </td>
                             </tr>
