@@ -66,20 +66,20 @@ const Cart = () => {
             </button>
           </div>
           <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1 ">
+            <div className="flex-1  ">
               {productsCart?.map((item) => {
                 const { productId, quantity, _id } = item;
                 return (
                   <div
                     key={_id}
-                    className="flex gap-6 mb-5 bg-gray-50 shadow-md p-6 rounded-lg  ">
+                    className="flex flex-col text-center md:text-start md:flex-row gap-6 mb-5 bg-gray-50 shadow-md p-6 rounded-lg  ">
                     <img
                       src={productId.imageCover}
-                      className="w-28 h-28 object-cover rounded-lg"
+                      className="w-28 h-28 object-cover rounded-lg m-auto"
                     />
                     <div className="flex-1 flex flex-col justify-between">
                       <h3 className="text-lg font-semibold">
-                        {productId.title}
+                        {productId.title.split(" ").slice(0, 2).join(" ")}
                       </h3>
                       <p className="text-sm text-gray-600">
                         {productId.category.name}
@@ -125,9 +125,12 @@ const Cart = () => {
                   <span>EGP {total.toFixed(2)}</span>
                 </div>
               </div>
-              <button className="w-full bg-teal-700 hover:bg-teal-800 text-white py-2 rounded transition">
-                Checkout
-              </button>
+              <Link to="/checkout">
+                {" "}
+                <button className="w-full bg-teal-700 hover:bg-teal-800 text-white py-2 rounded transition">
+                  Checkout
+                </button>
+              </Link>
             </div>
           </div>
         </div>

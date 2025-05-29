@@ -1,7 +1,9 @@
 import { Outlet, useLocation } from "react-router";
 import Footer from "../../component/footer";
 import Navbar from "../../component/navbar";
+
 const Layout = () => {
+    
   const url=useLocation()
   console.log(url.pathname.includes("dashboard"),"ddddddd")
   return (
