@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { cartReducer } from "../slices/cartSlice";
 
 import AuthSlice from "../slices/auth";
+import { productForAdminSlice } from "../slices/dashboard";
 
 export const store = configureStore({
   reducer: {
@@ -9,6 +10,7 @@ export const store = configureStore({
     cartReducer,
 
     auth: AuthSlice,
+    dashBoard:productForAdminSlice
 
   },
 });
