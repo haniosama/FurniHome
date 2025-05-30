@@ -6,6 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaCamera, FaUser, FaEnvelope, FaPhone, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../lib/store/store";
 
 interface UserInfo {
   username: string;
@@ -32,13 +34,7 @@ interface DecodedToken {
   role: string;
 }
 
-// getToken
-function getTokenFromLocalStorage(): string | null {
-  return localStorage.getItem("Token");
-}
-const token = getTokenFromLocalStorage();
-console.log("tokkkkkken",token)
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 const Setting: React.FC = () => {
@@ -57,6 +53,9 @@ const Setting: React.FC = () => {
     phone: "",
     avatar: "",
   });
+  const {loginToken}=useSelector((store:RootState)=>store.auth)
+  const token =loginToken;
+
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -66,10 +65,9 @@ const Setting: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `https://ecommerceapi-production-8d5f.up.railway.app/api/user/${userId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+    .get(`${API_URL}/api/user/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => {
         const data = res.data.data[0];
         setUserInfo((prev) => ({
@@ -136,7 +134,7 @@ const Setting: React.FC = () => {
     try {
       setLoading(true);
       await axios.patch(
-        "https://ecommerceapi-production-8d5f.up.railway.app/api/auth/changeUserInfo",
+        `${API_URL}/api/auth/changeUserInfo`,
         formData,
         { headers: { Authorization: `Bearer ${token}`} }
       );
