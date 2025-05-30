@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../lib/store/store";
@@ -23,7 +22,7 @@ const Product = ({
   };
   const { addLoading } = useSelector((state: RootState) => state.cartReducer);
   const dispatch: AppDispatch = useDispatch();
-
+  const { loginToken } = useSelector((store: RootState) => store.auth);
   const { products, error, loading } = useSelector(
     (state: RootState) => state.fetchProduct
   );
@@ -56,9 +55,7 @@ const Product = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2, delay: index * 0.1 }}
                 whileHover={{ scale: 1.05 }}
-
-                className="relative bg-white rounded-lg shadow-lg p-4 w-60 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-              >
+                className="relative bg-white rounded-lg shadow-lg p-4 w-60 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                 <button
                   onClick={() => toggleWishlist(index)}
                   aria-label="Add to wishlist"
@@ -112,10 +109,8 @@ const Product = ({
                 </p>
                 <button
                   onClick={() => {
-                    if (localStorage.getItem("Token")) {
-
+                    if (loginToken) {
                       cartDispatch(addTOCartAction(item._id));
-
                     } else {
                       toast.error("You must be logged in first");
                       navigate("/login");

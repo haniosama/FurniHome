@@ -32,7 +32,6 @@ export default function Navbar() {
     },
   };
 
-
   return (
     <nav className="sticky top-0 left-0 w-full bg-[#0058ab] text-white z-50 shadow-lg">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
@@ -58,28 +57,24 @@ export default function Navbar() {
           </Link>
         </div>
 
-
         {/* Desktop Right Menu */}
         <div className="hidden md:flex items-center space-x-2 justify-center">
           <Link to="/cart" className="relative ">
-            <FaShoppingCart className="text-xl  hover:text-gray-300 " />
+            <FaShoppingCart className="text-2xl  hover:text-gray-300 " />
 
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
               {!productsCart ? (
-                <LiaSpinnerSolid className="animate-spin text-xl text-blue-500" />
+                <LiaSpinnerSolid className="animate-spin  text-blue-500" />
               ) : (
                 productsCart.length
               )}
             </span>
-
           </Link>
 
           <Link
             to="/register"
-            className="hover:text-gray-300 border-r-2 border-gray-300 px-2 "
-          >
+            className="hover:text-gray-300 border-r-2 border-gray-300 px-2 ">
             Register
-
           </Link>
           <Link to="/login" className="hover:text-gray-300">
             Login
@@ -93,8 +88,7 @@ export default function Navbar() {
               className="w-6 h-6"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+              viewBox="0 0 24 24">
               {isOpen ? (
                 <path
                   strokeLinecap="round"
@@ -115,7 +109,6 @@ export default function Navbar() {
         </div>
       </div>
 
-
       {/* Mobile Dropdown Menu */}
       <AnimatePresence>
         {isOpen && (
@@ -125,8 +118,7 @@ export default function Navbar() {
             animate="open"
             exit="closed"
             variants={menuVariants}
-            className="md:hidden bg-gray-800 px-6 overflow-hidden"
-          >
+            className="md:hidden bg-gray-800 px-6 overflow-hidden">
             <div className="flex flex-col py-4 space-y-2">
               <Link to="/" className="hover:text-gray-300">
                 Home
@@ -143,8 +135,7 @@ export default function Navbar() {
               <Link
                 to="/cart"
                 className="hover:text-gray-300"
-                title="Shopping Cart"
-              >
+                title="Shopping Cart">
                 <Link to="/cart" className="relative">
                   <FaShoppingCart className="text-3xl  hover:text-gray-300" />
 
@@ -167,7 +158,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-
     </nav>
   );
 }
