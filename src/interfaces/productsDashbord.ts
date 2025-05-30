@@ -1,3 +1,5 @@
+import type { ICategories } from "./categoriesDasboard";
+import type { ICoupon } from "./coupons";
 import type { ICustomer } from "./customerDashboard";
 import type { IOrder } from "./orderDashboard";
 import type { IUserInfo } from "./userInfoDashboard";
@@ -22,6 +24,7 @@ export interface IProduct {
   sold: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comments: any[];
+  productDetails:IProduct
   __v: number;
 }
 
@@ -33,5 +36,8 @@ export interface IState {
         customers:ICustomer[],
         orders:IOrder[],
         usersInfo:IUserInfo[],
+        categories:ICategories[],
+        coupons:ICoupon[],
+        specificProduct:IProduct[]
     }
 }

@@ -27,8 +27,8 @@ const MainDashboar = () => {
         return customers.reduce((total,current)=>{
             return total+current.orders.reduce((sum,order)=>{
                 return order?.total+sum
-            },1)
-        },1)
+            },0)
+        },0)
     }
 
 
