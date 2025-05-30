@@ -6,6 +6,8 @@ import type { AppDispatch, RootState } from "../lib/store/store";
 import { getProductsCart } from "../lib/slices/cartSlice";
 import { FaShoppingCart } from "react-icons/fa";
 import { LiaSpinnerSolid } from "react-icons/lia";
+import { FaHeart } from "react-icons/fa";
+import { useAppSelector } from '../Hooks/index';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +16,7 @@ export default function Navbar() {
   );
   const dispatchs: AppDispatch = useDispatch();
   const { loginToken } = useSelector((store: RootState) => store.auth);
+    const wishlistCount = useAppSelector((state) => state.wishlist.ids.length);
 
   useEffect(() => {
     dispatchs(getProductsCart());
@@ -59,6 +62,16 @@ export default function Navbar() {
 
         {/* Desktop Right Menu */}
         <div className="hidden md:flex items-center space-x-2 justify-center">
+
+          <Link to="/wishlist" className="relative">
+            <FaHeart className="text-2xl text-white hover:text-red-400" />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
+
           <Link to="/cart" className="relative ">
             <FaShoppingCart className="text-2xl  hover:text-gray-300 " />
 
