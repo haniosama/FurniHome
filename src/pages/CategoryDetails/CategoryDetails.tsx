@@ -30,7 +30,7 @@ export default function CategoryDetails() {
   }, [name]);
 
   return (
-    <div className="p-6 min-h-screen">
+    <div className="p-6 min-h-screen bg-gray-100">
       <div className="text-center">
         <h2
           className="relative text-3xl md:text-4xl font-bold mb-12 text-[#0058AA]

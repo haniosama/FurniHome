@@ -14,7 +14,7 @@ const WishlistPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-gray-100">
       <div className="text-center">
         <h2
           className="relative text-2xl md:text-4xl font-bold mb-12 text-[#0058AA]

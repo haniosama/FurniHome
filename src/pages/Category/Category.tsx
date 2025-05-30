@@ -25,7 +25,7 @@ export default function Category() {
   }, []);
 
   return (
-    <div className="px-4 py-10 ">
+  <div className="px-4 py-10 bg-gray-100 ">
     <div className="text-center">
       <h2
         className="relative text-3xl md:text-4xl font-bold mb-12 text-[#0058AA]
