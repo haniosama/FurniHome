@@ -1,10 +1,18 @@
 import { Outlet, useLocation } from "react-router";
 import Footer from "../../component/footer";
 import Navbar from "../../component/navbar";
+import { useAppDispatch } from "../../Hooks/index";
+import { fetchWishlist } from "../../lib/slices/wishlistSlice";
+import { useEffect } from "react";
 
 const Layout = () => {
     
   const url=useLocation()
+  const dispatch = useAppDispatch();
+    useEffect(() => {
+    dispatch(fetchWishlist());
+  }, [dispatch]);
+
   console.log(url.pathname.includes("dashboard"),"ddddddd")
   return (
     <>
