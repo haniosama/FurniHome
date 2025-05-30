@@ -9,13 +9,15 @@ type Category = {
   image: string;
 };
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Category() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://ecommerceapi-production-8d5f.up.railway.app/api/categories")
+    fetch(`${API_URL}/api/categories`)
       .then((res) => res.json())
       .then((data) => setCategories(data.data))
       .catch((err) => console.error(err))
