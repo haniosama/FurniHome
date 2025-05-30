@@ -61,7 +61,7 @@ const Cart = () => {
               onClick={() => {
                 dispatch(clearCartAction());
               }}
-              className="text-red-600 border   border-red-600 px-4 py-1 rounded hover:bg-red-600 hover:text-white transition">
+              className="text-red-600 border cursor-pointer   border-red-600 px-4 py-1 rounded hover:bg-red-600 hover:text-white transition">
               Clear Cart
             </button>
           </div>
@@ -91,7 +91,7 @@ const Cart = () => {
                         onClick={() => {
                           dispatch(deleteFromCartAction(productId._id));
                         }}
-                        className="text-red-600 border border-red-600 px-4 py-1 rounded hover:bg-red-600 hover:text-white transition">
+                        className="text-red-600 border cursor-pointer border-red-600 px-4 py-1 rounded hover:bg-red-600 hover:text-white transition">
                         Remove
                       </button>
                       <div className="flex items-center gap-2">
@@ -127,7 +127,7 @@ const Cart = () => {
               </div>
               <Link to="/checkout">
                 {" "}
-                <button className="w-full bg-teal-700 hover:bg-teal-800 text-white py-2 rounded transition">
+                <button className="w-full cursor-pointer bg-teal-700 hover:bg-teal-800 text-white py-2 rounded transition">
                   Checkout
                 </button>
               </Link>

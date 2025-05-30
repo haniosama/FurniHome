@@ -9,7 +9,7 @@ import Home from "./pages/Home/Home.tsx";
 import ContactUs from "./pages/Contactus/ContactUs.tsx";
 import ProductDetials from "./pages/ProductDetial/ProductDetials.tsx";
 import Category from "./pages/Category/Category.tsx";
-import Order from "./pages/Order/Order.tsx";
+import Order from "./pages/Orders/Orders.tsx";
 import Setting from "./pages/Setting/Setting.tsx";
 import Wishlist from "./pages/Wishlist/Wishlist.tsx";
 import DashBoard from "./pages/Dasboard/Dashboard.tsx";
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         element: <CategoryDetails />,
       },
       {
-        path: "order",
+        path: "orders",
         element: <Order />,
       },
       {
@@ -98,7 +98,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
 
 function App() {
   return (
