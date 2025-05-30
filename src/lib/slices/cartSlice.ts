@@ -112,7 +112,7 @@ const cartSlice = createSlice({
       .addCase(getProductsCart.fulfilled, (state, action) => {
         state.getLoading = false;
         state.productsCart = action.payload.products;
-        console.log("action 1");
+
         state.errorInGet = null;
       })
       .addCase(getProductsCart.rejected, (state) => {

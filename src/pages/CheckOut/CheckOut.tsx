@@ -4,6 +4,13 @@ import type { FormikHelpers } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Helmet } from "react-helmet";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../lib/store/store";
+import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
+import { getProductsCart } from "../../lib/slices/cartSlice";
+import * as Yup from "yup";
+import { ImSpinner9 } from "react-icons/im";
 
 type ShippingAddress = {
   details: string;
@@ -18,29 +25,49 @@ type FormValues = {
 export default function CheckOut() {
   const [typeOrder, setTypeOrder] = useState<"cash" | "online">("cash");
   const navigate = useNavigate();
-  const token = "Bearer " + localStorage.getItem("Token");
+  const [loading, setloading] = useState(false);
+  const { loginToken } = useSelector((store: RootState) => store.auth);
+  const { productsCart } = useSelector((state: RootState) => state.cartReducer);
+  const dispatchs: AppDispatch = useDispatch();
+
+  let userId: string;
+  type DecodedToken = {
+    userID: string;
+  };
+  if (loginToken) {
+    const user = jwtDecode<DecodedToken>(loginToken);
+    userId = user.userID;
+  }
 
   const handleOnlineOrder = async (
     values: FormValues,
     helpers: FormikHelpers<FormValues>
   ) => {
     try {
+      setloading(true);
       const url = window.location.origin;
+      const { details, phone, city } = values.shippingAddress;
+      const payload = {
+        details,
+        phone,
+        address: city,
+      };
+
       const { data } = await axios.post(
-        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartItems.cartId}?url=${url}`,
-        values,
+        `https://nodejs-e-commerce-production.up.railway.app/api/checkout-session?success_url=${url}/orders`,
+        payload,
         {
-          headers: { token },
+          headers: { Authorization: "Bearer " + loginToken },
         }
       );
-      if (data.status === "success") {
-        // notify("loading", "redirect to payment gateway");
-        window.location.href = data.session.url;
-      }
+
+      toast.loading("redirect to payment gateway");
+      window.location.href = data.url;
     } catch (error) {
       console.error(error);
     } finally {
       helpers.setSubmitting(false);
+      setloading(false);
     }
   };
 
@@ -49,26 +76,43 @@ export default function CheckOut() {
     helpers: FormikHelpers<FormValues>
   ) => {
     try {
+      setloading(true);
       const { data } = await axios.post(
-        `https://ecommerce.routemisr.com/api/v1/orders/${cartItems.cartId}`,
-        values,
+        "https://nodejs-e-commerce-production.up.railway.app/api/order",
+        { order_details: values, userId: userId, products: productsCart },
         {
-          headers: { token },
+          headers: { Authorization: "Bearer " + loginToken },
         }
       );
+      console.log("🚀 ~ CheckOut ~ data:", data);
       if (data.status === "success") {
-        // setcartItems([]);
-        navigate("/allorders");
+        dispatchs(getProductsCart());
+        toast.success(data.message);
+        navigate("/orders");
       }
     } catch (error) {
       console.error(error);
     } finally {
+      setloading(false);
       helpers.setSubmitting(false);
     }
   };
 
   const onSubmitFunction =
     typeOrder === "cash" ? handleCashOrder : handleOnlineOrder;
+  const validationSchema = Yup.object({
+    shippingAddress: Yup.object({
+      details: Yup.string()
+        .required("Details are required")
+        .min(5, "Details must be at least 5 characters"),
+      phone: Yup.string()
+        .required("Phone number is required")
+        .matches(/^01[0125][0-9]{8}$/, "Invalid Egyptian phone number"),
+      city: Yup.string()
+        .required("City is required")
+        .min(2, "City must be at least 2 characters"),
+    }),
+  });
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -78,6 +122,7 @@ export default function CheckOut() {
         city: "",
       },
     },
+    validationSchema,
     onSubmit: onSubmitFunction,
   });
 
@@ -95,8 +140,7 @@ export default function CheckOut() {
         <div
           className="flex gap-4 mb-4"
           role="group"
-          aria-label="Select payment type"
-        >
+          aria-label="Select payment type">
           <button
             type="button"
             className={`px-4 py-2 rounded ${
@@ -105,8 +149,7 @@ export default function CheckOut() {
                 : "bg-gray-200 text-gray-700"
             }`}
             aria-pressed={typeOrder === "cash"}
-            onClick={() => setTypeOrder("cash")}
-          >
+            onClick={() => setTypeOrder("cash")}>
             Cash
           </button>
 
@@ -118,8 +161,7 @@ export default function CheckOut() {
                 : "bg-gray-200 text-gray-700"
             }`}
             aria-pressed={typeOrder === "online"}
-            onClick={() => setTypeOrder("online")}
-          >
+            onClick={() => setTypeOrder("online")}>
             Online
           </button>
         </div>
@@ -218,9 +260,12 @@ export default function CheckOut() {
 
           <button
             type="submit"
-            className=" bg-teal-700 hover:bg-teal-800 text-white p-2 rounded transition"
-          >
-            Submit Order
+            className=" bg-teal-700 cursor-pointer hover:bg-teal-800 text-white p-2 rounded transition">
+            {loading ? (
+              <ImSpinner9 className="animate-spin text-white mx-3 text-center " />
+            ) : (
+              "Submit Order"
+            )}
           </button>
         </form>
       </div>

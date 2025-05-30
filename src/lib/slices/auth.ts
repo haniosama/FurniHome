@@ -7,9 +7,25 @@ export const signup = createAsyncThunk(
   "Auth/signup",
   async function (userInfo: IRegister, { rejectWithValue }) {
     try {
+      const formData = new FormData();
+      formData.append("username", userInfo.username.toString());
+      formData.append("email", userInfo.email.toString());
+      formData.append("phone", userInfo.phone.toString());
+      formData.append("password", userInfo.password.toString());
+      formData.append("role", userInfo.role.toString());
+
+      if (userInfo.avatar) {
+        formData.append("avatar", userInfo.avatar);
+      }
+
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/auth/signup`,
-        userInfo
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       return data;
     } catch (error: any) {
@@ -23,7 +39,7 @@ export const signin = createAsyncThunk(
   async function (userInfo: ILogin, { rejectWithValue }) {
     try {
       const { data } = await axios.post(
-         `${import.meta.env.VITE_API_URL}/api/auth/signin`,
+        `${import.meta.env.VITE_API_URL}/api/auth/signin`,
         userInfo
       );
       return data;
@@ -53,7 +69,7 @@ export const changePassword = createAsyncThunk(
   async function (values: IChangePassword, { rejectWithValue }) {
     try {
       const { data } = await axios.patch(
-         `${import.meta.env.VITE_API_URL}/api/auth/forget-password-verification`,
+        `${import.meta.env.VITE_API_URL}/api/auth/forget-password-verification`,
         {
           providedCode: values.providedCode,
           newPassword: values.newPassword,

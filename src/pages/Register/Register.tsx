@@ -11,8 +11,9 @@ import type { AppDispatch, RootState } from "../../lib/store/store";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
+import { FiChevronDown, FiUpload } from "react-icons/fi";
 
-const Register= () => {
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { registerLoading } = useSelector((store: RootState) => store.auth);
   const navigate = useNavigate();
@@ -38,15 +39,23 @@ const Register= () => {
       .matches(/^01[0125][0-9]{8}$/, "Invalid Phone - Must be egyptian number ")
       .required("Phone Required"),
     role: Yup.string().required("Role Required"),
+    avatar: Yup.mixed().nullable(),
   });
-
-  const formik = useFormik({
+  const formik = useFormik<{
+    username: string;
+    email: string;
+    phone: string;
+    password: string;
+    role: string;
+    avatar: File | null;
+  }>({
     initialValues: {
       username: "",
       email: "",
       phone: "",
       password: "",
-      role: "user",
+      role: "",
+      avatar: null,
     },
     validationSchema,
     onSubmit: handleSubmit,
@@ -65,7 +74,7 @@ const Register= () => {
 
   return (
     <>
-      <div className="min-h-screen flex justify-center items-center  px-4">
+      <div className="min-h-screen flex justify-center items-center p-4">
         <div className="grid grid-cols-12 gap-3 w-full mx-6 items-center">
           <div className="col-span-12 lg:col-span-6">
             <div className="py-1 font-light">
@@ -94,11 +103,11 @@ const Register= () => {
                 <div className="col-span-12 md:col-span-6 lg:col-span-12 xl:col-span-6">
                   <div className="relative">
                     <input
-                      className={`block w-full mt-1 p-2 pr-10  text-base border rounded-md focus:outline-none ${
+                      className={`appearance-none block w-full mt-1 p-2 pr-10 text-base border rounded-md focus:outline-none transition-colors duration-200 ${
                         formik.errors.username && formik.touched.username
-                          ? "border-red-600"
-                          : "border-gray-300"
-                      }`}
+                          ? "border-red-600 bg-red-50"
+                          : "border-gray-300 bg-white"
+                      } hover:border-blue-500 focus:border-blue-600`}
                       type="text"
                       id="name"
                       name="username"
@@ -120,15 +129,14 @@ const Register= () => {
                     </p>
                   )}
                 </div>
-
                 <div className="col-span-12 md:col-span-6 lg:col-span-12 xl:col-span-6">
                   <div className="relative">
                     <input
-                      className={`block w-full mt-1 p-2 pr-10  text-base border rounded-md focus:outline-none ${
+                      className={`appearance-none block w-full mt-1 p-2 pr-10 text-base border rounded-md focus:outline-none transition-colors duration-200 ${
                         formik.errors.email && formik.touched.email
-                          ? "border-red-600"
-                          : "border-gray-300"
-                      }`}
+                          ? "border-red-600 bg-red-50"
+                          : "border-gray-300 bg-white"
+                      } hover:border-blue-500 focus:border-blue-600`}
                       type="email"
                       id="email"
                       name="email"
@@ -150,15 +158,14 @@ const Register= () => {
                     </p>
                   )}
                 </div>
-
                 <div className="col-span-12 md:col-span-6 lg:col-span-12 xl:col-span-6">
                   <div className="relative">
                     <input
-                      className={`block w-full mt-1 p-2 pr-10 text-base border rounded-md focus:outline-none ${
+                      className={`appearance-none block w-full mt-1 p-2 pr-10 text-base border rounded-md focus:outline-none transition-colors duration-200 ${
                         formik.errors.password && formik.touched.password
-                          ? "border-red-600"
-                          : "border-gray-300"
-                      }`}
+                          ? "border-red-600 bg-red-50"
+                          : "border-gray-300 bg-white"
+                      } hover:border-blue-500 focus:border-blue-600`}
                       type={showPassword ? "text" : "password"}
                       id="password"
                       name="password"
@@ -187,15 +194,14 @@ const Register= () => {
                     </p>
                   )}
                 </div>
-
                 <div className="col-span-12 md:col-span-6 lg:col-span-12 xl:col-span-6">
                   <div className="relative">
                     <input
-                      className={`block w-full mt-1 p-2 pr-10  text-base border rounded-md focus:outline-none ${
+                      className={`appearance-none block w-full mt-1 p-2 pr-10 text-base border rounded-md focus:outline-none transition-colors duration-200 ${
                         formik.errors.phone && formik.touched.phone
-                          ? "border-red-600"
-                          : "border-gray-300"
-                      }`}
+                          ? "border-red-600 bg-red-50"
+                          : "border-gray-300 bg-white"
+                      } hover:border-blue-500 focus:border-blue-600`}
                       type="tel"
                       id="phone"
                       name="phone"
@@ -217,51 +223,76 @@ const Register= () => {
                   )}
                 </div>
 
-                <div className="col-span-12 row-span-2 mt-5">
-                  <div className="text-center p-2 bg-gray-300 rounded-md font-semibold">
-                    Choose Role
-                  </div>
-                </div>
-
                 <div className="col-span-12 md:col-span-6 lg:col-span-12 xl:col-span-6">
-                  <div>
-                    <input
-                      className="hidden peer"
-                      type="radio"
-                      id="user"
-                      name="role"
-                      value="user"
-                      checked={formik.values.role === "user"}
+                  <div className="relative">
+                    <select
+                      value={formik.values.role}
                       onChange={formik.handleChange}
-                    />
-                    <label
-                      htmlFor="user"
-                      className="block w-full p-2 text-base text-center rounded-md border border-gray-300 
-                   peer-checked:bg-blue-500 peer-checked:border-blue-500 peer-checked:text-white transition-colors duration-300 cursor-pointer"
+                      onBlur={formik.handleBlur}
+                      className={`appearance-none block w-full mt-1 p-2 pr-10 text-base border rounded-md transition-colors duration-200
+                      ${
+                        formik.errors.role && formik.touched.role
+                          ? "border-red-600 bg-red-50"
+                          : formik.values.role === ""
+                          ? "text-gray-500 border-gray-300"
+                          : "text-black border-gray-300"
+                      }
+                      hover:border-blue-500
+                      focus:outline-none focus:ring-0 focus:border-blue-600
+                    `}
+                      name="role"
+                      id="role"
                     >
-                      User
-                    </label>
-                  </div>
-                </div>
+                      <option value="" disabled hidden>
+                        Choose role
+                      </option>
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
 
+                    <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500" />
+
+                    {formik.errors.role && formik.touched.role && (
+                      <span className="absolute right-10 top-1/2 -translate-y-1/2 text-red-600">
+                        <FaExclamationCircle />
+                      </span>
+                    )}
+                  </div>
+
+                  {formik.errors.role && formik.touched.role && (
+                    <p className="mt-1 text-red-400 text-sm font-medium">
+                      {formik.errors.role}
+                    </p>
+                  )}
+                </div>
                 <div className="col-span-12 md:col-span-6 lg:col-span-12 xl:col-span-6">
-                  <div>
-                    <input
-                      className="hidden peer"
-                      type="radio"
-                      id="admin"
-                      name="role"
-                      value="admin"
-                      checked={formik.values.role === "admin"}
-                      onChange={formik.handleChange}
-                    />
-                    <label
-                      htmlFor="admin"
-                      className="block w-full p-2 text-base text-center rounded-md border border-gray-300 
-                   peer-checked:bg-blue-500 peer-checked:border-blue-500 peer-checked:text-white transition-colors duration-300 cursor-pointer"
+                  <div className="relative w-full mt-1 border border-gray-300 rounded-md p-2 cursor-pointer hover:border-blue-500 focus-within:border-blue-600">
+                    <span
+                      className="block text-gray-500 truncate"
+                      style={{ maxWidth: "calc(100% - 40px)" }}
                     >
-                      Admin
-                    </label>
+                      {formik.values.avatar instanceof File
+                        ? formik.values.avatar.name
+                        : "Upload your avatar"}
+                    </span>
+
+                    <input
+                      id="avatar"
+                      name="avatar"
+                      type="file"
+                      accept="image/*"
+                      className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          formik.setFieldValue("avatar", e.target.files[0]);
+                        }
+                      }}
+                    />
+
+                    <FiUpload
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                      size={20}
+                    />
                   </div>
                 </div>
               </div>
