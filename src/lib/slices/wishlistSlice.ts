@@ -1,7 +1,7 @@
-// src/features/wishlist/wishlistSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import type IProducts from '../../interfaces/product';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -20,16 +20,8 @@ const getAuthHeader = () => {
   };
 };
 
-interface Product {
-  _id: string;
-  title: string;
-  description: string;
-  price: number;
-  imageCover: string;
-}
-
 interface WishlistState {
-  items: Product[];
+  items: IProducts[];
   ids: string[];
   loading: boolean;
   error: string | null;
@@ -43,7 +35,7 @@ const initialState: WishlistState = {
 };
 
 // Wishlist
-export const fetchWishlist = createAsyncThunk<Product[]>(
+export const fetchWishlist = createAsyncThunk<IProducts[]>(
   'wishlist/fetchWishlist',
   async (_, thunkAPI) => {
     try {
@@ -103,14 +95,14 @@ const wishlistSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchWishlist.fulfilled, (state, action: PayloadAction<Product[]>) => {
+      .addCase(fetchWishlist.fulfilled, (state, action: PayloadAction<IProducts[]>) => {
         state.loading = false;
         state.items = action.payload;
         state.ids = action.payload.map((product) => product._id);
       })
-      .addCase(fetchWishlist.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(fetchWishlist.rejected, (state, action: PayloadAction<unknown>) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = typeof action.payload === 'string' ? action.payload : 'An error occurred';
       })
       .addCase(addToWishlist.fulfilled, (state, action: PayloadAction<string[]>) => {
         state.ids = action.payload;

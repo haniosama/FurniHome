@@ -1,14 +1,15 @@
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import ProductCard from '../../component/ProductCard';
+import Product from '../../component/Product'; 
 import SkeletonCard from '../../component/SkeletonCard';
-import type { Product } from '../../interfaces/productCategory';
+import type IProducts from '../../interfaces/product';
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function CategoryDetails() {
   const { name } = useParams();
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<IProducts[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -69,15 +70,15 @@ export default function CategoryDetails() {
               d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <h3 className="text-xl font-medium text-gray-600 mt-4">No products found in this category</h3>
-          <p className="text-gray-500 mt-2">We couldn't find any products matching this category.</p>
+          <h3 className="text-xl font-medium text-gray-600 mt-4">
+            No products found in this category
+          </h3>
+          <p className="text-gray-500 mt-2">
+            We couldn't find any products matching this category.
+          </p>
         </div>
       ) : (
-        <div className="flex flex-wrap justify-center items-center gap-10 max-w-7xl mx-auto">
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </div>
+        <Product filteredProducts={products} />
       )}
     </div>
   );
