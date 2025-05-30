@@ -19,6 +19,10 @@ export default function Navbar() {
   const wishlistCount = useAppSelector((state) => state.wishlist.ids.length);
 
   useEffect(() => {
+    dispatch(getProductsCart());
+    // console.log(productsCart);
+    // console.log(productsCart?.length);
+  }, [dispatch, itemsCart]);
     dispatchs(getProductsCart());
   }, [dispatchs, itemsCart, loginToken]);
 
@@ -26,6 +30,7 @@ export default function Navbar() {
     open: { height: "auto", opacity: 1, transition: { duration: 0.3 } },
     closed: { height: 0, opacity: 0, transition: { duration: 0.3 } },
   };
+
 
   return (
     <nav className="sticky top-0 left-0 w-full bg-[#0058ab] text-white z-50 shadow-lg">

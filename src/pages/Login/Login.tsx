@@ -52,7 +52,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="min-h-screen flex justify-center items-center  px-4">
+      <div className="min-h-screen flex justify-center items-center p-4">
         <div className="grid grid-cols-12 gap-3 w-full mx-6 items-center">
           <div className="col-span-12 lg:col-span-6 ">
             <div className="py-1 font-light">

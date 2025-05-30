@@ -34,7 +34,17 @@ interface DecodedToken {
   role: string;
 }
 
+
+// getToken
+function getTokenFromLocalStorage(): string | null {
+  return localStorage.getItem("Token");
+}
+const token = getTokenFromLocalStorage();
+// console.log("tokkkkkken",token)
+
+
 const API_URL = import.meta.env.VITE_API_URL;
+
 
 
 const Setting: React.FC = () => {

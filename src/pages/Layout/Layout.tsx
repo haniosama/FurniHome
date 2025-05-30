@@ -8,12 +8,16 @@ import { useEffect } from "react";
 const Layout = () => {
     
   const url=useLocation()
+
+  // console.log(url.pathname.includes("dashboard"),"ddddddd")
+
   const dispatch = useAppDispatch();
     useEffect(() => {
     dispatch(fetchWishlist());
   }, [dispatch]);
 
   console.log(url.pathname.includes("dashboard"),"ddddddd")
+
   return (
     <>
       <div className="flex justify-between flex-col min-h-screen">
