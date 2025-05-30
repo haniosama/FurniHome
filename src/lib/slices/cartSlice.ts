@@ -4,8 +4,8 @@ import axios from "axios";
 import type { ProductCart } from "../../interfaces/productCart";
 import { toast } from "react-toastify";
 
-const token =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODI3OTkxZDkxNGU3NzlkNzI5NDNhZmEiLCJlbWFpbCI6ImV6emF0eW91c3NlZkBnbWFpbC5jb20iLCJ2ZXJpZmllZCI6ZmFsc2UsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3NDMyMDM3fQ.diNj3N8WuUiiynHuAh49WPd0NdKT2j4_J6UDVe-kJgY";
+const token = "Bearer " + localStorage.getItem("Token");
+
 export const addTOCartAction = createAsyncThunk(
   "cart/add",
   async (productId: string) => {
@@ -38,14 +38,11 @@ export const deleteFromCartAction = createAsyncThunk(
   }
 );
 export const getProductsCart = createAsyncThunk("cart/get", async () => {
-  const res = await axios.get(
-    "https://ecommerceapi-production-8d5f.up.railway.app/api/cart",
-    {
-      headers: {
-        Authorization: token,
-      },
-    }
-  );
+  const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/cart`, {
+    headers: {
+      Authorization: token,
+    },
+  });
 
   return res.data.cart;
 });
@@ -115,7 +112,7 @@ const cartSlice = createSlice({
       .addCase(getProductsCart.fulfilled, (state, action) => {
         state.getLoading = false;
         state.productsCart = action.payload.products;
-        console.log("action 1");
+
         state.errorInGet = null;
       })
       .addCase(getProductsCart.rejected, (state) => {
