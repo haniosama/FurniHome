@@ -4,7 +4,7 @@ import { Bounce, toast } from "react-toastify";
 import { Fragment, useEffect, useState, type ChangeEvent } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import {  getUserInformayionForUser } from "../../lib/slices/dashboard";
+import {  deleteOrderForUser, getUserInformayionForUser } from "../../lib/slices/dashboard";
 import type { IProduct, IState } from "../../interfaces/productsDashbord";
 import type { IOrder } from "../../interfaces/orderDashboard";
 import Loader from "../../component/Loader";
@@ -15,8 +15,7 @@ const OrdersDashboard = () => {
     // const [useInfo,setUserInfo]=useState<IUserInfo>();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dispatch=useDispatch<any>();
-    const {orders,usersInfo,isLoading}=useSelector((state:IState)=>state.dashBoard)
-    
+    const {orders,usersInfo,isLoading}=useSelector((state:IState)=>state.dashBoard);
     useEffect(()=>{
         try{
             (async()=>{
@@ -60,6 +59,9 @@ const OrdersDashboard = () => {
         return <Loader/>
     }
 
+    const deleteOrder=async(orderId:string)=>{
+        await dispatch(deleteOrderForUser(orderId))
+    }
     return (
         <>
             <div className="flex items-center justify-between mt-7 pr-10 flex-wrap gap-y-3 ">
@@ -99,15 +101,13 @@ const OrdersDashboard = () => {
                                             {order.total}
                                         </td>
                                         <td className=" px-4 py-6 text-center">
-                                            {/* <span className={`inline-block px-3 py-1 ${order.status.toLowerCase() == "complate"?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
-                                                {order.status}
-                                                </span> */}
-                                            <span className={`inline-block px-3 py-1 text-green-800 border border-green-800 bg-green-100 rounded-full font-semibold`}>
-                                                Complated
+                                            
+                                            <span className={`inline-block px-3 py-1 ${order.onlinePaymentDetails?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
+                                                {order.onlinePaymentDetails?"Complated" : "Pendding"}
                                             </span>
                                         </td>
                                         <td className=" px-4 py-6 text-center  text-gray-700">
-                                            <button className="bg-red-700 text-white py-1 px-4 rounded-lg transition-all duration-300 border border-red-700 hover:bg-white hover:text-red-800 cursor-pointer">Delete</button>
+                                            <button onClick={()=>deleteOrder(order._id)} className="bg-red-700 text-white py-1 px-4 rounded-lg transition-all duration-300 border border-red-700 hover:bg-white hover:text-red-800 cursor-pointer">Delete</button>
                                         </td>
                                         
                                     </tr>
@@ -124,8 +124,9 @@ const OrdersDashboard = () => {
                     <thead className="bg-gray-100">
                         <tr>
                             <th className=" px-4 py-4 text-center text-gray-700 w-[200px]">Product Name</th>
-                            <th className=" px-4 py-4 text-center text-gray-700">Order ID</th>
                             <th className=" px-4 py-4 text-center text-gray-700 w-[150px]">Customer Name</th>
+                            <th className=" px-4 py-4 text-center text-gray-700">Phone</th>
+                            <th className=" px-4 py-4 text-center text-gray-700">Address</th>
                             <th className=" px-4 py-4 text-center text-gray-700 w-[120px]">Date</th>
                             <th className=" px-4 py-4 text-center text-gray-700">QTY</th>
                             <th className=" px-4 py-4 text-center text-gray-700">Price</th>
@@ -141,26 +142,17 @@ const OrdersDashboard = () => {
                                     return(
                                         <Fragment key={index2}>
                                             <tr key={order._id} className="hover:bg-gray-50">
-                                            {pro.imageCover?
-                                                <td className="flex orders-center gap-3  px-4 py-6">
-                                                    <img
-                                                    src={pro.imageCover}
-                                                    alt="product"
-                                                    className="w-12 h-12 object-cover rounded"
-                                                    />
-                                                    <p>{pro.title}</p>
-                                                </td>
-                                                :
-                                                <td className="flex orders-center gap-3  px-4 py-6">
-                                                    <img
-                                                    src={placeholderImage}
-                                                    alt="product"
-                                                    className="w-12 h-12 object-cover rounded"
-                                                    />
-                                                </td>
-                                            }
-                                            <td className=" px-4 py-6 text-center text-gray-700">{order._id}</td>
+                                            <td className="flex orders-center gap-3  px-4 py-6">
+                                                <img
+                                                src={pro.productDetails.imageCover || placeholderImage}
+                                                alt="product"
+                                                className="w-12 h-12 object-cover rounded"
+                                                />
+                                                <p>{pro.productDetails.title.split(" ").slice(0,2).join(" ") }</p>
+                                            </td>
                                             <td className=" px-4 py-6 text-center text-gray-700">{user?user.username:"UnKnon"}</td>
+                                            <td className=" px-4 py-6 text-center text-gray-700">{order.order_details.shippingAddress.phone?order.order_details.shippingAddress.phone:"Unkown"}</td>
+                                            <td className=" px-4 py-6 text-center text-gray-700">{order.order_details.shippingAddress.city?order.order_details.shippingAddress.city:"Unkown"}</td>
                                             <td className=" px-4 py-6 text-gray-700 text-center">
                                                 {new Date(order.createdAt).toLocaleDateString()}
                                                 <span className="text-sm text-gray-500 block text-center">
@@ -174,11 +166,8 @@ const OrdersDashboard = () => {
                                                 {pro.price}
                                             </td>
                                             <td className=" px-4 py-6 text-center">
-                                                {/* <span className={`inline-block px-3 py-1 ${order.status.toLowerCase() == "complate"?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
-                                                    {order.status}
-                                                </span> */}
-                                                <span className={`inline-block px-3 py-1 text-green-800 border border-green-800 bg-green-100 rounded-full font-semibold`}>
-                                                    Complated
+                                                <span className={`inline-block px-3 py-1 ${order.onlinePaymentDetails?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
+                                                    {order.onlinePaymentDetails?"Complated" : "Pendding"}
                                                 </span>
                                             </td>
                                             
