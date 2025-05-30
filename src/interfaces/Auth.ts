@@ -4,6 +4,7 @@ export interface IRegister {
   phone: String;
   password: String;
   role: String;
+  avatar?: File | null;  
 }
 export interface ILogin {
   email: String;

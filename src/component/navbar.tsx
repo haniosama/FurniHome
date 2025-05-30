@@ -15,8 +15,8 @@ export default function Navbar() {
 
   useEffect(() => {
     dispatch(getProductsCart());
-    console.log(productsCart);
-    console.log(productsCart?.length);
+    // console.log(productsCart);
+    // console.log(productsCart?.length);
   }, [dispatch, itemsCart]);
 
   return (
