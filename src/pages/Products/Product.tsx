@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchProduct } from "../../lib/slices/products";
 import Product from "../../component/Product";
 import type IProducts from "../../interfaces/product";
+import SidebarFilter from "../../component/filter";
 
 
 const AllProduct = () => {

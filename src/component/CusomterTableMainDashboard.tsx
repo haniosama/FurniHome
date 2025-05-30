@@ -2,9 +2,9 @@ import placeholderImage from "../assets/placeholderProduct.jpg"
 import type { ICustomer } from "../interfaces/customerDashboard";
 
 const CusomterTableMainDashboard = ({customers}:{customers:ICustomer[]}) => {
-
   return (
-    <div className="scrollable-y max-h-[320px] w-[420px]">
+    <div className="scrollable-y max-h-[320px] w-[350px]">
+        
         <table className="min-w-full border-collapse bg-white">
             <thead className="bg-gray-100 sticky top-0 z-10">
                 <tr>
@@ -15,12 +15,12 @@ const CusomterTableMainDashboard = ({customers}:{customers:ICustomer[]}) => {
             </thead>
             <tbody>
                 {customers.length > 0 ? (
-                customers.map((item) => (
+                customers?.map((item) => (
                     <tr key={item._id} className="hover:bg-gray-50">
                     <td className="px-1 pl-3 py-3">
                         <div className="flex items-center gap-3">
                         <img
-                            src={item.image || placeholderImage}
+                            src={item.userDetails.avatar || placeholderImage}
                             alt="customer"
                             className="w-12 h-12 object-cover rounded"
                         />
