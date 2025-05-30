@@ -1,0 +1,32 @@
+export const inputsForm=[
+  {
+    name:'title',
+    title:"Title",
+    type:'text'
+  },
+  {
+    name:'description',
+    title:"Description",
+    type:'text'
+  },
+  {
+    name:'quantity',
+    title:"Quantity",
+    type:'number'
+  },
+  {
+    name:'title',
+    title:"Title",
+    type:'text'
+  },
+  {
+    name:'title',
+    title:"Title",
+    type:'text'
+  },
+  {
+    name:'title',
+    title:"Title",
+    type:'text'
+  },
+]

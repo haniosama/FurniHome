@@ -17,7 +17,6 @@ const Product = ({
 }) => {
   const [wishlist, setWishlist] = useState<{ [key: number]: boolean }>({});
   const navigate = useNavigate();
-  const { addLoading } = useSelector((state: RootState) => state.cartReducer);
   const cartDispatch: AppDispatch = useDispatch();
   const toggleWishlist = (index: number) => {
     setWishlist((prev) => ({ ...prev, [index]: !prev[index] }));
