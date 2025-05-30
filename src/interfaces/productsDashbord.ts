@@ -1,3 +1,7 @@
+import type { ICustomer } from "./customerDashboard";
+import type { IOrder } from "./orderDashboard";
+import type { IUserInfo } from "./userInfoDashboard";
+
 export interface IProduct {
   _id: string;
   adminId: string;
@@ -23,9 +27,11 @@ export interface IProduct {
 
 export interface IState {
     dashBoard:{
-        products:[],
-        isloading:boolean,
+        products:IProduct[],
+        isLoading:boolean,
         error:string | null,
-        customers:[]
+        customers:ICustomer[],
+        orders:IOrder[],
+        usersInfo:IUserInfo[],
     }
 }

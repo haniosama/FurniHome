@@ -1,4 +1,4 @@
-import type { IOrderItem } from "./ordersDashboard";
+import type { IOrder } from "./orderDashboard";
 
 export interface ICustomer{
     _id:string;
@@ -9,6 +9,9 @@ export interface ICustomer{
     phone:string;
     userDetails:{
         username:string;
+        avatar:string,
+        email:string,
+        phone:string,
     };
-    orders:IOrderItem[]
+    orders:IOrder[]
 }
