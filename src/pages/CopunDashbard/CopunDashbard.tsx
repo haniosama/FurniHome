@@ -26,20 +26,28 @@ const CouponDashbard = () => {
                     </tr>
                 </thead>
                 <tbody >
-                    {coupons.map((item)=>{
-                        return(
-                        <tr key={item._id} className="hover:bg-gray-50">
-                            <td className=" px-4 py-6 text-center text-gray-700">#{item._id}</td>
-                            <td className=" px-4 py-6 text-center text-gray-700">{item.code}</td>
-                            <td className=" px-4 py-6 text-center">{item.counterUser}</td>
-                            <td className=" px-4 py-6 text-center text-gray-700">{item.discount}</td>
-                            <td className=" px-4 py-6 text-center flex gap-1 justify-center">
-                                {/* <button className="bg-green-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-green-700 transition-all duration-300 hover:bg-white hover:text-green-700">Update</button> */}
-                                <button onClick={()=>{deleteCouponFun(item._id)}} className="bg-red-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-red-700 transition-all duration-300 hover:bg-white hover:text-red-700">Delete</button>
+                    {coupons?.length>0?
+                        coupons.map((item)=>{
+                            return(
+                            <tr key={item._id} className="hover:bg-gray-50">
+                                <td className=" px-4 py-6 text-center text-gray-700">#{item._id}</td>
+                                <td className=" px-4 py-6 text-center text-gray-700">{item.code}</td>
+                                <td className=" px-4 py-6 text-center">{item.counterUser}</td>
+                                <td className=" px-4 py-6 text-center text-gray-700">{item.discount}</td>
+                                <td className=" px-4 py-6 text-center flex gap-1 justify-center">
+                                    {/* <button className="bg-green-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-green-700 transition-all duration-300 hover:bg-white hover:text-green-700">Update</button> */}
+                                    <button onClick={()=>{deleteCouponFun(item._id)}} className="bg-red-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-red-700 transition-all duration-300 hover:bg-white hover:text-red-700">Delete</button>
+                                </td>
+                            </tr>
+                            )
+                        })
+                    :
+                    <tr>
+                            <td colSpan={5} className="text-center py-6 text-gray-500">
+                                You do not have any Coupon yet
                             </td>
                         </tr>
-                        )
-                    })}
+                    }
                 </tbody>
             </motion.table>
         </div>

@@ -9,32 +9,7 @@ import type { IState } from "../../interfaces/productsDashbord";
 import Loader from "../../component/Loader";
 
 const CustomerDashboard = () => {
-//    const customersArr:ICustomer[] = [
-//   {
-//     customerName: "Alice Johnson",
-//     totalOrder: 250.75,
-//     email: "alice.johnson@example.com",
-//     phone: "+1-555-1234"
-//   },
-//   {
-//     customerName: "Bob Smith",
-//     totalOrder: 120.00,
-//     email: "bob.smith@example.com",
-//     phone: "+1-555-5678"
-//   },
-//   {
-//     customerName: "Catherine Green",
-//     totalOrder: 330.40,
-//     email: "catherine.green@example.com",
-//     phone: "+1-555-9012"
-//   },
-//   {
-//     customerName: "David Lee",
-//     totalOrder: 89.99,
-//     email: "david.lee@example.com",
-//     phone: "+1-555-3456"
-//   }
-// ];
+
 const [searchCustomers,setSearchCustomers]=useState<ICustomer[]>()
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,23 +69,31 @@ const [searchCustomers,setSearchCustomers]=useState<ICustomer[]>()
                         </tr>
                     </thead>
                     <tbody >
-                        {(searchCustomers || customers).map((customer)=>{
-                            return(
-                            <tr key={customer._id} className="hover:bg-gray-50">
-                                <td className="flex items-center gap-3  px-4 py-6">
-                                    <img
-                                    src={customer.userDetails.avatar || placeholderImage}
-                                    alt="product"
-                                    className="w-12 h-12 object-cover rounded"
-                                    />
-                                </td>
-                                <td className=" px-4 py-6 text-gray-700">{customer.userDetails.username}</td>
-                                <td className=" px-4 py-6 text-gray-700 text-center ">{customer.orders.length.toFixed(0)}</td>
-                                <td className=" px-4 py-6 text-center">{customer.userDetails.email}</td>
-                                <td className=" px-4 py-6 text-center text-gray-700">{customer.userDetails.phone}</td>
-                            </tr>
-                            )
-                        })}
+                        {customers?.length>0?
+                            (searchCustomers || customers)?.map((customer)=>{
+                                return(
+                                <tr key={customer?._id} className="hover:bg-gray-50">
+                                    <td className="flex items-center gap-3  px-4 py-6">
+                                        <img
+                                        src={customer?.userDetails.avatar || placeholderImage}
+                                        alt="product"
+                                        className="w-12 h-12 object-cover rounded"
+                                        />
+                                    </td>
+                                    <td className=" px-4 py-6 text-gray-700">{customer?.userDetails.username}</td>
+                                    <td className=" px-4 py-6 text-gray-700 text-center ">{customer?.orders.length.toFixed(0)}</td>
+                                    <td className=" px-4 py-6 text-center">{customer?.userDetails.email}</td>
+                                    <td className=" px-4 py-6 text-center text-gray-700">{customer?.userDetails.phone}</td>
+                                </tr>
+                                )
+                            })
+                        :
+                        <tr>
+                            <td colSpan={5} className="text-center py-6 text-gray-500">
+                                You do not have any Customer yet
+                            </td>
+                        </tr>
+                        }
                     </tbody>
                 </motion.table>
             </div>

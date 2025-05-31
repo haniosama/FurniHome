@@ -1,3 +1,6 @@
+<h1>Manager Account</h1>
+<h2>Email: mohamedsalah@gmail.com</h2>
+<h2>Password: 123456</h2>
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

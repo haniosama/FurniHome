@@ -1,7 +1,7 @@
 import type { ICategories } from "../../interfaces/categoriesDasboard";
 import placeholderImage from "../../assets/placeholderProduct.jpg"
 import { IoMdSearch } from "react-icons/io";
-import { Bounce, toast, ToastContainer } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 import { useState, type ChangeEvent } from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
@@ -41,23 +41,11 @@ const CategoriesDashboard = () => {
     const deleteCategory=(categoryName:string)=>{
         console.log(categoryName)
     }
+    console.log(categories)
   return (
     <>
-      <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-                />
             <div className="flex items-center justify-between mt-7 pr-10 flex-wrap gap-y-3 ">
-                <h2 className="font-semibold text-2xl ">Products</h2>
+                <h2 className="font-semibold text-2xl ">Categories</h2>
                 <div className="bg-white px-4 py-2 rounded-3xl flex justify-between items-center w-[300px] mx-auto md:m-0">
                     <input type="text" placeholder="Search by Category Name" className="outline-0 border-0 pr-10" onChange={handleSearch}/>
                     <IoMdSearch className="text-lg " />
@@ -74,29 +62,37 @@ const CategoriesDashboard = () => {
                     </tr>
                 </thead>
                 <tbody >
-                    {(searchCategories|| categories).map((item)=>{
-                        let counter=0;
-                        products.forEach((pro:IProduct)=>{
-                            if(item.name===pro.category.name) counter++
-                        })
-                        return(
-                        <tr key={item.id} className="hover:bg-gray-50">
-                                <td className="flex items-center gap-3  px-4 py-6 ">
-                                    <img
-                                    src={item.image || placeholderImage}
-                                    alt="product"
-                                    className="w-12 h-12 object-cover rounded"
-                                    />
-                                </td>
+                    {categories?.length>0?
+                        (searchCategories|| categories).map((item)=>{
+                            let counter=0;
+                            products.forEach((pro:IProduct)=>{
+                                if(item.name===pro.category.name) counter++
+                            })
+                            return(
+                            <tr key={item.name} className="hover:bg-gray-50">
+                                    <td className="flex items-center gap-3  px-4 py-6 ">
+                                        <img
+                                        src={item.image || placeholderImage}
+                                        alt="product"
+                                        className="w-12 h-12 object-cover rounded"
+                                        />
+                                    </td>
 
-                            <td className=" px-4 py-6 text-center text-gray-700 ">{item.name}</td>
-                            <td className=" px-4 py-6 text-center text-gray-700">{counter}</td>
-                            <td className=" px-4 py-6 text-center flex gap-1 justify-center">
-                                <button onClick={()=>deleteCategory(item.name)} className="bg-red-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-red-700 transition-all duration-300 hover:bg-white hover:text-red-700">Delete</button>
+                                <td className=" px-4 py-6 text-center text-gray-700 ">{item.name}</td>
+                                <td className=" px-4 py-6 text-center text-gray-700">{counter}</td>
+                                <td className=" px-4 py-6 text-center flex gap-1 justify-center">
+                                    <button onClick={()=>deleteCategory(item.name)} className="bg-red-700 px-2 py-1 rounded-lg text-white cursor-pointer border border-red-700 transition-all duration-300 hover:bg-white hover:text-red-700">Delete</button>
+                                </td>
+                            </tr>
+                            )
+                        })
+                    :
+                    <tr>
+                            <td colSpan={4} className="text-center py-6 text-gray-500">
+                                You do not have any Category yet
                             </td>
                         </tr>
-                        )
-                    })}
+                    }
                 </tbody>
             </motion.table>
         </div>

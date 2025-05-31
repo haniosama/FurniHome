@@ -10,7 +10,77 @@ const token=localStorage.getItem("Token") as string;
 
 
 
+// ================ manager =============
+export const getProdectForManager=createAsyncThunk('dashboard/getProdectForManager',async()=>{
+    try{
+        const data =await (await fetch(`${baseUrl}/api/products`,{
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        })).json();
+        return data.products
+    }
+    catch(err){
+        console.log(err)
+    }
+})
 
+export const getOrdersForManager=createAsyncThunk('dashboard/getOrdersForManager',async()=>{
+    try{
+        const data =await (await fetch(`${baseUrl}/api/order/`,{
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        })).json();
+        return data.orders
+    }catch(err){
+        console.log(err)
+    }
+})
+
+export const getcategoryForManager=createAsyncThunk('dashboard/getcategoryForManager',async()=>{
+    try{
+        const data =await (await fetch(`${baseUrl}/api/categories`,{
+            method:"GET",
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        })).json();
+        console.log(data,"manager")
+        return data.data
+    }catch(err){
+        console.log(err,"erros")
+    }
+})
+
+export const getCustomerForManager=createAsyncThunk('dashboard/getCustomerForManager',async()=>{
+    try{
+        const data =await (await fetch(`${baseUrl}/api/customer`,{
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        })).json();
+        return data.customers
+    }catch(err){
+        console.log(err)
+    }
+})
+
+export const getCouponsForManager=createAsyncThunk('dashboard/getCouponsForManager',async()=>{
+    try{
+        const data =await (await fetch(`${baseUrl}/api/coupon/manager`,{
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        })).json();
+        return data.coupons
+    }catch(err){
+        console.log(err,"erros")
+    }
+})
+
+
+// ============== Admin ==========
 export const getProdectForAdmin=createAsyncThunk('dashboard/getProduct',async()=>{
     try{
         const data =await (await fetch(`${baseUrl}/api/dashboard`,{
@@ -46,7 +116,7 @@ export const getUserInformayionForUser=createAsyncThunk('dashboard/getUserInform
                 'Authorization':`Bearer ${token}`
             }
         })).json();
-        console.log(data)
+        console.log(data,"daaaaaaaaate")
         return data
     }catch(err){
         console.log(err)
@@ -138,14 +208,14 @@ export const getSpecificProduct=createAsyncThunk('dashboard/getSpecificProduct',
     }
 })
 
-export const addProduct=createAsyncThunk('dashboard/addProduct',async(formatData:FormData)=>{
+export const addProduct=createAsyncThunk('dashboard/addProduct',async(formtData:FormData)=>{
     try{
         const data =await (await fetch(`${baseUrl}/api/product`,{
             method:"POST",
             headers:{
                 'Authorization':`Bearer ${token}`
             },
-            body:formatData,
+            body:formtData,
         })).json();
         return data.products
     }catch(err){
@@ -153,14 +223,18 @@ export const addProduct=createAsyncThunk('dashboard/addProduct',async(formatData
     }
 })
 
-export const updataProduct=createAsyncThunk('dashboard/updataProduct',async(formatData:FormData)=>{
+export const updataProduct=createAsyncThunk('dashboard/updataProduct',async({productId,formtData}:{productId:string,formtData:FormData})=>{
     try{
-        const data =await (await fetch(`${baseUrl}/api/product`,{
+        console.log(formtData,"eeeeeeeeeeeeeeee");
+                    for (const pair of formtData.entries()) {
+                console.log(`${pair[0]}:`, pair[1]);
+                }
+        const data =await (await fetch(`${baseUrl}/api/product/${productId}`,{
             method:"PATCH",
             headers:{
                 'Authorization':`Bearer ${token}`
             },
-            body:formatData,
+            body:formtData,
         })).json();
         console.log(data,"ggggggggggggggggggggggg");
         return data.products
@@ -192,6 +266,29 @@ const dashboardAdmim=createSlice({
     initialState:{specificProduct:{} as IProduct,products:[] as IProduct[],orders:[] as IOrder[],coupons:[] as ICoupon[],categories:[] as ICategories[], usersInfo:[] as IUserInfo[],customers:[] as [], isLoading: false as boolean, error:null as string | null},
     reducers:{},
     extraReducers:(builder)=>{
+        // ========== Manager ===============
+        builder.addCase(getProdectForManager.fulfilled,(state,action)=>{state.products=action.payload;state.isLoading=false});
+        builder.addCase(getProdectForManager.pending,(state)=>{state.isLoading=true});
+        builder.addCase(getProdectForManager.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
+        
+        builder.addCase(getOrdersForManager.fulfilled,(state,action)=>{state.orders=action.payload;state.isLoading=false});
+        builder.addCase(getOrdersForManager.pending,(state)=>{state.isLoading=true});
+        builder.addCase(getOrdersForManager.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
+        
+        builder.addCase(getcategoryForManager.fulfilled,(state,action)=>{state.categories=action.payload;state.isLoading=false});
+        builder.addCase(getcategoryForManager.pending,(state)=>{state.isLoading=true});
+        builder.addCase(getcategoryForManager.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
+        
+        builder.addCase(getCustomerForManager.fulfilled,(state,action)=>{state.customers=action.payload;state.isLoading=false});
+        builder.addCase(getCustomerForManager.pending,(state)=>{state.isLoading=true});
+        builder.addCase(getCustomerForManager.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
+        
+        builder.addCase(getCouponsForManager.fulfilled,(state,action)=>{state.coupons=action.payload;state.isLoading=false});
+        builder.addCase(getCouponsForManager.pending,(state)=>{state.isLoading=true});
+        builder.addCase(getCouponsForManager.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
+        
+        
+        // ============== Admin ============
         builder.addCase(getProdectForAdmin.fulfilled,(state,action)=>{state.products=action.payload;state.isLoading=false});
         builder.addCase(getProdectForAdmin.pending,(state)=>{state.isLoading=true});
         builder.addCase(getProdectForAdmin.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
@@ -204,7 +301,7 @@ const dashboardAdmim=createSlice({
         builder.addCase(getOrdersForAdmin.pending,(state)=>{state.isLoading=true});
         builder.addCase(getOrdersForAdmin.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
 
-        builder.addCase(getUserInformayionForUser.fulfilled,(state,action)=>{state.usersInfo.push(...action.payload.data);state.isLoading=false});
+        builder.addCase(getUserInformayionForUser.fulfilled,(state,action)=>{state.usersInfo=action.payload.data;state.isLoading=false});
         builder.addCase(getUserInformayionForUser.pending,(state)=>{state.isLoading=true});
         builder.addCase(getUserInformayionForUser.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
 
