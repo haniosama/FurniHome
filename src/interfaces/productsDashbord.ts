@@ -38,6 +38,12 @@ export interface IState {
         usersInfo:IUserInfo[],
         categories:ICategories[],
         coupons:ICoupon[],
-        specificProduct:IProduct[]
+        specificProduct:IProduct[],
+        userDecoded:IUserInfo
+    }
+}
+export interface IStateProduct {
+    fetchProduct:{
+      products:IProduct[]
     }
 }

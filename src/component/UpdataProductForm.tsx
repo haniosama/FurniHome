@@ -6,6 +6,7 @@ import type { IProduct } from "../interfaces/productsDashbord";
 
 
 
+
 type IAction={
   type:string,
   field:string,
@@ -14,10 +15,10 @@ type IAction={
 interface IInitState{
     title: string;
     description: string;
-    price: string;
-    category: string;
-    quantity: string;
-    images: File[];
+    price: number;
+    category: string ;
+    quantity: number;
+    images: File[] | string[];
 }
 interface IError{
     title:string,
@@ -27,8 +28,8 @@ interface IError{
     quantity:string,
     images:string,
 }
-const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,specificProduct}:{setOpenUpdataProductContainer:(val:boolean)=>void,handleUpdataProduct:(productId?:string,val?:FormData)=>void,specificProduct:IProduct}) => {
-
+const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,specificProduct,productId}:{setOpenUpdataProductContainer:(val:boolean)=>void,handleUpdataProduct:(productId:string,val:FormData)=>void,specificProduct:IProduct,productId:string}) => {
+    const categories = ["Camera", "Phones", "Home","Printers","Headphones","Laptops", "Accessories"];
     const [errors,setErrors]=useState<IError>({
         title:"",
         description:"",
@@ -37,16 +38,15 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
         quantity:"",
         images:"",
     })
-
+    console.log(specificProduct?.category.name)
     const initState:IInitState={
-        title:"",
-        description:"",
-        price:"",
-        category:"",
-        quantity:"",
-        images:[],
+        title:specificProduct?.title,
+        description:specificProduct?.title,
+        price:Number(specificProduct?.price),
+        category:specificProduct?.category.name,
+        quantity:specificProduct?.quantity,
+        images:specificProduct?.images,
     }
-
     const reducer=(state:IInitState,action:IAction)=>{
         if(action.type === 'input'){
             return {...state,[action.field]:action.value}
@@ -54,7 +54,6 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
         return state
     }
     const [state,dispatch]=useReducer(reducer,initState);
-
 
     const handleOnChange=(e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
         dispatch({
@@ -84,18 +83,20 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
     const formData = new FormData();
     const handleOnSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        if((state.title || specificProduct.title) && (state.description || specificProduct.description) &&  (!isNaN(Number(state.price)) || !isNaN(specificProduct.price) )&& ( Number(state.price) > 0 || Number(specificProduct.price)>0) && (state.category || specificProduct.category) &&  (!isNaN(Number(state.quantity)) || !isNaN(specificProduct.quantity)) &&  (Number(state.quantity) > 0 || Number(specificProduct.quantity))  && (state.images.length>0 || specificProduct.images.length>0)&& (state.images.length<=5 || specificProduct.images.length<=5)){
-
+        if((state.title || specificProduct?.title) && (state.description || specificProduct?.description) &&  (!isNaN(Number(state.price)) || !isNaN(specificProduct?.price) )&& ( Number(state.price) > 0 || Number(specificProduct?.price)>0) && (state.category || specificProduct?.category) &&  (!isNaN(Number(state.quantity)) || !isNaN(specificProduct?.quantity)) &&  (Number(state.quantity) > 0 || Number(specificProduct?.quantity))  && (state.images.length>0 || specificProduct?.images.length>0)&& (state.images.length<=5 || specificProduct?.images.length<=5)){
+            
             formData.append('title', state.title);
             formData.append('description', state.description);
-            formData.append('price', state.price);
-            formData.append('quantity', state.quantity);
+            formData.append('price', String(state.price));
+            formData.append('quantity', String(state.quantity));
             formData.append('category', state.category);
             state.images.forEach((image) => {
                 formData.append('images', image);
             });
             console.log(formData,"formate Datajjjjjjjjjjjj")
-            handleUpdataProduct("",formData)
+            
+            handleUpdataProduct(productId,formData)
+            setOpenUpdataProductContainer(false)
         }else{
             setErrors(prev=>{return{...prev,title:"",description:"",price:"",category:"",quantity:"",images:""}})
             if(!state.title.trim()){
@@ -127,6 +128,8 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
             }
         }
     }
+
+
   return (
     <motion.form 
             onSubmit={handleOnSubmit} className="fixed top-[50%] left-[50%] py-7 px-10 -translate-[50%] bg-white rounded-2xl min-h-[450px] min-w-[90%] md:min-w-[700px] "
@@ -140,7 +143,7 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5 h-[80%]">
                     <div >
                         <label htmlFor="title" className="block font-medium">Title:</label>
-                        <input id="title" type="text" placeholder="Title" name="title" value={state.title || specificProduct.title} onChange={(e)=>handleOnChange(e)} className={` w-full py-2 px-2 border-b-2 ${errors.title ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 `} />
+                        <input id="title" type="text" placeholder="Title" name="title" value={state.title }  onChange={(e)=>handleOnChange(e)} className={` w-full py-2 px-2 border-b-2 ${errors.title ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 `} />
                         {errors.title 
                         &&
                         <p className="text-red-700">{errors.title}</p>
@@ -148,7 +151,7 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
                     </div>
                     <div >
                         <label htmlFor="desc" className="block font-medium">Description:</label>
-                        <input id="desc" type="text" placeholder="Description" value={state.description || specificProduct.description} name="description" onChange={(e)=>handleOnChange(e)} className={` w-full py-2 px-2 border-b-2 ${errors.description ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 `} />
+                        <input id="desc" type="text" placeholder="Description" value={state.description  } name="description" onChange={(e)=>handleOnChange(e)} className={` w-full py-2 px-2 border-b-2 ${errors.description ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 `} />
                         {errors.description 
                         &&
                         <p className="text-red-700">{errors.description}</p>
@@ -156,7 +159,7 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
                     </div>
                     <div >
                         <label htmlFor="price" className="block font-medium">Price:</label>
-                        <input id="price" type="text" placeholder="Price" name="price" value={state.price || specificProduct.price} onChange={(e)=>handleOnChange(e)} className={` w-full py-2 px-2 border-b-2 ${errors.price ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 `} />
+                        <input id="price" type="text" placeholder="Price" name="price" value={state.price} onChange={(e)=>handleOnChange(e)} className={` w-full py-2 px-2 border-b-2 ${errors.price ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 `} />
                         {errors.price 
                         &&
                         <p className="text-red-700">{errors.price}</p>
@@ -165,10 +168,13 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
                     <div >
                         <label htmlFor="select" className="block font-medium">Categories:</label>
                         {/* <input type="select" placeholder="Title"  /> */}
-                        <select id="select" title="selection" name="category" value={state.category || specificProduct.category.name} onChange={(e)=>handleOnChange(e)} className={`  py-2 px-2 border-b-2 ${errors.category ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 w-full`}>
+                        <select id="select" title="selection" name="category" value={state.category } onChange={(e)=>handleOnChange(e)} className={`  py-2 px-2 border-b-2 ${errors.category ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 w-full`}>
                             <option value="">Select Category</option>
-                            <option value="Camera">Camera</option>
-                            <option value="Phones">Phones</option>
+                                {categories.map((cat) => (
+                                    <option key={cat} value={cat}>
+                                    {cat}
+                                    </option>
+                                ))}
                         </select>
                         {errors.category 
                         &&
@@ -177,7 +183,7 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
                     </div>
                     <div >
                         <label htmlFor="quantity" className="block font-medium">Quantity:</label>
-                        <input id="quantity"name="quantity" type="text" value={state.quantity || specificProduct.quantity} placeholder="Quantity" onChange={(e)=>handleOnChange(e)} className={` w-full py-2 px-2 border-b-2 ${errors.quantity ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 `} />
+                        <input id="quantity"name="quantity" type="text" value={state.quantity } placeholder="Quantity" onChange={(e)=>handleOnChange(e)} className={` w-full py-2 px-2 border-b-2 ${errors.quantity ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 `} />
                         {errors.quantity 
                         &&
                         <p className="text-red-700">{errors.quantity}</p>

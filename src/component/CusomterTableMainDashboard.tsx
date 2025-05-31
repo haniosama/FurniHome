@@ -14,7 +14,7 @@ const CusomterTableMainDashboard = ({customers}:{customers:ICustomer[]}) => {
                 </tr>
             </thead>
             <tbody>
-                {customers.length > 0 ? (
+                {customers?.length > 0 ? (
                 customers?.map((item) => (
                     <tr key={item._id} className="hover:bg-gray-50">
                     <td className="px-1 pl-3 py-3">
@@ -27,7 +27,7 @@ const CusomterTableMainDashboard = ({customers}:{customers:ICustomer[]}) => {
                         </div>
                     </td>
                     <td className="px-1 py-3 text-gray-700 text-center">{item.userDetails.username}</td>
-                    <td className="px-1 py-3 text-gray-700 text-center">{item.orders.length}</td>
+                    <td className="px-1 py-3 text-gray-700 text-center">{item.orders?.length}</td>
                     </tr>
                 ))
                 ) : (

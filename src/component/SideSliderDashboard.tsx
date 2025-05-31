@@ -10,85 +10,128 @@ import { MdSupportAgent } from "react-icons/md"
 import { useEffect, useState } from "react";
 import "../pages/Dasboard/Dashboard.css"
 import { useDispatch, useSelector } from "react-redux"
-import type { IState } from "../interfaces/productsDashbord"
-import { getcategoryForAdmin, getCouponsForAdmin, getCustomerForAdmin, getOrdersForAdmin, getProdectForAdmin } from "../lib/slices/dashboard"
+import type { IProduct, IState } from "../interfaces/productsDashbord"
+import { getcategoryForAdmin, getcategoryForManager, getCouponsForAdmin, getCouponsForManager, getCustomerForAdmin, getCustomerForManager, getOrdersForAdmin, getOrdersForManager, getProdectForAdmin, getProdectForManager } from "../lib/slices/dashboard"
 import { jwtDecode } from "jwt-decode"
 import type { IUserInfo } from "../interfaces/userInfoDashboard"
+import type { ICustomer } from "../interfaces/customerDashboard"
+import type { IOrder } from "../interfaces/orderDashboard"
+import type { ICategories } from "../interfaces/categoriesDasboard"
+import type { ICoupon } from "../interfaces/coupons"
 
 
 const SideSliderDashboard = () => {
     const [openSlider,setOpenSlider]=useState(false);
-    const [token,setToken]=useState<string>('')
+    const [userDecoded,setUserDecode]=useState<IUserInfo>()
 
-    const {orders,products,customers,categories,coupons}=useSelector((state:IState)=>state.dashBoard);
-    
+
+    const {orders,products,customers,categories,coupons}:{customers:ICustomer[],orders:IOrder[],categories:ICategories[],products:IProduct[],coupons:ICoupon[]}=useSelector((state:IState)=>state.dashBoard);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dispatch=useDispatch<any>()
     // get toke
     useEffect(()=>{
         const token=localStorage.getItem('Token') as string;
         if(token){
-            setToken(token);
+            const userDecodedFun = jwtDecode<IUserInfo>(token);
+            console.log(userDecoded)
+            setUserDecode(userDecodedFun)
         }
     },[])
     
-    // get order data
+    
     useEffect(()=>{
-        try{
-            const decodeUser=jwtDecode<IUserInfo>(token);
+        // get Order for admin
+        if(userDecoded?.role == "admin"){
+            try{
+                (async()=>{
+                    if(userDecoded.userID){
+                        await dispatch(getOrdersForAdmin(userDecoded.userID))
+                    }
+                })()
+            }
+            catch(error){
+                console.log(error)
+            }
+        }
+        console.log(userDecoded)
+        // all products for manager 
+        if(userDecoded?.role == "manager"){
             (async()=>{
-                if(decodeUser.userID){
-                    await dispatch(getOrdersForAdmin(decodeUser.userID))
-                }
+                await dispatch(getOrdersForManager())
             })()
         }
-        catch(error){
-            console.log(error)
-        }
-    },[dispatch,token])
+    },[dispatch,userDecoded])
     
-    // get products
     useEffect(()=>{
+        // get products Admin
+        if(userDecoded?.role == "admin"){
             (async()=>{
                 await dispatch(getProdectForAdmin())
                 // setSearchProducts(products)
             })()
-    },[dispatch,token]);
+        }
+        if(userDecoded?.role == "manager"){
+            // get products Manager
+            (async()=>{
+                await dispatch(getProdectForManager())
+            })()
+        }
+    },[dispatch,userDecoded]);
 
     // get customer data
     useEffect(() => {
-        const token = localStorage.getItem('Token') as string;
-        if (!token) return;
-
-        try {
-            const userDecoded = jwtDecode<IUserInfo>(token);
-            console.log(userDecoded);
-
-            if (userDecoded.userID) {
-            dispatch(getCustomerForAdmin(userDecoded.userID));
+        if(userDecoded?.role == "admin"){
+            const token = localStorage.getItem('Token') as string;
+            if (!token) return;
+            try {
+                if (userDecoded.userID) {
+                dispatch(getCustomerForAdmin(userDecoded.userID));
+                }
+            } catch (error) {
+                console.error("Token decode error:", error);
             }
-        } catch (error) {
-            console.error("Token decode error:", error);
         }
-    }, [dispatch]);
+        if(userDecoded?.role == "manager"){
+            (async()=>{
+                await dispatch(getCustomerForManager())
+            })()
+        }
+    }, [dispatch,userDecoded]);
     
     // get Categories data
     useEffect(() => {
-        try {
-            dispatch(getcategoryForAdmin());
-        } catch (error) {
-            console.error("Token decode error:", error);
+        if(userDecoded?.role == "admin"){
+            try {
+                dispatch(getcategoryForAdmin());
+            } catch (error) {
+                console.error("Token decode error:", error);
+            }
         }
-    }, [dispatch]);
-    
-    // get Coupons data
+        if(userDecoded?.role == "manager"){
+            (async()=>{
+                await dispatch(getcategoryForManager())
+            })()
+        }
+    }, [dispatch,userDecoded?.role]);
+    console.log(categories,"sssssssssssssssss")
+
     useEffect(() => {
-        try {
-            dispatch(getCouponsForAdmin());
-        } catch (error) {
-            console.error("Token decode error:", error);
+        if(userDecoded?.role == "admin"){
+            // get Coupons data Admin
+            try {
+                dispatch(getCouponsForAdmin());
+            } catch (error) {
+                console.error("Token decode error:", error);
+            }
         }
-    }, [dispatch]);
+        if(userDecoded?.role == "manager"){
+            // get Coupons data manager
+            (async()=>{
+                await dispatch(getCouponsForManager())
+            })()
+        }
+    }, [dispatch,userDecoded]);
+    // get order data
 
     return (
         <div className={`${openSlider?"translate-x-0":"-translate-x-[210px]"} lg:translate-x-0 h-[90vh] bg-white p-2 pt-5 fixed top-[65px] w-[210px] text-gray-700 transition-all duration-500 z-10`}>
