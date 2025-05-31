@@ -9,32 +9,7 @@ import type { IState } from "../../interfaces/productsDashbord";
 import Loader from "../../component/Loader";
 
 const CustomerDashboard = () => {
-//    const customersArr:ICustomer[] = [
-//   {
-//     customerName: "Alice Johnson",
-//     totalOrder: 250.75,
-//     email: "alice.johnson@example.com",
-//     phone: "+1-555-1234"
-//   },
-//   {
-//     customerName: "Bob Smith",
-//     totalOrder: 120.00,
-//     email: "bob.smith@example.com",
-//     phone: "+1-555-5678"
-//   },
-//   {
-//     customerName: "Catherine Green",
-//     totalOrder: 330.40,
-//     email: "catherine.green@example.com",
-//     phone: "+1-555-9012"
-//   },
-//   {
-//     customerName: "David Lee",
-//     totalOrder: 89.99,
-//     email: "david.lee@example.com",
-//     phone: "+1-555-3456"
-//   }
-// ];
+
 const [searchCustomers,setSearchCustomers]=useState<ICustomer[]>()
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
