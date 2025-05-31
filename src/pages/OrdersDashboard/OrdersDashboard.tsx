@@ -135,13 +135,13 @@ const OrdersDashboard = () => {
                     </thead>
                     <tbody >
                         {(searchOrders||orders).map((order,index:number)=>{
-                            const user =usersInfo.find((u)=>u._id ==order.userId)
+                            const user =usersInfo.find((u)=>u._id ==order?.userId)
                             return(
                                 <Fragment key={index}>
-                                {order.products.map((pro:IProduct,index2:number)=>{
+                                {order?.products.map((pro:IProduct,index2:number)=>{
                                     return(
                                         <Fragment key={index2}>
-                                            <tr key={order._id} className="hover:bg-gray-50">
+                                            <tr key={order?._id} className="hover:bg-gray-50">
                                             <td className="flex orders-center gap-3  px-4 py-6">
                                                 <img
                                                 src={pro.productDetails.imageCover || placeholderImage}
@@ -150,9 +150,9 @@ const OrdersDashboard = () => {
                                                 />
                                                 <p>{pro.productDetails.title.split(" ").slice(0,2).join(" ") }</p>
                                             </td>
-                                            <td className=" px-4 py-6 text-center text-gray-700">{user?user.username:"UnKnon"}</td>
-                                            <td className=" px-4 py-6 text-center text-gray-700">{order.order_details.shippingAddress.phone?order.order_details.shippingAddress.phone:"Unkown"}</td>
-                                            <td className=" px-4 py-6 text-center text-gray-700">{order.order_details.shippingAddress.city?order.order_details.shippingAddress.city:"Unkown"}</td>
+                                            <td className=" px-4 py-6 text-center text-gray-700">{user?user?.username:"UnKnon"}</td>
+                                            <td className=" px-4 py-6 text-center text-gray-700">{order?.order_details?.shippingAddress?.phone?order.order_details.shippingAddress.phone:"Unkown"}</td>
+                                            <td className=" px-4 py-6 text-center text-gray-700">{order?.order_details?.shippingAddress?.city?order.order_details.shippingAddress.city:"Unkown"}</td>
                                             <td className=" px-4 py-6 text-gray-700 text-center">
                                                 {new Date(order.createdAt).toLocaleDateString()}
                                                 <span className="text-sm text-gray-500 block text-center">
@@ -166,7 +166,7 @@ const OrdersDashboard = () => {
                                                 {pro.price}
                                             </td>
                                             <td className=" px-4 py-6 text-center">
-                                                <span className={`inline-block px-3 py-1 ${order.onlinePaymentDetails?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
+                                                <span className={`inline-block px-3 py-1 ${order?.onlinePaymentDetails?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
                                                     {order.onlinePaymentDetails?"Complated" : "Pendding"}
                                                 </span>
                                             </td>

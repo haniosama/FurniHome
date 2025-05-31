@@ -94,7 +94,8 @@ const AddProductForm = ({setOpenAddProductContainer,handleAddProduct}:{setOpenAd
                 formData.append('images', image);
             });
             console.log(formData,"formate Datajjjjjjjjjjjj")
-            handleAddProduct(formData)
+            handleAddProduct(formData);
+            setOpenAddProductContainer(false)
         }else{
             setErrors(prev=>{return{...prev,title:"",description:"",price:"",category:"",quantity:"",images:""}})
             if(!state.title.trim()){

@@ -96,6 +96,7 @@ const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,sp
             });
             console.log(formData,"formate Datajjjjjjjjjjjj")
             handleUpdataProduct("",formData)
+            setOpenUpdataProductContainer(false)
         }else{
             setErrors(prev=>{return{...prev,title:"",description:"",price:"",category:"",quantity:"",images:""}})
             if(!state.title.trim()){
