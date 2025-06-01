@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../lib/store/store";
 import { fetchProduct } from "../lib/slices/products";
 import { motion } from "framer-motion";
-import type IProducts from "../interfaces/product";
+import type Iproduct from "../interfaces/product";
 import { addTOCartAction } from "../lib/slices/cartSlice";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -21,7 +21,7 @@ const truncate = (str: string | undefined, max: number): string => {
 const Product = ({
   filteredProducts = [],
 }: {
-  filteredProducts?: IProducts[];
+  filteredProducts?: Iproduct[];
 }) => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const Product = ({
     dispatch(fetchProduct());
   }, [dispatch]);
 
-  const handleWishlistToggle = (product: IProducts) => {
+  const handleWishlistToggle = (product: Iproduct) => {
     if (!product._id) {
       toast.error("Product ID is missing.");
       return;
@@ -76,7 +76,7 @@ const Product = ({
         {products &&
           (filteredProducts?.length > 0 ? filteredProducts : products)
             .slice(0, 10)
-            .map((product: IProducts, index: number) => {
+            .map((product: Iproduct, index: number) => {
               const isInWishlist = wishlistIds.includes(product._id);
 
               return (
