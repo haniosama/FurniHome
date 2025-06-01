@@ -58,7 +58,7 @@ export const clearCartAction = createAsyncThunk("cart/clear", async () => {
   return res.data;
 });
 export const UpdateCartAction = createAsyncThunk(
-  "cart/add",
+  "cart/update",
   async (productId: string) => {
     const res = await axios.post(
       `${import.meta.env.VITE_API_URL}/api/cart/add`,

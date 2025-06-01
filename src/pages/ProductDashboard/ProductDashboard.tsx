@@ -60,7 +60,7 @@ const ProductDashboard = () => {
 
     console.log(usersInfo,"ffffffff")
 
-    const handleSearch=(e:ChangeEvent<HTMLInputElement>)=>{
+    const handleSearch=(e:ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
         const searchName=e.target.value.toLowerCase();
         if(searchName !==""){
             const filterProducts=products.filter(item=>item.title.toLowerCase().indexOf(searchName) !== -1);
