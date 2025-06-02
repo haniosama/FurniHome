@@ -110,6 +110,7 @@ export const getCustomerForAdmin=createAsyncThunk('dashboard/getCustomer',async(
 })
 
 export const getUserInformayionForUser=createAsyncThunk('dashboard/getUserInformation',async(userId:string)=>{
+    console.log(userId,"kkkkkkkkkkkkkkkkkkkk")
     try{
         const data =await (await fetch(`${baseUrl}/api/user/${userId}`,{
             headers:{
@@ -185,7 +186,7 @@ export const deleteAdminCoupon=createAsyncThunk('dashboard/deleteCoupon',async(c
                 'Authorization':`Bearer ${token}`
             }
         })).json();
-        console.log(data,"coupons")
+        console.log(data,"couponsssssssssssss")
         return data.coupons
     }catch(err){
         console.log(err,"erros")
@@ -209,6 +210,7 @@ export const getSpecificProduct=createAsyncThunk('dashboard/getSpecificProduct',
 })
 
 export const addProduct=createAsyncThunk('dashboard/addProduct',async(formtData:FormData)=>{
+    console.log(formtData)
     try{
         const data =await (await fetch(`${baseUrl}/api/product`,{
             method:"POST",
@@ -253,6 +255,24 @@ export const deleteProduct=createAsyncThunk('dashboard/deleteProduct',async(prod
         })).json();
         console.log(data,"delete")
         return data.products
+    }catch(err){
+        console.log(err,"erros")
+    }
+})
+
+
+
+export const addCoupon=createAsyncThunk('dashboard/addCoupon',async(formtData:FormData)=>{
+                console.log(formtData.get('code'),"lllll")
+    try{
+        const data =await (await fetch(`${baseUrl}/api/coupon`,{
+            method:"POST",
+            headers:{
+                'Authorization':`Bearer ${token}`
+            },
+            body:formtData,
+        })).json();
+        return data
     }catch(err){
         console.log(err,"erros")
     }
@@ -336,6 +356,10 @@ const dashboardAdmim=createSlice({
         builder.addCase(updataProduct.fulfilled,(state,action)=>{state.products=action.payload;state.isLoading=false});
         builder.addCase(updataProduct.pending,(state)=>{state.isLoading=true});
         builder.addCase(updataProduct.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
+        
+        builder.addCase(addCoupon.fulfilled,(state,action)=>{state.coupons=action.payload.coupons;state.isLoading=false});
+        builder.addCase(addCoupon.pending,(state)=>{state.isLoading=true});
+        builder.addCase(addCoupon.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
     }
 })
 
