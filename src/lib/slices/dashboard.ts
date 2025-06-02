@@ -165,6 +165,21 @@ export const getcategoryForAdmin=createAsyncThunk('dashboard/getCategies',async(
     }
 })
 
+export const deleteCategoryForAdmin=createAsyncThunk('dashboard/deleteCategoryForAdmin',async(categoryName:string)=>{
+    try{
+        const data =await (await fetch(`${baseUrl}/api/categories/${categoryName}`,{
+            method:"DELETE",
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        })).json();
+        console.log(data,"categoriesssssssssssss")
+        return data.data
+    }catch(err){
+        console.log(err,"erros")
+    }
+})
+
 export const getCouponsForAdmin=createAsyncThunk('dashboard/getCouponsForAdmin',async()=>{
     try{
         const data =await (await fetch(`${baseUrl}/api/coupon`,{
@@ -193,6 +208,21 @@ export const deleteAdminCoupon=createAsyncThunk('dashboard/deleteCoupon',async(c
     }
 })
 
+export const addCoupon=createAsyncThunk('dashboard/addCoupon',async(formtData:FormData)=>{
+                console.log(formtData.get('code'),"lllll")
+    try{
+        const data =await (await fetch(`${baseUrl}/api/coupon`,{
+            method:"POST",
+            headers:{
+                'Authorization':`Bearer ${token}`
+            },
+            body:formtData,
+        })).json();
+        return data
+    }catch(err){
+        console.log(err,"erros")
+    }
+})
 
 
 export const getSpecificProduct=createAsyncThunk('dashboard/getSpecificProduct',async(productId:string)=>{
@@ -262,21 +292,6 @@ export const deleteProduct=createAsyncThunk('dashboard/deleteProduct',async(prod
 
 
 
-export const addCoupon=createAsyncThunk('dashboard/addCoupon',async(formtData:FormData)=>{
-                console.log(formtData.get('code'),"lllll")
-    try{
-        const data =await (await fetch(`${baseUrl}/api/coupon`,{
-            method:"POST",
-            headers:{
-                'Authorization':`Bearer ${token}`
-            },
-            body:formtData,
-        })).json();
-        return data
-    }catch(err){
-        console.log(err,"erros")
-    }
-})
 
 
 
@@ -325,13 +340,17 @@ const dashboardAdmim=createSlice({
         builder.addCase(getUserInformayionForUser.pending,(state)=>{state.isLoading=true});
         builder.addCase(getUserInformayionForUser.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
 
-        builder.addCase(deleteOrderForUser.fulfilled,(state,action)=>{state.orders=[...action.payload.remainingOrders];state.isLoading=false});
+        builder.addCase(deleteOrderForUser.fulfilled,(state,action)=>{state.orders=action.payload?.remainingOrders;state.isLoading=false});
         builder.addCase(deleteOrderForUser.pending,(state)=>{state.isLoading=true});
         builder.addCase(deleteOrderForUser.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
         
         builder.addCase(getcategoryForAdmin.fulfilled,(state,action)=>{state.categories=action.payload;state.isLoading=false});
         builder.addCase(getcategoryForAdmin.pending,(state)=>{state.isLoading=true});
         builder.addCase(getcategoryForAdmin.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
+        
+        builder.addCase(deleteCategoryForAdmin.fulfilled,(state,action)=>{state.categories=action.payload.data;state.isLoading=false});
+        builder.addCase(deleteCategoryForAdmin.pending,(state)=>{state.isLoading=true});
+        builder.addCase(deleteCategoryForAdmin.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
         
         builder.addCase(getCouponsForAdmin.fulfilled,(state,action)=>{state.coupons=action.payload;state.isLoading=false});
         builder.addCase(getCouponsForAdmin.pending,(state)=>{state.isLoading=true});

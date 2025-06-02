@@ -32,6 +32,7 @@ const SideSliderDashboard = () => {
     // get toke
     useEffect(()=>{
         const token=localStorage.getItem('Token') as string;
+        
         if(token){
             const userDecodedFun = jwtDecode<IUserInfo>(token);
             console.log(userDecoded)
