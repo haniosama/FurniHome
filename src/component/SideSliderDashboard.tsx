@@ -26,11 +26,13 @@ const SideSliderDashboard = () => {
 
 
     const {orders,products,customers,categories,coupons}:{customers:ICustomer[],orders:IOrder[],categories:ICategories[],products:IProduct[],coupons:ICoupon[]}=useSelector((state:IState)=>state.dashBoard);
+    console.log(orders,"oooooooooo")
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dispatch=useDispatch<any>()
     // get toke
     useEffect(()=>{
         const token=localStorage.getItem('Token') as string;
+        
         if(token){
             const userDecodedFun = jwtDecode<IUserInfo>(token);
             console.log(userDecoded)

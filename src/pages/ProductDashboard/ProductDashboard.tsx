@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import Loader from "../../component/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import AddProductForm from "../../component/AddProductForm";
-import { addProduct, deleteProduct, getSpecificProduct, updataProduct } from "../../lib/slices/dashboard";
+import { addProduct, deleteProduct, getcategoryForAdmin, getSpecificProduct, updataProduct } from "../../lib/slices/dashboard";
 import UpdataProductForm from "../../component/UpdataProductForm";
 import type { IUserInfo } from "../../interfaces/userInfoDashboard";
 import { jwtDecode } from "jwt-decode";
@@ -41,7 +41,8 @@ const ProductDashboard = () => {
 
 
     const handleAddProduct=useCallback(async(formtData:FormData)=>{
-        await dispatch(addProduct(formtData))
+        await dispatch(addProduct(formtData));
+        await dispatch(getcategoryForAdmin());
     },[dispatch])
     
     const handleUpdataProduct=useCallback(async(productId:string,formtData:FormData)=>{

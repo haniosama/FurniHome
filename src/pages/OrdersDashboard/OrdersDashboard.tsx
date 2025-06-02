@@ -19,8 +19,10 @@ const OrdersDashboard = () => {
     useEffect(()=>{
         try{
             (async()=>{
-                if(orders.length>0){
-                    for(let i=0;i<orders.length;i++){
+                if(orders?.length>0){
+                    console.log("aaaa")
+                    for(let i=0;i<orders?.length;i++){
+                        console.log(orders[i].userId,"ppppppppppp")
                         await dispatch(getUserInformayionForUser(orders[i].userId))
                     }
                 }
@@ -35,7 +37,7 @@ const OrdersDashboard = () => {
         const orderId=e.target.value.toLowerCase();
         if(orderId !==""){
             const filterorders:IOrder[]=orders.filter((item:IOrder)=>item._id.toLowerCase().indexOf(orderId) !== -1);
-            if(filterorders.length>0){
+            if(filterorders?.length>0){
                 setSearchOrders(filterorders)
             }else{
                 toast.error('Order Not Found', {
@@ -85,8 +87,9 @@ const OrdersDashboard = () => {
                         </tr>
                     </thead>
                     <tbody >
-                        {(searchOrders||orders).map((order)=>{
-                            const user =usersInfo.find((u)=>u._id ==order.userId)
+                        {orders?.length>0?
+                        (searchOrders||orders)?.map((order)=>{
+                            const user =usersInfo?.find((u)=>u._id ==order.userId) || null
                             return(
                                 <Fragment key={order._id}>
                                     <tr key={order._id} className="hover:bg-gray-50">
@@ -123,7 +126,12 @@ const OrdersDashboard = () => {
                                     </tr>
                                 </Fragment>
                             )
-                        })}
+                        })
+                        :
+                        <tr>
+                            <td className="text-center py-6 text-gray-500" colSpan={7}>Not Found Orders</td>
+                        </tr>
+                        }
                     </tbody>
                 </motion.table>
             </div>
@@ -144,9 +152,9 @@ const OrdersDashboard = () => {
                         </tr>
                     </thead>
                     <tbody >
-                        {orders.length>0?
+                        {orders?.length>0?
                             (searchOrders||orders).map((order,index:number)=>{
-                                const user =usersInfo.find((u)=>u._id ==order?.userId)
+                                const user =usersInfo?.find((u)=>u._id ==order?.userId) || null
                                 return(
                                     <Fragment key={index}>
                                     {order?.products.map((pro:IProduct,index2:number)=>{

@@ -27,6 +27,7 @@ interface IError{
     images:string,
 }
 const AddProductForm = ({setOpenAddProductContainer,handleAddProduct}:{setOpenAddProductContainer:(val:boolean)=>void,handleAddProduct:(val:FormData)=>void}) => {
+    const categories = ["Camera", "Phones", "Home","Printers","Headphones","Laptops", "Accessories"];
 
     const [errors,setErrors]=useState<IError>({
         title:"",
@@ -165,10 +166,13 @@ const AddProductForm = ({setOpenAddProductContainer,handleAddProduct}:{setOpenAd
                     <div >
                         <label htmlFor="select" className="block font-medium">Categories:</label>
                         {/* <input type="select" placeholder="Title"  /> */}
-                        <select id="select" title="selection" name="category" value={state.category} onChange={(e)=>handleOnChange(e)} className={`  py-2 px-2 border-b-2 ${errors.category ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 w-full`}>
+                        <select id="select" title="selection" name="category" value={state.category } onChange={(e)=>handleOnChange(e)} className={`  py-2 px-2 border-b-2 ${errors.category ?"border-red-700" :"border-sky-700 "} outline-none rounded-sm transition-all duration-300 hover:scale-105 w-full`}>
                             <option value="">Select Category</option>
-                            <option value="Camera">Camera</option>
-                            <option value="Phones">Phones</option>
+                                {categories.map((cat) => (
+                                    <option key={cat} value={cat}>
+                                    {cat}
+                                    </option>
+                                ))}
                         </select>
                         {errors.category 
                         &&

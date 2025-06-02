@@ -2,16 +2,24 @@ import type { ICategories } from "../../interfaces/categoriesDasboard";
 import placeholderImage from "../../assets/placeholderProduct.jpg"
 import { IoMdSearch } from "react-icons/io";
 import { Bounce, toast } from "react-toastify";
-import { useState, type ChangeEvent } from "react";
+import {  useState, type ChangeEvent } from "react";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { IProduct, IState } from "../../interfaces/productsDashbord";
+import { deleteCategoryForAdmin, getcategoryForAdmin, getcategoryForManager} from "../../lib/slices/dashboard";
+import { jwtDecode } from "jwt-decode";
+import type { IUserInfo } from "../../interfaces/userInfoDashboard";
+
 
 
 const CategoriesDashboard = () => {
 
     const [searchCategories,setSearchCategories]=useState<ICategories[]>()
-    const {categories,products}=useSelector((state:IState)=>state.dashBoard)
+    const {categories,products}=useSelector((state:IState)=>state.dashBoard);
+    
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const dispatch=useDispatch<any>();
+
 
     console.log(categories,"jjjjjjjjjjjj")
     const handleSearch=(e:ChangeEvent<HTMLInputElement>)=>{
@@ -38,8 +46,20 @@ const CategoriesDashboard = () => {
             setSearchCategories(categories);
         }
     }
-    const deleteCategory=(categoryName:string)=>{
-        console.log(categoryName)
+    const deleteCategory=async(categoryName:string)=>{
+        
+        await dispatch(deleteCategoryForAdmin(categoryName));
+
+        const token=localStorage.getItem('Token') as string;
+                
+        if(token){
+            const userDecodedFun = jwtDecode<IUserInfo>(token);
+            if(userDecodedFun.role == "admin"){
+                await dispatch(getcategoryForAdmin())
+            }else{
+                await dispatch(getcategoryForManager())
+            }
+        }
     }
     console.log(categories)
   return (
