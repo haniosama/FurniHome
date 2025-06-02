@@ -17,7 +17,7 @@ const CardDashboard = ({header,icon,ratio,quantity}:props) => {
             </div>
         </div>
         <div className="px-2 py-1 bg-[#3d5f9e38] inline-block text-[#3d5f9e] rounded-3xl font-semibold my-3">{ratio}%</div>
-        <p className="text-2xl scale-x-110 translate-x-5 font-semibold">${(quantity).toLocaleString('en-US',{minimumFractionDigits: 2, maximumFractionDigits: 2,})}</p>
+        <p className="text-2xl scale-x-110 translate-x-5 font-semibold">{header.includes("Sales") && '$'}{(quantity)?.toLocaleString('en-US')}</p>
     </div>
   )
 }

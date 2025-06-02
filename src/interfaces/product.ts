@@ -1,3 +1,17 @@
+
+interface IProducts {
+  _id: string;
+  title: string;
+  description: string;
+  rating: number;
+  price: number;
+  imageCover: string;
+  category: {
+    name: string;
+  };
+}
+
+
 export interface Iproduct {
   _id: string;
   title: string;
@@ -31,3 +45,4 @@ export interface ICartProduct {
   quantity: number;
   productId: Iproduct;
 }
+export type { IProducts as default };

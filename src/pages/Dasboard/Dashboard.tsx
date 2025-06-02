@@ -5,7 +5,8 @@ const DashBoard = () => {
   return <div className="flex">
     <SideSliderDashboard/>
     <div className="lg:ml-[230px] bg-[#f4f5fc] min-h-[99vh] w-full p-4 ">
-        <Outlet/>
+      
+    <Outlet/>
     </div>
   </div>;
 };

@@ -71,18 +71,18 @@ const Setting: React.FC = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
-        const data = res.data.data[0];
+        const data = res.data?.data[0];
         setUserInfo((prev) => ({
           ...prev,
-          username: data.username,
-          email: data.email,
-          phone: data.phone,
-          avatar: data.avatar,
+          username: data?.username,
+          email: data?.email,
+          phone: data?.phone,
+          avatar: data?.avatar,
         }));
         setOriginalData({
-          username: data.username,
-          phone: data.phone,
-          avatar: data.avatar,
+          username: data?.username,
+          phone: data?.phone,
+          avatar: data?.avatar,
         });
       })
       .catch(console.error);
@@ -103,8 +103,8 @@ const Setting: React.FC = () => {
 
   const hasChanges = () => {
     return (
-      userInfo.username !== originalData.username ||
-      userInfo.phone !== originalData.phone ||
+      userInfo.username !== originalData?.username ||
+      userInfo.phone !== originalData?.phone ||
       !!userInfo.avatarFile ||
       !!userInfo.oldPassword ||
       !!userInfo.newPassword
@@ -124,14 +124,14 @@ const Setting: React.FC = () => {
 
     const formData = new FormData();
     if (userInfo.avatarFile) {
-      formData.append("avatar", userInfo.avatarFile);
+      formData?.append("avatar", userInfo.avatarFile);
     } else {
-      formData.append("oldAvatar", userInfo.avatar || "Ronaldo.jpg");
+      formData?.append("oldAvatar", userInfo.avatar || "Ronaldo.jpg");
     }
-    formData.append("username", userInfo.username);
-    formData.append("phone", userInfo.phone);
-    formData.append("oldPassword", userInfo.oldPassword);
-    formData.append("newPassword", userInfo.newPassword);
+    formData?.append("username", userInfo.username);
+    formData?.append("phone", userInfo.phone);
+    formData?.append("oldPassword", userInfo.oldPassword);
+    formData?.append("newPassword", userInfo.newPassword);
 
     try {
       setLoading(true);
