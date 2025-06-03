@@ -16,4 +16,5 @@ export interface IOrder{
   onlinePaymentDetails:{
     amount_total:number
   }
+  orderStatus:"Delivered" | "Pending"  |"Shipped"
 }

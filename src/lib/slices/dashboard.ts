@@ -283,8 +283,25 @@ export const deleteProduct=createAsyncThunk('dashboard/deleteProduct',async(prod
                 'Authorization':`Bearer ${token}`
             },
         })).json();
-        console.log(data,"delete")
         return data.products
+    }catch(err){
+        console.log(err,"erros")
+    }
+})
+
+export const changeStatus=createAsyncThunk('dashboard/changeStatus',async({orderId,orderStatus}:{orderId:string,orderStatus:string})=>{
+    console.log(orderStatus,"uuuuuuuuuuuuuuu")
+    try{
+        const data =await (await fetch(`${baseUrl}/api/order/status/${orderId}`,{
+            method:"POST",
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization':`Bearer ${token}`
+            },
+            body:JSON.stringify({orderStatus})      
+        })).json();
+        console.log(data,"deleteoooooooooooooo")
+        return data.orders
     }catch(err){
         console.log(err,"erros")
     }
@@ -321,6 +338,10 @@ const dashboardAdmim=createSlice({
         builder.addCase(getCouponsForManager.fulfilled,(state,action)=>{state.coupons=action.payload;state.isLoading=false});
         builder.addCase(getCouponsForManager.pending,(state)=>{state.isLoading=true});
         builder.addCase(getCouponsForManager.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
+        
+        builder.addCase(changeStatus.fulfilled,(state,action)=>{state.orders=action.payload;state.isLoading=false});
+        builder.addCase(changeStatus.pending,(state)=>{state.isLoading=true});
+        builder.addCase(changeStatus.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
         
         
         // ============== Admin ============
