@@ -4,25 +4,36 @@ import { Bounce, toast } from "react-toastify";
 import { Fragment, useEffect, useState, type ChangeEvent } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import {  deleteOrderForUser, getUserInformayionForUser } from "../../lib/slices/dashboard";
+import {  changeStatus, deleteOrderForUser, getUserInformayionForUser } from "../../lib/slices/dashboard";
 import type { IProduct, IState } from "../../interfaces/productsDashbord";
 import type { IOrder } from "../../interfaces/orderDashboard";
 import Loader from "../../component/Loader";
+import type { IUserInfo } from "../../interfaces/userInfoDashboard";
+import { jwtDecode } from "jwt-decode";
 
 const OrdersDashboard = () => {
 
     const [searchOrders,setSearchOrders]=useState<IOrder[]>()
+    const [userDecoded,setUserDecode]=useState<IUserInfo>()
+    
     // const [useInfo,setUserInfo]=useState<IUserInfo>();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dispatch=useDispatch<any>();
     const {orders,usersInfo,isLoading}=useSelector((state:IState)=>state.dashBoard);
+
+    useEffect(()=>{
+        const token=localStorage.getItem('Token') as string;
+        if(token){
+            const userDecodedFun = jwtDecode<IUserInfo>(token);
+            console.log(userDecoded)
+            setUserDecode(userDecodedFun)
+        }
+    },[])
     useEffect(()=>{
         try{
             (async()=>{
                 if(orders?.length>0){
-                    console.log("aaaa")
                     for(let i=0;i<orders?.length;i++){
-                        console.log(orders[i].userId,"ppppppppppp")
                         await dispatch(getUserInformayionForUser(orders[i].userId))
                     }
                 }
@@ -33,6 +44,7 @@ const OrdersDashboard = () => {
         }
     },[dispatch,orders]) 
     
+
     const handleSearch=(e:ChangeEvent<HTMLInputElement>)=>{
         const orderId=e.target.value.toLowerCase();
         if(orderId !==""){
@@ -64,6 +76,9 @@ const OrdersDashboard = () => {
     const deleteOrder=async(orderId:string)=>{
         await dispatch(deleteOrderForUser(orderId))
     }
+    const handleChangeStatus=async(orderId:string,orderStatus:string)=>{
+        await dispatch(changeStatus({orderId,orderStatus}))
+    }
     return (
         <>
             <div className="flex items-center justify-between mt-7 pr-10 flex-wrap gap-y-3 ">
@@ -77,51 +92,44 @@ const OrdersDashboard = () => {
                 <motion.table initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.4 }} className="min-w-full border-collapse bg-white mt-10 ">
                     <thead className="bg-gray-100">
                         <tr>
-                            <th className=" px-4 py-4 text-center text-gray-700 w-[150px]">Customer Name</th>
+                            <th className=" px-0 py-4 text-center text-gray-700 w-[150px]">Customer Name</th>
                             <th className=" px-4 py-4 text-center text-gray-700">Order ID</th>
-                            <th className=" px-4 py-4 text-center text-gray-700">Total</th>
-                            <th className=" px-4 py-4 text-center text-gray-700 min-w-[150px]">Payment Status</th>
-                            <th className=" px-4 py-4 text-center text-gray-700 min-w-[120px]">Date</th>
-                            <th className=" px-4 py-4 text-center text-gray-700 min-w-[150px]">Order Status</th>
-                            <th className=" px-4 py-4 text-center text-gray-700 min-w-[150px]">Actions</th>
+                            <th className=" px-0 py-4 text-center text-gray-700 min-w-[150px]">Payment Status</th>
+                            <th className=" px-2 py-4 text-center text-gray-700">Total</th>
+                            <th className=" px-0 py-4 text-center text-gray-700 min-w-[150px]">Actions</th>
                         </tr>
                     </thead>
                     <tbody >
                         {orders?.length>0?
                         (searchOrders||orders)?.map((order)=>{
                             const user =usersInfo?.find((u)=>u._id ==order.userId) || null
+                            console.log(user?.role)
                             return(
                                 <Fragment key={order._id}>
                                     <tr key={order._id} className="hover:bg-gray-50">
-                                        <td className=" px-4 py-6 text-center text-gray-700">{user?user.username:"UnKnon"}</td>
-                                        <td className=" px-4 py-6 text-center text-gray-700">{order._id}</td>
-                                        
-                                        <td className=" px-4 py-6 text-center  text-gray-700">
-                                            {order.total}
-                                        </td>
+                                        <td className=" px-0 py-6 text-center text-gray-700">{user?user.username:"UnKnon"}</td>
+                                        <td className=" px-2 py-6 text-center text-gray-700">{order._id}</td>
                                         <td className=" px-0 py-6 text-center">
-                                            <span className={`inline-block px-3 py-1 ${order.onlinePaymentDetails?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
+                                            <span className={`inline-block px-2 py-1 ${order?.onlinePaymentDetails || order.orderStatus == "Delivered"?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
                                                 {order.onlinePaymentDetails?"Online Payment" : "Pay on Delivery"}
                                             </span>
                                         </td>
-                                        <td className=" px-4 py-6 text-gray-700 text-center">
-                                            {new Date(order.createdAt).toLocaleDateString()}
-                                            <span className="text-sm text-gray-500 block text-center">
-                                                {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                            </span>
+                                        <td className=" px-2 py-6 text-center  text-gray-700">
+                                            {order.total}
                                         </td>
-                                        <td className=" px-0 py-6 text-center">
-                                            <span className={`inline-block px-3 py-1 ${order.onlinePaymentDetails?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
-                                                {/* {order.onlinePaymentDetails?"Online Payment" : "Pay on Delivery"} */}
-                                                <p>Pending</p>
-                                                {/* <p>Shipped </p>
-                                                <p>Delivered </p> */}
-                                            </span>
-                                        </td>
+                                        {userDecoded?.role == "admin"?
+                                            <td className=" px-0 py-6 text-center  text-gray-700">
+                                                <button onClick={()=>deleteOrder(order._id)} className="bg-red-700 text-white py-1 px-4 rounded-lg transition-all duration-300 border border-red-700 hover:bg-white hover:text-red-800 cursor-pointer">Delete</button>
+                                            </td>
+                                        :
+                                            <td className="px-2 py-6 text-center text-gray-700 flex flex-wrap justify-center w-[350px] items-center gap-2">
+                                                <button onClick={()=>handleChangeStatus(order._id,"Pending")} className={` mr-2 mt-2 ${order.orderStatus == "Pending" && 'bg-sky-700 text-white'} py-1 px-4 rounded-lg transition-all duration-300 border border-sky-700 hover:bg-sky-700 hover:text-white cursor-pointer`}>Pending</button>
+                                                <button onClick={()=>handleChangeStatus(order._id,"Shipped")} className={` mr-2 mt-2 ${order.orderStatus == "Shipped" && 'bg-sky-700 text-white'} py-1 px-4 rounded-lg transition-all duration-300 border border-sky-700 hover:bg-sky-700 hover:text-white cursor-pointer`}>Shipped</button>
+                                                <button onClick={()=>handleChangeStatus(order._id,"Delivered")} className={` mr-2 mt-2 ${order.orderStatus == "Delivered" && 'bg-sky-700 text-white'} py-1 px-4 rounded-lg transition-all duration-300 border border-sky-700 hover:bg-sky-700 hover:text-white cursor-pointer`}>Delivered</button>
+                                                <button onClick={()=>deleteOrder(order._id)} className="bg-red-700  mr-2 mt-2 text-white py-1 px-4 rounded-lg transition-all duration-300 border border-red-700 hover:bg-white hover:text-red-800 cursor-pointer">Delete</button>
+                                            </td>
+                                        }
                                         
-                                        <td className=" px-4 py-6 text-center  text-gray-700">
-                                            <button onClick={()=>deleteOrder(order._id)} className="bg-red-700 text-white py-1 px-4 rounded-lg transition-all duration-300 border border-red-700 hover:bg-white hover:text-red-800 cursor-pointer">Delete</button>
-                                        </td>
                                         
                                     </tr>
                                 </Fragment>
@@ -148,7 +156,7 @@ const OrdersDashboard = () => {
                             <th className=" px-4 py-4 text-center text-gray-700 w-[120px]">Date</th>
                             <th className=" px-4 py-4 text-center text-gray-700">QTY</th>
                             <th className=" px-4 py-4 text-center text-gray-700">Price</th>
-                            <th className=" px-4 py-4 text-center text-gray-700 min-w-[150px]">Payment Status</th>
+                            <th className=" px-4 py-4 text-center text-gray-700 min-w-[150px]">Order Status</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -184,9 +192,10 @@ const OrdersDashboard = () => {
                                                 <td className=" px-4 py-6 text-center text-gray-700">
                                                     {pro.price}
                                                 </td>
-                                                <td className=" px-4 py-6 text-center">
-                                                    <span className={`inline-block px-2 py-1 ${order?.onlinePaymentDetails?"text-green-800 border border-green-800 bg-green-100 " : "text-gray-800 border border-gray-800 bg-gray-100"}   rounded-full font-semibold`}>
-                                                        {order.onlinePaymentDetails?"Online Payment" : "Pay on Delivery"}
+                                                <td className="text-center">
+                                                    <span className={`inline-block px-3 py-1 ${order.orderStatus == "Delivered"?"text-green-800 border border-green-800 bg-green-100 ": order.orderStatus =="Shipped"?"text-blue-800 border border-blue-800 bg-blue-100" : "text-gray-800 border border-gray-800 bg-gray-100"} rounded-full font-semibold`}>
+                                                        <p>{order.orderStatus}</p>
+                                                        
                                                     </span>
                                                 </td>
                                                 
