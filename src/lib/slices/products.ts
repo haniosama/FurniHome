@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import Cookie from "js-cookie";
+// import Cookie from "js-cookie";
 
-const token = Cookie.get("token");
-// const token =
-//   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODI3OTkxZDkxNGU3NzlkNzI5NDNhZmEiLCJlbWFpbCI6ImV6emF0eW91c3NlZkBnbWFpbC5jb20iLCJ2ZXJpZmllZCI6ZmFsc2UsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3NDMyMDM3fQ.diNj3N8WuUiiynHuAh49WPd0NdKT2j4_J6UDVe-kJgY";
+// const token = Cookie.get("token");
+const token =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODI3OTkxZDkxNGU3NzlkNzI5NDNhZmEiLCJlbWFpbCI6ImV6emF0eW91c3NlZkBnbWFpbC5jb20iLCJ2ZXJpZmllZCI6ZmFsc2UsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3NDMyMDM3fQ.diNj3N8WuUiiynHuAh49WPd0NdKT2j4_J6UDVe-kJgY";
 export const fetchProduct = createAsyncThunk(
   "product/fetchProduct",
   async () => {
