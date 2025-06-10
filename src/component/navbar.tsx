@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
@@ -273,17 +274,7 @@ export default function Navbar() {
                 <span>|</span>
                 <Link to="/login" className="hover:text-gray-300 cursor-pointer">
                   Login
-                </Link>
-                <span>|</span>
-                <Link
-                  to="/setting"
-                  className="hover:text-gray-300 cursor-pointer flex items-center gap-1"
-                  title="Settings"
-                >
-                  className="hover:text-gray-300 flex items-center gap-1"
-                  title="Settings">
-                  <FiSettings className="text-xl" />
-                </Link>
+                </Link>                
               </div>
               </>
               }
