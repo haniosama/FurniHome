@@ -58,7 +58,7 @@ const Setting: React.FC = () => {
     avatar: "",
   });
 
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  // const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const decoded: DecodedToken = jwtDecode(token || "");
@@ -97,7 +97,7 @@ const Setting: React.FC = () => {
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setPreviewImage(URL.createObjectURL(file));
+      // setPreviewImage(URL.createObjectURL(file));
       setUserInfo((prev) => ({ ...prev, avatarFile: file }));
     }
   };
@@ -194,6 +194,7 @@ const Setting: React.FC = () => {
           </label>
         </motion.div>
         <input
+        title="input"
           type="file"
           id="avatar"
           onChange={handleImageChange}
