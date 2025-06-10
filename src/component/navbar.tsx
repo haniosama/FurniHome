@@ -234,9 +234,7 @@ export default function Navbar() {
                   className="hover:text-gray-300 cursor-pointer"
                   title="Shopping Cart"
                 >
-                  className="hover:text-gray-300"
-                  title="Shopping Cart">
-                  <div className="relative w-6 h-6">
+                <div className="relative w-6 h-6">
                     <FaShoppingCart className="text-xl hover:text-gray-300" />
                     <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                       {!productsCart ? (
