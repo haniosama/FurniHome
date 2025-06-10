@@ -1,12 +1,12 @@
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
-import type { AppDispatch, RootState } from "../../lib/store/store";
-import { useMemo } from "react";
 import Loader from "../../component/Loader";
 import {
   clearCartAction,
   deleteFromCartAction,
 } from "../../lib/slices/cartSlice";
+import type { AppDispatch, RootState } from "../../lib/store/store";
 // import img1 from "react-store/src/assets/image1.jpg";
 const Cart = () => {
   const { productsCart, getLoading, removeLoading, clearLoading } = useSelector(
@@ -84,7 +84,9 @@ const Cart = () => {
                       <p className="text-sm text-gray-600">
                         {productId.category.name}
                       </p>
-                      <p className="text-gray-600">EGP {productId.price}</p>
+                      <p className="text-gray-600">
+                        EGP {productId.price > 30 ? productId.price : 35}
+                      </p>
                     </div>
                     <div className="flex flex-col items-center justify-between gap-4">
                       <button
