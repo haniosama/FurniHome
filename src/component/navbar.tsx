@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
@@ -67,15 +68,22 @@ export default function Navbar() {
           <Link to="/contact" className="hover:text-gray-300 cursor-pointer">
             Contact
           </Link>
+          {loginToken && userDecode?.role == "user"
+              &&
+             <Link to="/orders" className="hover:text-gray-300">
+                Orders
+              </Link>
+            } 
+         
           {loginToken && userDecode?.role !== "user"
           &&
             <Link to="/dashboard" className="hover:text-gray-300 cursor-pointer">
               Dashboard
             </Link>
           }
+          
         </div>
         <div className="hidden md:flex items-center space-x-4 justify-center">
-
           {loginToken?
           <>
           {userDecode?.role == "user"
@@ -133,7 +141,6 @@ export default function Navbar() {
               </Link>
             </>
             }
-          
         </div>
 
         {/* Hamburger Button */}
@@ -143,8 +150,7 @@ export default function Navbar() {
               className="w-6 h-6"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+              viewBox="0 0 24 24">
               {isOpen ? (
                 <path
                   strokeLinecap="round"
@@ -174,8 +180,7 @@ export default function Navbar() {
             animate="open"
             exit="closed"
             variants={menuVariants}
-            className="md:hidden bg-gray-800 px-6 overflow-hidden"
-          >
+            className="md:hidden bg-gray-800 px-6 overflow-hidden">
             <div className="flex flex-col py-4 space-y-2">
               <Link to="/" className="hover:text-gray-300 cursor-pointer">
                 Home
@@ -189,13 +194,18 @@ export default function Navbar() {
               <Link to="/contact" className="hover:text-gray-300 cursor-pointer">
                 Contact
               </Link>
+              {loginToken && userDecode?.role == "user"
+                &&
+               <Link to="/orders" className="hover:text-gray-300">
+                  Orders
+                </Link>
+              } 
               {userDecode?.role !== "user"
               &&
               <Link to="/dashboard" className="hover:text-gray-300 cursor-pointer">
                 Dashboard
               </Link>
               }
-
               {loginToken?
               <>
               {loginToken && userDecode?.role == "user"
@@ -225,7 +235,7 @@ export default function Navbar() {
                   className="hover:text-gray-300 cursor-pointer"
                   title="Shopping Cart"
                 >
-                  <div className="relative w-6 h-6">
+                <div className="relative w-6 h-6">
                     <FaShoppingCart className="text-xl hover:text-gray-300" />
                     <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                       {!productsCart ? (
@@ -264,8 +274,7 @@ export default function Navbar() {
                 <span>|</span>
                 <Link to="/login" className="hover:text-gray-300 cursor-pointer">
                   Login
-                </Link>
-                <span>|</span>
+                </Link>                
               </div>
               </>
               }

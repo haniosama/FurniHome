@@ -29,6 +29,17 @@ const SideSliderDashboard = () => {
     console.log(orders,"oooooooooo")
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dispatch=useDispatch<any>()
+
+    useEffect(()=>{
+        const alreadyReloaded = sessionStorage.getItem("reloaded");
+
+        console.log(alreadyReloaded,"zzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+        if(!alreadyReloaded){
+            window.location.reload()
+            sessionStorage.setItem("reloaded", "true");
+        }
+
+    },[])
     // get toke
     useEffect(()=>{
         const token=localStorage.getItem('Token') as string;
@@ -62,7 +73,7 @@ const SideSliderDashboard = () => {
                 await dispatch(getOrdersForManager())
             })()
         }
-    },[dispatch,userDecoded])
+    },[dispatch,userDecoded,userDecoded?.role])
     
     useEffect(()=>{
         // get products Admin
@@ -78,7 +89,7 @@ const SideSliderDashboard = () => {
                 await dispatch(getProdectForManager())
             })()
         }
-    },[dispatch,userDecoded]);
+    },[dispatch,userDecoded,userDecoded?.role]);
 
     // get customer data
     useEffect(() => {
@@ -94,11 +105,9 @@ const SideSliderDashboard = () => {
             }
         }
         if(userDecoded?.role == "manager"){
-            (async()=>{
-                await dispatch(getCustomerForManager())
-            })()
+            dispatch(getCustomerForManager())
         }
-    }, [dispatch,userDecoded]);
+    }, [dispatch,userDecoded,userDecoded?.role]);
     
     // get Categories data
     useEffect(() => {
@@ -114,7 +123,7 @@ const SideSliderDashboard = () => {
                 await dispatch(getcategoryForManager())
             })()
         }
-    }, [dispatch,userDecoded?.role]);
+    }, [dispatch,userDecoded,userDecoded?.role]);
     console.log(categories,"sssssssssssssssss")
 
     useEffect(() => {
@@ -132,7 +141,7 @@ const SideSliderDashboard = () => {
                 await dispatch(getCouponsForManager())
             })()
         }
-    }, [dispatch,userDecoded]);
+    }, [dispatch,userDecoded,userDecoded?.role]);
     // get order data
 
     return (
