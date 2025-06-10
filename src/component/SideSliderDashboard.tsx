@@ -38,7 +38,7 @@ const SideSliderDashboard = () => {
             console.log(userDecoded)
             setUserDecode(userDecodedFun)
         }
-    },[])
+    },[dispatch])
     
     
     useEffect(()=>{

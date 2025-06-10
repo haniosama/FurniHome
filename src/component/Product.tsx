@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../lib/store/store";
 import { fetchProduct } from "../lib/slices/products";
@@ -12,6 +12,8 @@ import {
   addToWishlist,
   removeFromWishlist,
 } from "../lib/slices/wishlistSlice";
+import type { IUserInfo } from "../interfaces/userInfoDashboard";
+import { jwtDecode } from "jwt-decode";
 
 const truncate = (str: string | undefined, max: number): string => {
   if (!str) return "";
@@ -25,7 +27,7 @@ const Product = ({
 }) => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [userInfo,setUserInfo]=useState<IUserInfo>()
   const { loginToken } = useSelector((store: RootState) => store.auth);
   const { addLoading } = useSelector((state: RootState) => state.cartReducer);
   const { ids: wishlistIds, loading: wishlistLoading } = useSelector(
@@ -38,6 +40,12 @@ const Product = ({
   useEffect(() => {
     dispatch(fetchProduct());
   }, [dispatch]);
+  useEffect(() => {
+    if(loginToken){
+      const userDecode=jwtDecode<IUserInfo>(loginToken);
+      setUserInfo(userDecode)
+    }
+  }, [dispatch,loginToken]);
 
   const handleWishlistToggle = (product: Iproduct) => {
     if (!product._id) {
@@ -129,6 +137,10 @@ const Product = ({
                   </p>
 
                   {/* Add to Cart Button */}
+                  {userInfo?.role == "manager" || userInfo?.role == "admin"
+                  ?
+                  null
+                  :
                   <button
                     onClick={() => {
                       if (loginToken) {
@@ -143,6 +155,7 @@ const Product = ({
                   >
                     Add to Cart
                   </button>
+                  }
                 </motion.div>
               );
             })}
