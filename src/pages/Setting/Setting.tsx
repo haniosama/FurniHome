@@ -67,7 +67,7 @@ const Setting: React.FC = () => {
   useEffect(() => {
     axios
       .get(
-        `https://ecommerceapi-production-8d5f.up.railway.app/api/user/${userId}`,
+        `${import.meta.env.VITE_API_URL}/api/user/${userId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
@@ -80,13 +80,14 @@ const Setting: React.FC = () => {
           avatar: data?.avatar,
         }));
         setOriginalData({
-          username: data?.username,
+          username: data?.username, 
           phone: data?.phone,
           avatar: data?.avatar,
         });
       })
       .catch(console.error);
-  }, [userId]);
+    }, [userId]);
+    console.log(userInfo,"kkkkkkk")
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -136,7 +137,7 @@ const Setting: React.FC = () => {
     try {
       setLoading(true);
       await axios.patch(
-        "https://ecommerceapi-production-8d5f.up.railway.app/api/auth/changeUserInfo",
+        "${import.meta.env.VITE_API_URL}/api/auth/changeUserInfo",
         formData,
         { headers: { Authorization: `Bearer ${token}`} }
       );
@@ -180,7 +181,7 @@ const Setting: React.FC = () => {
         >
           <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#0058AA] shadow-lg">
             <img
-              src={previewImage ? previewImage : "/Ronaldo.jpg"}
+              src={userInfo.avatar ? userInfo.avatar  : "/avator.png"}
               alt="Avatar"
               className="w-full h-full object-cover"
             />
