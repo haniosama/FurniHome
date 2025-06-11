@@ -5,7 +5,7 @@ import { fetchProduct } from "../lib/slices/products";
 import { motion } from "framer-motion";
 import type Iproduct from "../interfaces/product";
 import { addTOCartAction } from "../lib/slices/cartSlice";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FaHeart } from "react-icons/fa";
 import {
@@ -113,13 +113,15 @@ const Product = ({
                   </button>
 
                   {/* Product Image */}
-                  <img
-                    src={product.imageCover}
-                    alt={product.title}
-                    className="w-full h-48 object-contain rounded-md mb-4 transform transition-transform duration-300 group-hover:scale-105"
-                    crossOrigin="anonymous"
-                    loading="lazy"
-                  />
+                  <Link to={`/product/${product._id}`}>
+                    <img
+                      src={product.imageCover}
+                      alt={product.title}
+                      className="w-full h-48 object-contain rounded-md mb-4 transform transition-transform duration-300 group-hover:scale-105"
+                      crossOrigin="anonymous"
+                      loading="lazy"
+                    />
+                  </Link>
 
                   {/* Title */}
                   <h2 className="text-lg font-semibold text-gray-800 mb-2 px-2 truncate">
