@@ -4,6 +4,7 @@ import { addToWishlist, removeFromWishlist } from '../lib/slices/wishlistSlice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaHeart } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 interface Product {
   _id: string;
@@ -72,12 +73,14 @@ const handleWishlistToggle = () => {
       </button>
 
       {/* Product Image */}
-      <img
-        src={product.imageCover}
-        alt={product.title}
-        className="w-full h-48 object-contain rounded-md mb-4 transform transition-transform duration-300 group-hover:scale-105"
-        crossOrigin="anonymous"
-      />
+      <Link to={`/product/${product._id}`} className='cursor-pointer'>
+        <img
+          src={product.imageCover}
+          alt={product.title}
+          className="w-full h-48 object-contain rounded-md mb-4 transform transition-transform duration-300 group-hover:scale-105"
+          crossOrigin="anonymous"
+        />
+      </Link>
 
       {/* Title */}
       <h2 className="text-lg font-semibold text-gray-800 mb-2 px-2 truncate">
