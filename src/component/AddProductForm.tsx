@@ -27,7 +27,7 @@ interface IError{
     images:string,
 }
 const AddProductForm = ({setOpenAddProductContainer,handleAddProduct}:{setOpenAddProductContainer:(val:boolean)=>void,handleAddProduct:(val:FormData)=>void}) => {
-    const categories = ["Camera", "Phones", "Home","Printers","Headphones","Laptops", "Accessories"];
+    const categories = ["Beds", "Sofas", "Desks"];
 
     const [errors,setErrors]=useState<IError>({
         title:"",
