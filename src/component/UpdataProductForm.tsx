@@ -29,7 +29,7 @@ interface IError{
     images:string,
 }
 const UpdataProductForm = ({setOpenUpdataProductContainer,handleUpdataProduct,specificProduct,productId}:{setOpenUpdataProductContainer:(val:boolean)=>void,handleUpdataProduct:(productId:string,val:FormData)=>void,specificProduct:IProduct,productId:string}) => {
-    const categories = ["Camera", "Phones", "Home","Printers","Headphones","Laptops", "Accessories"];
+    const categories = ["Beds", "Sofas", "Desks"];
     const [errors,setErrors]=useState<IError>({
         title:"",
         description:"",
