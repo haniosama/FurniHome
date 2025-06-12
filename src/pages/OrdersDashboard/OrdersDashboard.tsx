@@ -42,7 +42,7 @@ const OrdersDashboard = () => {
         catch(error){
             console.log(error)
         }
-    },[dispatch,orders]) 
+    },[dispatch]) 
     
 
     const handleSearch=(e:ChangeEvent<HTMLInputElement>)=>{
