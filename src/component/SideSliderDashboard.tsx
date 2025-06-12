@@ -32,13 +32,13 @@ const SideSliderDashboard = () => {
 
     useEffect(()=>{
         const alreadyReloaded = sessionStorage.getItem("reloaded");
-
-        console.log(alreadyReloaded,"zzzzzzzzzzzzzzzzzzzzzzzzzzzz")
         if(!alreadyReloaded){
             window.location.reload()
             sessionStorage.setItem("reloaded", "true");
         }
-
+        return () => {
+            sessionStorage.removeItem("reloaded");
+        };
     },[])
     // get toke
     useEffect(()=>{
