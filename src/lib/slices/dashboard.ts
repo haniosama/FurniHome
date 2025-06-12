@@ -144,7 +144,8 @@ export const deleteOrderForUser=createAsyncThunk('dashboard/deleteOrder',async(o
                 'Authorization':`Bearer ${token}`
             }
         })).json();
-        return data.orders
+        console.log(data,"oooooooooooooooooooorrrrrrrr")
+        return data.remainingOrders
     }catch(err){
         console.log(err,"erros")
     }
@@ -361,7 +362,7 @@ const dashboardAdmim=createSlice({
         builder.addCase(getUserInformayionForUser.pending,(state)=>{state.isLoading=true});
         builder.addCase(getUserInformayionForUser.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
 
-        builder.addCase(deleteOrderForUser.fulfilled,(state,action)=>{state.orders=action.payload?.remainingOrders;state.isLoading=false});
+        builder.addCase(deleteOrderForUser.fulfilled,(state,action)=>{state.orders=action.payload;state.isLoading=false});
         builder.addCase(deleteOrderForUser.pending,(state)=>{state.isLoading=true});
         builder.addCase(deleteOrderForUser.rejected,(state,action)=>{state.error=action.payload as string;state.isLoading=false});
         
