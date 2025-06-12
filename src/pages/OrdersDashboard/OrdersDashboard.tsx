@@ -31,19 +31,22 @@ const OrdersDashboard = () => {
     },[])
     useEffect(()=>{
         try{
-            (async()=>{
-                if(orders?.length>0){
-                    for(let i=0;i<orders?.length;i++){
-                        await dispatch(getUserInformayionForUser(orders[i].userId))
+            const seenUserIds = new Set<string>();
+            if(orders?.length>0){
+                for(const order of orders){
+                    if(!seenUserIds.has(order.userId)){
+                        seenUserIds.add(order.userId)
+                        dispatch(getUserInformayionForUser(order.userId))
                     }
                 }
-            })()
+            }
+            
         }
         catch(error){
             console.log(error)
         }
     },[dispatch,orders]) 
-    
+    console.log(orders,"orders")
 
     const handleSearch=(e:ChangeEvent<HTMLInputElement>)=>{
         const orderId=e.target.value.toLowerCase();
