@@ -6,7 +6,6 @@ import Product from "../../component/Product";
 import type IProducts from "../../interfaces/product";
 import SidebarFilter from "../../component/filter";
 
-
 const AllProduct = () => {
   const [filteredProducts, setFilteredProducts] = useState<IProducts[]>([]);
   // const [price, setPrice] = useState<string>("");
@@ -44,16 +43,15 @@ const AllProduct = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row bg-gray-100 pt-20 min-h-screen">
-      {/* Sidebar Filter */}
-      <div className="w-full lg:w-1/5 px-4 mb-6 lg:mb-0 flex justify-center">
+    <div className=" bg-gray-100 pt-20 min-h-screen">
+      <div className="w-full px-4 mb-6 lg:mb-0 flex justify-center">
         <SidebarFilter
           onSearch={handleSearch}
           onPriceChange={handlePriceChange}
           onRatingChange={handleRatingChange}
         />
       </div>
-      <div className="w-full lg:w-4/5 px-4">
+      <div className="w-full px-4">
         <div className="flex flex-wrap justify-center gap-6">
           <Product filteredProducts={filteredProducts} />
         </div>

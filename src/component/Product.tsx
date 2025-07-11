@@ -8,10 +8,7 @@ import { addTOCartAction } from "../lib/slices/cartSlice";
 import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FaHeart } from "react-icons/fa";
-import {
-  addToWishlist,
-  removeFromWishlist,
-} from "../lib/slices/wishlistSlice";
+import { addToWishlist, removeFromWishlist } from "../lib/slices/wishlistSlice";
 import type { IUserInfo } from "../interfaces/userInfoDashboard";
 import { jwtDecode } from "jwt-decode";
 
@@ -27,7 +24,7 @@ const Product = ({
 }) => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  const [userInfo,setUserInfo]=useState<IUserInfo>()
+  const [userInfo, setUserInfo] = useState<IUserInfo>();
   const { loginToken } = useSelector((store: RootState) => store.auth);
   const { addLoading } = useSelector((state: RootState) => state.cartReducer);
   const { ids: wishlistIds, loading: wishlistLoading } = useSelector(
@@ -41,11 +38,11 @@ const Product = ({
     dispatch(fetchProduct());
   }, [dispatch]);
   useEffect(() => {
-    if(loginToken){
-      const userDecode=jwtDecode<IUserInfo>(loginToken);
-      setUserInfo(userDecode)
+    if (loginToken) {
+      const userDecode = jwtDecode<IUserInfo>(loginToken);
+      setUserInfo(userDecode);
     }
-  }, [dispatch,loginToken]);
+  }, [dispatch, loginToken]);
 
   const handleWishlistToggle = (product: Iproduct) => {
     if (!product._id) {
@@ -59,7 +56,7 @@ const Product = ({
     }
 
     const shortTitle = product.title.split(" ").slice(0, 2).join(" ");
-    
+
     if (wishlistIds.includes(product._id)) {
       dispatch(removeFromWishlist(product._id)).then(() => {
         toast.info(`Removed "${shortTitle}" from wishlist ❤️`);
@@ -139,25 +136,23 @@ const Product = ({
                   </p>
 
                   {/* Add to Cart Button */}
-                  {userInfo?.role == "manager" || userInfo?.role == "admin"
-                  ?
-                  null
-                  :
-                  <button
-                    onClick={() => {
-                      if (loginToken) {
-                        dispatch(addTOCartAction(product._id));
-                      } else {
-                        toast.error("You must be logged in first");
-                        navigate("/login");
-                      }
-                    }}
-                    disabled={addLoading}
-                    className="bg-[#0058AA] hover:bg-[#2b4158] text-white px-6 py-2 rounded-md transition duration-300 w-full"
-                  >
-                    Add to Cart
-                  </button>
-                  }
+                  {userInfo?.role == "manager" ||
+                  userInfo?.role == "admin" ? null : (
+                    <button
+                      onClick={() => {
+                        if (loginToken) {
+                          dispatch(addTOCartAction(product._id));
+                        } else {
+                          toast.error("You must be logged in first");
+                          navigate("/login");
+                        }
+                      }}
+                      disabled={addLoading}
+                      className="bg-[#0058AA] hover:bg-[#2b4158] text-white px-6 py-2 rounded-md transition duration-300 w-full"
+                    >
+                      Add to Cart
+                    </button>
+                  )}
                 </motion.div>
               );
             })}
