@@ -97,7 +97,7 @@ const CommentsSection: React.FC<Props> = ({ productId }) => {
 
   return (
     <div className="bg-gray-100 p-6 md:p-20 rounded-lg shadow-md">
-      <div className="text-center mb-10">
+      <div className="text-center">
         <h2 className="
           relative text-3xl md:text-4xl font-bold text-[#0058AA] inline-block
           after:content-[''] after:absolute after:-bottom-3 after:left-0 after:w-full after:h-1 after:bg-[#FBD913]
@@ -107,7 +107,7 @@ const CommentsSection: React.FC<Props> = ({ productId }) => {
       </div>
 
       {loginToken && (
-        <div className="mb-8">
+        <div className="m-10">
           <label className="block text-lg font-bold text-gray-800 mb-3">Add Review ✍️</label>
           <div className="flex gap-3 items-center">
             <input
@@ -193,13 +193,13 @@ const CommentsSection: React.FC<Props> = ({ productId }) => {
                       />
                       <div className="flex gap-2 mt-2 sm:mt-0">
                         <button
-                          className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+                          className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition cursor-pointer"
                           onClick={() => handleUpdate(c._id)}
                         >
                           Save
                         </button>
                         <button
-                          className="px-6 py-2 bg-gray-300 rounded hover:bg-gray-400 transition"
+                          className="px-6 py-2 bg-gray-300 rounded hover:bg-gray-400 transition cursor-pointer"
                           onClick={() => {
                             setEditingId(null);
                             setEditingText('');
