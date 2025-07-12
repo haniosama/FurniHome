@@ -1,16 +1,16 @@
 import axios from "axios";
-import { useFormik } from "formik";
 import type { FormikHelpers } from "formik";
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { Helmet } from "react-helmet";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../lib/store/store";
-import toast from "react-hot-toast";
+import { useFormik } from "formik";
 import { jwtDecode } from "jwt-decode";
-import { getProductsCart } from "../../lib/slices/cartSlice";
-import * as Yup from "yup";
+import { useState } from "react";
+import { Helmet } from "react-helmet";
+import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import * as Yup from "yup";
+import { getProductsCart } from "../../lib/slices/cartSlice";
+import type { AppDispatch, RootState } from "../../lib/store/store";
 
 type ShippingAddress = {
   details: string;
@@ -29,6 +29,7 @@ export default function CheckOut() {
   const { loginToken } = useSelector((store: RootState) => store.auth);
   const { productsCart } = useSelector((state: RootState) => state.cartReducer);
   const dispatchs: AppDispatch = useDispatch();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   let userId: string;
   type DecodedToken = {
@@ -54,7 +55,7 @@ export default function CheckOut() {
       };
 
       const { data } = await axios.post(
-        `https://nodejs-e-commerce-production.up.railway.app/api/checkout-session?success_url=${url}/orders`,
+        `${API_URL}/api/checkout-session?success_url=${url}/orders`,
         payload,
         {
           headers: { Authorization: "Bearer " + loginToken },
@@ -78,7 +79,7 @@ export default function CheckOut() {
     try {
       setloading(true);
       const { data } = await axios.post(
-        "https://nodejs-e-commerce-production.up.railway.app/api/order",
+        `${API_URL}/api/order`,
         { order_details: values, userId: userId, products: productsCart },
         {
           headers: { Authorization: "Bearer " + loginToken },
