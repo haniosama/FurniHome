@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Loader from "../../component/Loader";
 import type { RootState } from "../../lib/store/store";
 const Order = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const { loginToken } = useSelector((store: RootState) => store.auth);
   type ProductType = {
     productDetails: {
@@ -35,12 +36,9 @@ const Order = () => {
   }
   const [orders, setorders] = useState<OrderType[] | null>(null);
   const getAllOrders = async () => {
-    const { data } = await axios.get(
-      `https://nodejs-e-commerce-production.up.railway.app/api/order/${userId}`,
-      {
-        headers: { Authorization: "Bearer " + loginToken },
-      }
-    );
+    const { data } = await axios.get(`${API_URL}/api/order/${userId}`, {
+      headers: { Authorization: "Bearer " + loginToken },
+    });
     // console.log("🚀 ~ getAllOrders ~ data:", data.orders);
     setorders(data.orders);
   };
