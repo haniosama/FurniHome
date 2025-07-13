@@ -109,35 +109,6 @@ const SpecificProductDetails = () => {
               {specificProduct.sold}
             </div>
 
-            {/* Quantity Controls */}
-            <div className="flex items-center gap-4 mt-6">
-              <button
-                className="w-10 h-10 text-xl font-bold bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg shadow"
-                onClick={() => handleQuantityChange(quantity - 1)}
-              >
-                −
-              </button>
-
-              <input
-                title="Quantity"
-                type="number"
-                min={1}
-                max={specificProduct.quantity}
-                value={quantity}
-                onChange={(e) => {
-                  const val = Number(e.target.value);
-                  handleQuantityChange(val);
-                }}
-                className="w-16 h-10 text-center text-lg border border-gray-300 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-
-              <button
-                className="w-10 h-10 text-xl font-bold bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg shadow"
-                onClick={() => handleQuantityChange(quantity + 1)}
-              >
-                +
-              </button>
-            </div>
 
             <button
               onClick={() => {
