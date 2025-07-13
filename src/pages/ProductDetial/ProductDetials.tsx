@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../Hooks";
 import { addTOCartAction } from "../../lib/slices/cartSlice";
-import { fetchProductById } from "../../lib/slices/productDetials";
+
 
 const SpecificProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -54,7 +54,7 @@ const SpecificProductDetails = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 py-10 px-4">
+      <div className=" bg-gray-100 py-10 px-4">
         <div className="max-w-6xl mx-auto rounded-2xl shadow-lg bg-white p-6 md:flex gap-8">
           {/* Left: Image Gallery */}
           <div className="md:w-1/2 flex flex-col items-center">
@@ -152,7 +152,9 @@ const SpecificProductDetails = () => {
           </div>
         </div>
       </div>
-      <div></div>
+      <div>
+        <CommentsSection productId={specificProduct._id} />
+      </div>
     </>
   );
 };

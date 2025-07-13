@@ -2,17 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { IChangePassword, ILogin, IRegister } from "../../interfaces/Auth";
 import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
 
+// ✅ Signup
 export const signup = createAsyncThunk(
   "Auth/signup",
   async function (userInfo: IRegister, { rejectWithValue }) {
     try {
       const formData = new FormData();
-      formData.append("username", userInfo.username.toString());
-      formData.append("email", userInfo.email.toString());
-      formData.append("phone", userInfo.phone.toString());
-      formData.append("password", userInfo.password.toString());
-      formData.append("role", userInfo.role.toString());
+      formData.append("username", userInfo.username);
+      formData.append("email", userInfo.email);
+      formData.append("phone", userInfo.phone);
+      formData.append("password", userInfo.password);
+      formData.append("role", userInfo.role);
 
       if (userInfo.avatar) {
         formData.append("avatar", userInfo.avatar);
@@ -34,6 +36,7 @@ export const signup = createAsyncThunk(
   }
 );
 
+// ✅ Signin
 export const signin = createAsyncThunk(
   "Auth/signin",
   async function (userInfo: ILogin, { rejectWithValue }) {
@@ -49,6 +52,7 @@ export const signin = createAsyncThunk(
   }
 );
 
+// ✅ Email Verification
 export const emailVerification = createAsyncThunk(
   "Auth/emailVerification",
   async function (values: IChangePassword, { rejectWithValue }) {
@@ -64,6 +68,7 @@ export const emailVerification = createAsyncThunk(
   }
 );
 
+// ✅ Change Password
 export const changePassword = createAsyncThunk(
   "Auth/changePassword",
   async function (values: IChangePassword, { rejectWithValue }) {
@@ -82,17 +87,19 @@ export const changePassword = createAsyncThunk(
   }
 );
 
+// ✅ Slice
 const AuthSlice = createSlice({
   name: "Auth",
   initialState: {
     loginToken: localStorage.getItem("Token") || null,
+    userId: localStorage.getItem("UserId") || null,
     registerLoading: false,
     loginLoading: false,
     verifyCodeLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
-    //#region signup
+    // Signup
     builder.addCase(signup.pending, (state) => {
       state.registerLoading = true;
     });
@@ -101,35 +108,34 @@ const AuthSlice = createSlice({
     });
     builder.addCase(signup.rejected, (state, action) => {
       state.registerLoading = false;
-
-      if (typeof action.payload === "string") {
-        toast.error(action.payload);
-      } else {
-        toast.error("Register failed");
-      }
+      toast.error(typeof action.payload === "string" ? action.payload : "Register failed");
     });
-    //#endregion
 
-    //#region signIn
+    // Signin
     builder.addCase(signin.pending, (state) => {
       state.loginLoading = true;
     });
     builder.addCase(signin.fulfilled, (state, action) => {
       state.loginLoading = false;
       state.loginToken = action.payload.token;
+
+      try {
+        const decoded: any = jwtDecode(action.payload.token);
+        const extractedUserId = decoded.userID;
+        state.userId = extractedUserId;
+        localStorage.setItem("Token", action.payload.token);
+        localStorage.setItem("UserId", extractedUserId);
+      } catch {
+        state.userId = null;
+        toast.error("Failed to decode token");
+      }
     });
     builder.addCase(signin.rejected, (state, action) => {
       state.loginLoading = false;
-
-      if (typeof action.payload === "string") {
-        toast.error(action.payload);
-      } else {
-        toast.error("Login failed");
-      }
+      toast.error(typeof action.payload === "string" ? action.payload : "Login failed");
     });
-    //#endregion
 
-    //#region emailVerification
+    // Email Verification
     builder.addCase(emailVerification.pending, (state) => {
       state.verifyCodeLoading = true;
     });
@@ -138,16 +144,10 @@ const AuthSlice = createSlice({
     });
     builder.addCase(emailVerification.rejected, (state, action) => {
       state.verifyCodeLoading = false;
-
-      if (typeof action.payload === "string") {
-        toast.error(action.payload);
-      } else {
-        toast.error("Email Is Invalid");
-      }
+      toast.error(typeof action.payload === "string" ? action.payload : "Email Is Invalid");
     });
-    //#endregion
 
-    //#region changePassword
+    // Change Password
     builder.addCase(changePassword.pending, (state) => {
       state.verifyCodeLoading = true;
     });
@@ -156,14 +156,8 @@ const AuthSlice = createSlice({
     });
     builder.addCase(changePassword.rejected, (state, action) => {
       state.verifyCodeLoading = false;
-
-      if (typeof action.payload === "string") {
-        toast.error(action.payload);
-      } else {
-        toast.error("Invalid code or password");
-      }
+      toast.error(typeof action.payload === "string" ? action.payload : "Invalid code or password");
     });
-    //#endregion
   },
 });
 
