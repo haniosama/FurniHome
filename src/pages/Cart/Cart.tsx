@@ -24,7 +24,7 @@ const Cart = () => {
     );
   }, [productsCart]);
 
-  const shipping = 50;
+  const shipping = 150;
   const total = subtotal + shipping;
 
   return (
@@ -81,11 +81,11 @@ const Cart = () => {
                       <h3 className="text-lg font-semibold">
                         {productId.title.split(" ").slice(0, 2).join(" ")}
                       </h3>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 text-xl">
                         {productId.category.name}
                       </p>
-                      <p className="text-gray-600">
-                        EGP {productId.price > 30 ? productId.price : 35}
+                      <p className="text-gray-600 text-xl">
+                        EGP {productId.price}
                       </p>
                     </div>
                     <div className="flex flex-col items-center justify-between gap-4">
@@ -96,15 +96,19 @@ const Cart = () => {
                         className="text-red-600 border cursor-pointer border-red-600 px-4 py-1 rounded hover:bg-red-600 hover:text-white transition">
                         Remove
                       </button>
-                      <div className="flex items-center gap-2">
-                        <button className="w-8 h-8 bg-gray-200 rounded text-lg font-bold">
+                      {/* <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => decrement(quantity)}
+                          className="w-8 h-8 bg-gray-200 rounded text-lg font-bold">
                           -
                         </button>
                         <span className="text-md font-medium">{quantity}</span>
-                        <button className="w-8 h-8 bg-gray-200 rounded text-lg font-bold">
+                        <button
+                          onClick={() => increment(quantity)}
+                          className="w-8 h-8 bg-gray-200 rounded text-lg font-bold">
                           +
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 );
