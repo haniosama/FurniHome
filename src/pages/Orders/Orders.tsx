@@ -2,11 +2,13 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../component/Loader";
-import type { RootState } from "../../lib/store/store";
+import { clearCartAction } from "../../lib/slices/cartSlice";
+import type { AppDispatch, RootState } from "../../lib/store/store";
 const Order = () => {
   const API_URL = import.meta.env.VITE_API_URL;
+  const dispatch: AppDispatch = useDispatch();
   const { loginToken } = useSelector((store: RootState) => store.auth);
   type ProductType = {
     productDetails: {
@@ -47,6 +49,7 @@ const Order = () => {
   useEffect(() => {
     if (loginToken) {
       getAllOrders();
+      dispatch(clearCartAction());
     }
   }, [loginToken]);
 

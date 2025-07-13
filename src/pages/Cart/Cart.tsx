@@ -68,7 +68,7 @@ const Cart = () => {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1  ">
               {productsCart?.map((item) => {
-                const { productId, quantity, _id } = item;
+                const { productId, _id } = item;
                 return (
                   <div
                     key={_id}
