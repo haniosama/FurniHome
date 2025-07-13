@@ -19,7 +19,7 @@ const SpecificProductDetails = () => {
 
   const [mainImage, setMainImage] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,19 +29,11 @@ const SpecificProductDetails = () => {
   useEffect(() => {
     if (specificProduct) {
       setMainImage(specificProduct.images?.[0] || "");
-      setTotalPrice(specificProduct.price);
+    
     }
   }, [specificProduct]);
 
-  const handleQuantityChange = (newQuantity: number) => {
-    if (!specificProduct) return;
-
-    // Prevent out-of-bound values
-    if (newQuantity < 1 || newQuantity > specificProduct.quantity) return;
-
-    setQuantity(newQuantity);
-    setTotalPrice(specificProduct.price * newQuantity);
-  };
+ 
 
   if (loading)
     return (
