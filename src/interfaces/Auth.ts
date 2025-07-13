@@ -1,17 +1,17 @@
 export interface IRegister {
-  username: String;
-  email: String;
-  phone: String;
-  password: String;
-  role: String;
-  avatar?: File | null;  
+  username: string;
+  email: string;
+  phone: string;
+  password: string;
+  role: string;
+  avatar?: File | null;
 }
 export interface ILogin {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 }
 export interface IChangePassword {
-  email: String;
-  providedCode: String;
-  newPassword: String;
+  email: string;
+  providedCode: string;
+  newPassword: string;
 }
