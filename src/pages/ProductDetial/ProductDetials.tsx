@@ -71,7 +71,7 @@ const SpecificProductDetails = () => {
                 <img
                   key={i}
                   src={img}
-                  alt={Thumbnail ${i}}
+                  alt={`Thumbnail ${i}`}
                   onClick={() => setMainImage(img)}
                   className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 transition-all ${
                     mainImage === img ? "border-blue-500" : "border-transparent"
