@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../lib/store/store";
-import { fetchProduct } from "../lib/slices/products";
 import { motion } from "framer-motion";
-import type Iproduct from "../interfaces/product";
-import { addTOCartAction } from "../lib/slices/cartSlice";
+import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { FaHeart } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { FaHeart } from "react-icons/fa";
-import { addToWishlist, removeFromWishlist } from "../lib/slices/wishlistSlice";
+import type Iproduct from "../interfaces/product";
 import type { IUserInfo } from "../interfaces/userInfoDashboard";
-import { jwtDecode } from "jwt-decode";
+import { addTOCartAction } from "../lib/slices/cartSlice";
+import { fetchProduct } from "../lib/slices/products";
+import { addToWishlist, removeFromWishlist } from "../lib/slices/wishlistSlice";
+import type { AppDispatch, RootState } from "../lib/store/store";
 
 const truncate = (str: string | undefined, max: number): string => {
   if (!str) return "";
@@ -91,22 +91,23 @@ const Product = ({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: index * 0.1 }}
                   whileHover={{ scale: 1.05 }}
-                  className="relative bg-white rounded-lg shadow-md p-4 w-72 flex flex-col items-center text-center hover:shadow-lg transition duration-300 group overflow-hidden"
-                >
+                  className="relative bg-white rounded-lg shadow-md p-4 w-72 flex flex-col items-center text-center hover:shadow-lg transition duration-300 group overflow-hidden">
                   {/* Wishlist Icon */}
                   <button
                     onClick={() => handleWishlistToggle(product)}
                     aria-label="Toggle wishlist"
                     disabled={wishlistLoading}
-                    className="absolute top-3 right-3 z-10"
-                  >
-                    <FaHeart
-                      className={`w-6 h-6 transition-colors ${
-                        isInWishlist
-                          ? "text-red-500"
-                          : "text-gray-400 group-hover:text-red-400"
-                      }`}
-                    />
+                    className="absolute top-3 right-3 z-10">
+                    {userInfo?.role == "manager" ||
+                    userInfo?.role == "admin" ? null : (
+                      <FaHeart
+                        className={`w-6 h-6 transition-colors ${
+                          isInWishlist
+                            ? "text-red-500"
+                            : "text-gray-400 group-hover:text-red-400"
+                        }`}
+                      />
+                    )}
                   </button>
 
                   {/* Product Image */}
@@ -132,7 +133,7 @@ const Product = ({
 
                   {/* Description */}
                   <p className="text-gray-600 text-sm mb-4 px-2">
-                    {truncate(product.description, 80)}
+                    {truncate(product.description, 30)}
                   </p>
 
                   {/* Add to Cart Button */}
@@ -148,8 +149,7 @@ const Product = ({
                         }
                       }}
                       disabled={addLoading}
-                      className="bg-[#0058AA] hover:bg-[#2b4158] text-white px-6 py-2 rounded-md transition duration-300 w-full"
-                    >
+                      className="bg-[#0058AA] hover:bg-[#2b4158] text-white px-6 py-2 rounded-md transition duration-300 w-full">
                       Add to Cart
                     </button>
                   )}

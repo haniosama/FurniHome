@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const SidebarFilter = ({
   onSearch,
@@ -13,15 +13,14 @@ const SidebarFilter = ({
 
   const [selectedPrice, setSelectedPrice] = useState<string | undefined>("All");
 
-  const prices = [0, 100, 500, 1000, 2000, 3000];
+  const prices = [500, 1000, 1500, 2000, 3000];
 
   return (
     <motion.aside
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="w-full  p-4 bg-white rounded-lg shadow-lg "
-    >
+      className="w-10/12 m-auto p-4 bg-white rounded-lg shadow-lg ">
       <h2 className="text-xl font-bold text-gray-800 mb-4">Filter Products</h2>
 
       <div className="flex flex-col gap-3 lg:flex-row">
@@ -53,8 +52,7 @@ const SidebarFilter = ({
               setSelectedPrice(e.target.value);
               onPriceChange(val);
             }}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring focus:ring-blue-300"
-          >
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring focus:ring-blue-300">
             <option value={"All"}>All</option>
             {prices.map((price) => (
               <option key={price} value={price}>

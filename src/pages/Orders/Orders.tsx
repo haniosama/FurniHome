@@ -35,11 +35,12 @@ const Order = () => {
     userId = user.userID;
   }
   const [orders, setorders] = useState<OrderType[] | null>(null);
+
   const getAllOrders = async () => {
     const { data } = await axios.get(`${API_URL}/api/order/${userId}`, {
       headers: { Authorization: "Bearer " + loginToken },
     });
-    // console.log("🚀 ~ getAllOrders ~ data:", data.orders);
+    console.log("🚀 ~ getAllOrders ~ data:", data.orders);
     setorders(data.orders);
   };
 
@@ -51,10 +52,18 @@ const Order = () => {
 
   return (
     <>
-      <div className=" container px-2 md:mx-auto ">
-        <h1 className="text-center py-2 font-bold text-2xl underline underline-offset-4 text-blue-500 ">
-          Orders
-        </h1>
+      <div className=" container px-2 md:mx-auto  ">
+        <div className="text-center pt-4">
+          <h2
+            className="relative text-2xl md:text-4xl font-bold mb-12 text-[#0058AA]
+              inline-block
+              after:content-[''] after:absolute after:-bottom-3 after:left-0 
+              after:w-full after:h-1 after:bg-[#FBD913] after:opacity-100
+              before:content-[''] before:absolute before:-bottom-5 before:left-1/4 
+              before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-80">
+            Orders
+          </h2>
+        </div>
         <div>
           <Helmet>
             <title>Orders</title>

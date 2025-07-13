@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../Hooks/index";
-import { fetchWishlist } from "../../lib/slices/wishlistSlice";
-import Product from "../../component/Product"; 
+import { Link } from "react-router";
+import Product from "../../component/Product";
 import ProductCardSkeleton from "../../component/SkeletonCard";
-import type IProducts from '../../interfaces/product';
+import { useAppDispatch, useAppSelector } from "../../Hooks/index";
+import type IProducts from "../../interfaces/product";
+import { fetchWishlist } from "../../lib/slices/wishlistSlice";
 
 const WishlistPage = () => {
   const { items, loading, error } = useAppSelector((state) => state.wishlist);
@@ -22,8 +23,7 @@ const WishlistPage = () => {
               after:content-[''] after:absolute after:-bottom-3 after:left-0 
               after:w-full after:h-1 after:bg-[#FBD913] after:opacity-100
               before:content-[''] before:absolute before:-bottom-5 before:left-1/4 
-              before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-80"
-        >
+              before:w-1/2 before:h-1 before:bg-[#0058AA] before:opacity-80">
           My Wishlist
         </h2>
       </div>
@@ -37,10 +37,20 @@ const WishlistPage = () => {
       ) : error ? (
         <p className="text-red-500 text-center">An error occurred: {error}</p>
       ) : items.length === 0 ? (
-        <p className="text-center text-gray-600">Your wishlist is empty.</p>
+        <>
+          <div className="w-full text-center">
+            <p className="text-center my-2 text-gray-600">
+              Your wishlist is empty.
+            </p>
+            <Link to="/">
+              <button className="bg-teal-600 m-auto text-white px-6 py-2 rounded hover:bg-teal-700 transition">
+                Go to Home
+              </button>
+            </Link>
+          </div>
+        </>
       ) : (
-   <Product filteredProducts={items as IProducts[]} />
-
+        <Product filteredProducts={items as IProducts[]} />
       )}
     </div>
   );
