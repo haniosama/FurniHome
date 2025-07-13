@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../Hooks";
+import { useEffect, useState } from "react";
+import { fetchProductById } from "../../lib/slices/productDetials";
 import { addTOCartAction } from "../../lib/slices/cartSlice";
+import toast from "react-hot-toast";
+import CommentsSection from '../../component/CommentsSection';
 
 
 const SpecificProductDetails = () => {
@@ -69,7 +71,7 @@ const SpecificProductDetails = () => {
                 <img
                   key={i}
                   src={img}
-                  alt={`Thumbnail ${i}`}
+                  alt={Thumbnail ${i}}
                   onClick={() => setMainImage(img)}
                   className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 transition-all ${
                     mainImage === img ? "border-blue-500" : "border-transparent"
@@ -108,7 +110,7 @@ const SpecificProductDetails = () => {
             </div>
 
             {/* Quantity Controls */}
-            {/* <div className="flex items-center gap-4 mt-6">
+            <div className="flex items-center gap-4 mt-6">
               <button
                 className="w-10 h-10 text-xl font-bold bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg shadow"
                 onClick={() => handleQuantityChange(quantity - 1)}
@@ -135,7 +137,7 @@ const SpecificProductDetails = () => {
               >
                 +
               </button>
-            </div> */}
+            </div>
 
             <button
               onClick={() => {
@@ -146,7 +148,8 @@ const SpecificProductDetails = () => {
                   navigate("/login");
                 }
               }}
-              className="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl transition-all">
+              className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl transition-all"
+            >
               Add to Cart
             </button>
           </div>
