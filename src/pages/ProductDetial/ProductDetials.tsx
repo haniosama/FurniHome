@@ -5,6 +5,7 @@ import { fetchProductById } from "../../lib/slices/productDetials";
 import { addTOCartAction } from "../../lib/slices/cartSlice";
 import toast from "react-hot-toast";
 import CommentsSection from '../../component/CommentsSection';
+import Loader from "../../component/Loader";
 
 
 const SpecificProductDetails = () => {
@@ -37,7 +38,7 @@ const SpecificProductDetails = () => {
 
   if (loading)
     return (
-      <div className="text-center text-lg font-medium mt-10">Loading...</div>
+      <Loader />
     );
 
   if (error)
