@@ -18,7 +18,7 @@ const SpecificProductDetails = () => {
   const { loginToken } = useAppSelector((store) => store.auth);
 
   const [mainImage, setMainImage] = useState<string>("");
-  const [quantity, setQuantity] = useState<number>(1);
+  
 
   const navigate = useNavigate();
 
@@ -81,7 +81,7 @@ const SpecificProductDetails = () => {
             <p className="text-gray-500">{specificProduct.description}</p>
 
             <div className="text-xl font-semibold text-green-600">
-              ${totalPrice}
+              ${specificProduct.price}
             </div>
 
             <div className="text-gray-700">
